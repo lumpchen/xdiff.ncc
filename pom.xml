@@ -1,0 +1,190 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>me.lumpchen</groupId>
+	<artifactId>xdiff.ncc</artifactId>
+	<version>1.0</version>
+	<name>xdiff.ncc</name>
+	<description>xdiff.ncc</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.common/common-image -->
+		<dependency>
+			<groupId>com.twelvemonkeys.common</groupId>
+			<artifactId>common-image</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.common/common-io -->
+		<dependency>
+			<groupId>com.twelvemonkeys.common</groupId>
+			<artifactId>common-io</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.common/common-lang -->
+		<dependency>
+			<groupId>com.twelvemonkeys.common</groupId>
+			<artifactId>common-lang</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-core -->
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-core</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-jpeg -->
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-jpeg</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-metadata -->
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-metadata</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-sgi -->
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-sgi</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-tiff -->
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-tiff</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160810</version>
+		</dependency>
+
+		<dependency>
+			<groupId>me.lumpchen</groupId>
+			<artifactId>xafp</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<!-- <dependency> <groupId>org.apache.pdfbox</groupId> <artifactId>pdfbox-app</artifactId> 
+			<version>2.0.7</version> <scope>system</scope> <systemPath>${project.basedir}/src/main/resources/pdfbox-concurrency-2.0.7.jar</systemPath> 
+			</dependency> -->
+
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox-app</artifactId>
+			<version>2.0.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.20</version>
+				<configuration>
+					<!-- <skipTests>true</skipTests> -->
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<id>test-reports</id>
+						<phase>test</phase>
+						<configuration>
+							<!-- <skip>true</skip> -->
+							<tasks>
+								<junitreport todir="target/surefire-reports">
+									<fileset dir="target/surefire-reports">
+										<include name="**/*.xml" />
+									</fileset>
+									<report format="noframes" todir="target/surefire-reports" />
+								</junitreport>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>ant</groupId>
+						<artifactId>ant-junit</artifactId>
+						<version>1.6.2</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>me.lumpchen.xdiff.XDiff</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>

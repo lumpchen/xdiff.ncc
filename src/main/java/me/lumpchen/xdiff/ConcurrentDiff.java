@@ -106,6 +106,7 @@ public abstract class ConcurrentDiff {
 	
 	protected String writeOutImage(int pageNo, BufferedImage image) throws Exception {
         File temp = File.createTempFile("xdiff", "." + setting.previewImageFormat);
+        temp.deleteOnExit();
         if (ImageIOUtil.writeImage(image, temp.getAbsolutePath(), (int) this.setting.resolution)) {
         	return temp.getAbsolutePath();
         }

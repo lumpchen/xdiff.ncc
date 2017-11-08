@@ -200,7 +200,8 @@ public class SignleThreadPDFDiff {
 	}
 	
 	private String writeOutImage(int pageNo, BufferedImage image) throws Exception {
-        File temp = File.createTempFile("pdf_diff", "." + setting.previewImageFormat);
+        File temp = File.createTempFile("xdiff", "." + setting.previewImageFormat);
+        temp.deleteOnExit();
         if (ImageIOUtil.writeImage(image, temp.getAbsolutePath(), (int) this.setting.resolution)) {
         	return temp.getAbsolutePath();
         }

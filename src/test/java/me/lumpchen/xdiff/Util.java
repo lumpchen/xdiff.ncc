@@ -144,7 +144,7 @@ public class Util {
 				|| obj_1 instanceof Double
 				|| obj_1 instanceof Long
 				|| obj_1 instanceof Integer) {
-			if (!obj_1.equals(obj_2)) {
+			if (!compareValue(obj_1, obj_2)) {
 				logger.severe("Diff value found: " + obj_1.toString() + " | " + obj_2.toString());
 				return false;
 			}
@@ -158,6 +158,26 @@ public class Util {
 			}
 		}
 		
+		return true;
+	}
+	
+	static boolean compareValue(Object o1, Object o2) {
+		if (o1.toString().equals(o2.toString())) {
+			return true;
+		}
+		try {
+			double d1 = Double.parseDouble(o1.toString());
+			double d2 = Double.parseDouble(o2.toString());
+			if (Math.abs(d1 - d2) > 0.1) {
+				logger.severe("Diff value found: " + o1.toString() + " | " + o2.toString());
+				return false;
+			}
+		} catch (Exception e) {
+			if (!o1.equals(o2)) {
+				logger.severe("Diff value found: " + o1.toString() + " | " + o2.toString());
+				return false;
+			}
+		}
 		return true;
 	}
 	

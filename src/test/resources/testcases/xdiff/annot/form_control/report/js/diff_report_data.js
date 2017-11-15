@@ -404,8 +404,8 @@ PDF_DIFF.diff_report_data = {
                         },
                         {
                             "Value": [
-                                "mikeli@emc.com ",
-                                "mikeli@emc.com "
+                                "lumpchen@google.com ",
+                                "lumpchen@google.com "
                             ],
                             "Key": "|----------Text",
                             "Equals": true
@@ -444,8 +444,8 @@ PDF_DIFF.diff_report_data = {
                         },
                         {
                             "Value": [
-                                "203.504",
-                                "203.504"
+                                "203.524",
+                                "203.524"
                             ],
                             "Key": "|----------X Position",
                             "Equals": true
@@ -851,12 +851,12 @@ PDF_DIFF.diff_report_data = {
     "ShowDifferentPagesOnly": true,
     "Test_Fill_Color": "rgba(138, 43, 226, 0.2)",
     "test_pdf_json_obj": {
-        "fileSize": "668816 Bytes",
+        "fileSize": "610868 Bytes",
         "author": "",
         "pageCount": 1,
         "title": "ANSØGNING OM GODKENDELSE SOM VE-MONTØRVIRKSOMHED ELLER VE-INSTALLATØRVIRKSOMHED",
         "keywords": "",
-        "location": "C:\\dev\\mine\\git\\xdiff\\src\\test\\resources\\testcases\\xdiff\\annot\\form_control\\test.pdf",
+        "location": "C:\\dev\\mine\\git\\xdiff.ncc\\src\\test\\resources\\testcases\\xdiff\\annot\\form_control\\test.pdf",
         "created": "Tue Mar 04 19:18:11 CST 2014",
         "subject": "",
         "pages": [{
@@ -868,16 +868,16 @@ PDF_DIFF.diff_report_data = {
         "producer": "Adobe PDF Library 10.0.1",
         "fileName": "test.pdf",
         "version": "1.6",
-        "modified": "Fri Apr 08 13:31:20 CST 2016"
+        "modified": "Wed Nov 15 15:05:06 CST 2017"
     },
     "Base_Stroke_Color": "red",
     "base_pdf_json_obj": {
-        "fileSize": "616451 Bytes",
+        "fileSize": "609708 Bytes",
         "author": "",
         "pageCount": 1,
         "title": "ANSØGNING OM GODKENDELSE SOM VE-MONTØRVIRKSOMHED ELLER VE-INSTALLATØRVIRKSOMHED",
         "keywords": "",
-        "location": "C:\\dev\\mine\\git\\xdiff\\src\\test\\resources\\testcases\\xdiff\\annot\\form_control\\control.pdf",
+        "location": "C:\\dev\\mine\\git\\xdiff.ncc\\src\\test\\resources\\testcases\\xdiff\\annot\\form_control\\control.pdf",
         "created": "Tue Mar 04 19:18:11 CST 2014",
         "subject": "",
         "pages": [{
@@ -889,7 +889,7 @@ PDF_DIFF.diff_report_data = {
         "producer": "Adobe PDF Library 10.0.1",
         "fileName": "control.pdf",
         "version": "1.6",
-        "modified": "Tue Apr 05 18:20:26 CST 2016"
+        "modified": "Wed Nov 15 15:04:42 CST 2017"
     },
     "Base_Fill_Color": "rgba(138, 43, 226, 0.2)",
     "Rendering_Resolution": 96

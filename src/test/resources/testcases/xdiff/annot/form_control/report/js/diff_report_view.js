@@ -244,7 +244,7 @@ PDF_DIFF.diff_report_view = function(report_data) {
 			}
 			cell.appendChild(x);
 			cell.style.textAlign = "center";
-			pageRow.onclick = pageSelectHandler(i - invisibleRow);
+			pageRow.onclick = pageSelectHandler(i, i - invisibleRow);
 		}
 
 		$(function() {
@@ -451,13 +451,13 @@ PDF_DIFF.diff_report_view = function(report_data) {
 		});
 	};
 
-	var updatePageSelection = function(pageNo) {
+	var updatePageSelection = function(tableRowIndex) {
 		var tableBody = document.getElementById("page_list_table").getElementsByTagName("tbody")[0];
 
 		for (var i = 0; i < tableBody.rows.length; i++) {
 			var td = tableBody.rows[i].cells[0];
 			var td_1 = tableBody.rows[i].cells[1];
-			if (i == pageNo) {
+			if (i == tableRowIndex) {
 				updateCellColor(td, true);
 				updateCellColor(td_1, true);
 			} else {
@@ -479,9 +479,9 @@ PDF_DIFF.diff_report_view = function(report_data) {
 		}
 	}
 	
-	var pageSelectHandler = function(pageNo) {
+	var pageSelectHandler = function(pageNo, tableRowIndex) {
 		return function() {
-			updatePageSelection(pageNo);
+			updatePageSelection(tableRowIndex);
 			
 			page_view_paras["PageNo"] = pageNo;
 			page_view_paras["DiffContent"] = null;

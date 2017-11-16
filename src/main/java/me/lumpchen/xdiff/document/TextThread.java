@@ -160,12 +160,6 @@ public class TextThread {
 				TextContent last = mergedContents.get(mergedContents.size() - 1);
 				TextContent next = contents.get(i);
 
-				// Symbol character use character name as Unicode value, so can't merge any symbol characters.
-				if (last.isSymbol() || next.isSymbol()) {
-					mergedContents.add(next);
-					continue;
-				}
-				
 				double distance = next.getOrigin().getX() - last.getX() - last.getOutlineRect().getWidth();
 				
 				if (last.getGraphicsStateDesc().equals(next.getGraphicsStateDesc())

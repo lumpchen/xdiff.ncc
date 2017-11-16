@@ -45,7 +45,7 @@ public abstract class PageContentHandler implements StructuredAFPGraphics {
 		}
 	}
 	
-	public void appendChar(String unicode, Integer cid, Point2D origin, AffineTransform at, Shape glyph, boolean isSymbol) {
+	public void appendChar(String unicode, Integer cid, Point2D origin, AffineTransform at, Shape glyph) {
 		if (this.runtimePageContentStack.isEmpty()) {
 			return;
 		}
@@ -56,7 +56,7 @@ public abstract class PageContentHandler implements StructuredAFPGraphics {
 		}
 		
 		TextContent textContent = (TextContent) content;
-		textContent.appendText(unicode, cid, origin, at, glyph.getBounds2D(), isSymbol);
+		textContent.appendText(unicode, cid, origin, at, glyph.getBounds2D());
 	}
 	
 	public void beginGraphics() {

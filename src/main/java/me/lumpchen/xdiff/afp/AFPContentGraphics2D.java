@@ -149,9 +149,7 @@ public class AFPContentGraphics2D extends StructuredAFPPageGraphics {
 		}
 		
 		TextContent textContent = (TextContent) content;
-		
-		boolean isSymbol = false; // TODO handle symbol font
-		textContent.appendText(unicode, cid, origin, at, glyph.getBounds2D(), isSymbol);		
+		textContent.appendText(unicode, cid, origin, at, glyph.getBounds2D());		
 	}
 
 	@Override

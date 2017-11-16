@@ -19,7 +19,6 @@ public class TextContent extends PageContent {
 	private double baseline = -1;
 	private AffineTransform at;
 	private double averageFontWidth = -1;
-	private boolean isSymbol = false;
 	
 	public TextContent() {
 		super();
@@ -28,7 +27,7 @@ public class TextContent extends PageContent {
 		this.cidArray = new ArrayList<Integer>();
 	}	
 	
-	public void appendText(String unicode, Integer cid, Point2D origin, AffineTransform at, Shape glyphBBox, boolean isSymbol) {
+	public void appendText(String unicode, Integer cid, Point2D origin, AffineTransform at, Shape glyphBBox) {
 		this.text.append(unicode);
 		this.cidArray.add(cid);
 		
@@ -46,12 +45,6 @@ public class TextContent extends PageContent {
 		if (this.averageFontWidth == -1) {
 			this.averageFontWidth = glyphBBox.getBounds2D().getWidth();
 		}
-		
-		this.isSymbol = isSymbol;
-	}
-	
-	public boolean isSymbol() {
-		return this.isSymbol;
 	}
 	
 	public boolean onBaseline(double y) {

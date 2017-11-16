@@ -165,7 +165,7 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 		this.markImage(pdImage, new GeneralPath(outline));
     }
     
-	private void markText(String unicode, Integer cid, Point2D origin, AffineTransform at, Shape glyph, boolean isSymbol) {
+	private void markText(String unicode, Integer cid, Point2D origin, AffineTransform at, Shape glyph) {
 		if (this.runtimePageContentStack.isEmpty()) {
 			return;
 		}
@@ -177,12 +177,8 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 		
 		TextContent textContent = (TextContent) content;
 		
-		if (isSymbol) {
-			unicode = Character.getName(cid);
-		}
-		
 		if (textContent.onBaseline(origin.getY())) {
-			textContent.appendText(unicode, cid, origin, at, glyph.getBounds2D(), isSymbol);
+			textContent.appendText(unicode, cid, origin, at, glyph.getBounds2D());
 		} else {
     		if (textContent.getText() == null 
     				|| textContent.getText().trim().length() == 0
@@ -193,7 +189,7 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
     		}
     		
         	TextContent newContent = new TextContent();
-        	newContent.appendText(unicode, cid, origin, at, glyph.getBounds2D(), isSymbol);
+        	newContent.appendText(unicode, cid, origin, at, glyph.getBounds2D());
         	this.runtimePageContentStack.push(newContent);
         	this.markGraphicsState();
 		}
@@ -571,8 +567,6 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
     protected void showFontGlyph(Matrix textRenderingMatrix, PDFont font, int code, String unicode,
                                  Vector displacement) throws IOException
     {
-    	boolean isSymbol = font.getFontDescriptor().isSymbolic() && code < 0x00FF;
-    	
         AffineTransform at = textRenderingMatrix.createAffineTransform();
         at.concatenate(font.getFontMatrix().createAffineTransform());
 
@@ -589,7 +583,7 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 			spaceWidth = wGlyph.getBounds2D().getWidth();
 		}*/
 
-		this.markText(unicode, code, ptDst, at, this.lastGlyph, isSymbol);
+		this.markText(unicode, code, ptDst, at, this.lastGlyph);
     }
 
     /**

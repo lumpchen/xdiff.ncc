@@ -721,7 +721,7 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Value": [
                                 "#INSERT#",
-                                "LATIN SMALL LETTER N"
+                                "■"
                             ],
                             "Key": "|----------Text",
                             "Equals": false
@@ -811,7 +811,7 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Value": [
                                 "#INSERT#",
-                                "LATIN SMALL LETTER N"
+                                "■"
                             ],
                             "Key": "|----------Text",
                             "Equals": false

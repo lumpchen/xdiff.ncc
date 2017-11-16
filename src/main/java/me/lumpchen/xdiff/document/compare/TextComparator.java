@@ -218,15 +218,6 @@ public class TextComparator extends ContentComparator {
 			result &= equals;
 			entry.putAttr(DiffContent.Key.Attr_Pos_Y, equals, roundM(y_1), roundM(y_2));
 		}
-
-		if (textContent_1 != null && textContent_1.isSymbol()
-				&& textContent_2 != null && textContent_2.isSymbol()) {
-			val_1 = textContent_1.getCIDString();
-			val_2 = textContent_2.getCIDString();
-			equals = compare(val_1, val_2);
-			result &= equals;
-			entry.putAttr(DiffContent.Key.Attr_CID, equals, val_1, val_2);
-		}
 		
 		entry.setBBox(baseLob.getBoundingBox(), testLob.getBoundingBox());
 		

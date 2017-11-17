@@ -90,6 +90,8 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
     // whether image of a transparency group must be flipped
     // needed when in a tiling pattern
     private boolean flipTG = false;
+    
+    private boolean isTJBegin = false;
 
     // clipping winding rule used for the clipping path
     private int clipWindingRule = -1;
@@ -489,39 +491,20 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
     {
         setClip();
         beginTextClip();
-        
-//    	TextContent content = new TextContent();
-//    	this.runtimePageContentStack.push(content);
     }
 
     @Override
     public void endText() throws IOException
     {
         endTextClip();
-        
-/*    	if (this.runtimePageContentStack.isEmpty()) {
-    		return;
-    	}
-    	PageContent content = this.runtimePageContentStack.pop();
-    	
-    	if (content.getType() == PageContent.Type.Text) {
-    		TextContent textContent = (TextContent) content;
-    		if (textContent.getText() == null 
-    				|| textContent.getText().trim().length() == 0
-    				|| textContent.getHeight() == 0) { //empty TJ
-    			return;
-    		}
-    	}
-    	this.addToContentList(content);*/
     }
     
-	@Override
-	protected void showText(byte[] string) throws IOException {
-    	this.runtimePageContentStack.push( new TextContent());
+    private void beginTextContent() {
+    	this.runtimePageContentStack.push(new TextContent());
 		this.markGraphicsState();
-		
-		super.showText(string);
-		
+    }
+    
+    private void endTextContent() {
     	if (this.runtimePageContentStack.isEmpty()) {
     		return;
     	}
@@ -536,6 +519,30 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
     		}
     	}
     	this.addToContentList(content);
+    }
+    
+    @Override
+    public void showTextStrings(COSArray array) throws IOException {
+    	this.beginTextContent();
+    	this.isTJBegin = true;
+    	
+    	super.showTextStrings(array);
+    
+    	this.endTextContent();
+    	this.isTJBegin = false;
+    }
+    
+	@Override
+	protected void showText(byte[] string) throws IOException {
+		if (!this.isTJBegin) {
+			this.beginTextContent();
+		}
+		
+		super.showText(string);
+		
+    	if (!this.isTJBegin) {
+    		this.endTextContent();
+    	}
 	}
     
     /**

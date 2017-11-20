@@ -18,6 +18,10 @@ You need Java JDK 7 (or higher) and Maven 3 <http://maven.apache.org/> to build 
 
 The default build will compile the Java sources and package the binary classes into jar packages. See the Maven documentation for all the other available build options.
 
+Binary download: 
+[xdiff.ncc-1.0-jar-with-dependencies.jar](./dst/xdiff.ncc-1.0-jar-with-dependencies.jar)
+
+
 Usage
 -----
 

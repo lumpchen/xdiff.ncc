@@ -33,6 +33,10 @@ Resource
 -----
 xdiff.ncc uses PDFBox for PDF interpreting and rendering. PDFBox is a project of the Apache Software Foundation <http://www.apache.org/>. xdiff.ncc is based on PDFBox 2.0.7.
 
+Support
+-----
+lumpchen@gmail.com 
+
 License
 -----
 [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)

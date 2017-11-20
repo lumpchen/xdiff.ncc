@@ -1,5 +1,5 @@
 # xdiff.ncc
-A document comparison tool, support PDF, Postscript and AFP.
+A document comparison tool, support comparison of PDF, Postscript and AFP documents.xdiff.ncc not only compares rendering bitmap of each page, but also analyzes and compares all contents in each page. For [detail](https://lumpchen.github.io/xdiff.ncc/), see showcase below.
 
 ## Showcase
 https://lumpchen.github.io/xdiff.ncc/
@@ -21,3 +21,7 @@ The default build will compile the Java sources and package the binary classes i
 Resource
 -----
 PDFBox is a project of the Apache Software Foundation <http://www.apache.org/>. xdiff.ncc is based on PDFBox 2.0.7.
+
+License
+-----
+http://www.apache.org/licenses/LICENSE-2.0

@@ -19,12 +19,15 @@ You need Java JDK 7 (or higher) and Maven 3 <http://maven.apache.org/> to build 
 The default build will compile the Java sources and package the binary classes into jar packages. See the Maven documentation for all the other available build options.
 
 Binary download: 
-[xdiff.ncc-1.0-jar-with-dependencies.jar](./dst/xdiff.ncc-1.0-jar-with-dependencies.jar)
-
+-----
+[xdiff.ncc-1.0-jar-with-dependencies.jar](./dst/), download both xdiff.jar and config.properties. xdiff.jar is an excutable java program, see detail in usage section.
 
 Usage
 -----
+    Usage: java -jar xdiff.ncc-1.0-jar-with-dependencies.jar [options] <baseline-pdf> <test-pdf> <result-folder>
 
+    Options:
+      -config                            : Comparison configuration file path.
 
 Resource
 -----

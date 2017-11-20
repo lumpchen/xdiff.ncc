@@ -76,9 +76,22 @@ public class GraphicsComparator extends ContentComparator {
 		Rectangle2D bbox_1 = basePath == null ? null : basePath.getBBox();
 		Rectangle2D bbox_2 = testPath == null ? null : testPath.getBBox();
 		
+		GraphicsContent pathContent_1 = basePath == null ? null : basePath.getPathContent();
+		GraphicsContent pathContent_2 = testPath == null ? null : testPath.getPathContent();
+		
 		entry.setBBox(bbox_1, bbox_2);
 		if (this.setting.ignoreZeroSizeArea && isZeroSize(bbox_1) && isZeroSize(bbox_2)) {
-			return true;
+			Float f1 = pathContent_1 == null ? null : pathContent_1.getGraphicsStateDesc().lineWidth;
+			Float f2 = pathContent_2 == null ? null : pathContent_2.getGraphicsStateDesc().lineWidth;
+			if (f1 == null && f2 == null) {
+				return true;
+			}
+			if ((f1 != null && f1.floatValue() != 0) || 
+					(f2 != null && f2.floatValue() != 0)) {
+				// continue comparing
+			} else {
+				return true;	
+			}
 		}
 		
 		List<Rectangle2D> subBbox_1 = basePath == null ? null : basePath.getShapeBBox();
@@ -93,9 +106,6 @@ public class GraphicsComparator extends ContentComparator {
 		boolean equals = compare(val_1, val_2);
 		result &= equals;
 		entry.putAttr(DiffContent.Key.Attr_Painting_OP, equals, val_1, val_2);
-
-		GraphicsContent pathContent_1 = basePath == null ? null : basePath.getPathContent();
-		GraphicsContent pathContent_2 = testPath == null ? null : testPath.getPathContent();
 		
 		if ("Fill".equalsIgnoreCase(val_1) || "Fill".equalsIgnoreCase(val_2)) {
 			if (this.setting.ignoreInvisibleGraphics) {

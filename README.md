@@ -20,18 +20,18 @@ The default build will compile the Java sources and package the binary classes i
 
 Binary download: 
 -----
-[xdiff.ncc-1.0-jar-with-dependencies.jar](./dst/), download both xdiff.jar and config.properties. xdiff.jar is an excutable java program, see detail in usage section.
+[xdiff.jar](./dst/), download both xdiff.jar and config.properties. xdiff.jar is an excutable java program, see detail in usage section.
 
 Usage
 -----
-    Usage: java -jar xdiff.ncc-1.0-jar-with-dependencies.jar [options] <baseline-pdf> <test-pdf> <result-folder>
+    Usage: java -jar xdiff.jar [options] <baseline-pdf> <test-pdf> <result-folder>
 
     Options:
       -config                            : Comparison configuration file path.
 
 Resource
 -----
-PDFBox is a project of the Apache Software Foundation <http://www.apache.org/>. xdiff.ncc is based on PDFBox 2.0.7.
+xdiff.ncc uses PDFBox for PDF interpreting and rendering. PDFBox is a project of the Apache Software Foundation <http://www.apache.org/>. xdiff.ncc is based on PDFBox 2.0.7.
 
 License
 -----

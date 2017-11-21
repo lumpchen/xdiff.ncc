@@ -81,16 +81,23 @@ public class GraphicsComparator extends ContentComparator {
 		
 		entry.setBBox(bbox_1, bbox_2);
 		if (this.setting.ignoreZeroSizeArea && isZeroSize(bbox_1) && isZeroSize(bbox_2)) {
-			Float f1 = pathContent_1 == null ? null : pathContent_1.getGraphicsStateDesc().lineWidth;
-			Float f2 = pathContent_2 == null ? null : pathContent_2.getGraphicsStateDesc().lineWidth;
-			if (f1 == null && f2 == null) {
+			
+			String op_1 = basePath == null ? null : basePath.getPaintOperator();
+			String op_2 = testPath == null ? null : testPath.getPaintOperator();
+			if ("Fill".equalsIgnoreCase(op_1) || "Fill".equalsIgnoreCase(op_2)) {
 				return true;
-			}
-			if ((f1 != null && f1.floatValue() != 0) || 
-					(f2 != null && f2.floatValue() != 0)) {
-				// continue comparing
 			} else {
-				return true;	
+				Float f1 = pathContent_1 == null ? null : pathContent_1.getGraphicsStateDesc().lineWidth;
+				Float f2 = pathContent_2 == null ? null : pathContent_2.getGraphicsStateDesc().lineWidth;
+				if (f1 == null && f2 == null) {
+					return true;
+				}
+				if ((f1 != null && f1.floatValue() != 0) || 
+						(f2 != null && f2.floatValue() != 0)) {
+					// should be a line, continue comparing
+				} else {
+					return true;	
+				}
 			}
 		}
 		

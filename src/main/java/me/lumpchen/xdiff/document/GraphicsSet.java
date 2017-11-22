@@ -14,6 +14,7 @@ public class GraphicsSet {
 	public GraphicsSet(PageThread pageThread) {
 		this.pageThread = pageThread;
 		this.pathList = new ArrayList<GraphicsContent>();
+		this.mergePath = this.pageThread.getCompareSetting().enableMergePath;
 	}
 	
 	private void merge(List<GraphicsContent> mergeList, GraphicsContent content) {

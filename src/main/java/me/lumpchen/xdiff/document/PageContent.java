@@ -42,17 +42,83 @@ public abstract class PageContent {
 	        }
 	        
 	        GraphicsStateDesc aObj = (GraphicsStateDesc) obj;
-	        if (this.textState != null && this.textState.equals(aObj.textState)
-	        		&& this.nonStrokingColor != null && this.nonStrokingColor.equals(aObj.nonStrokingColor)
-	        		&& this.strokingColor != null && this.strokingColor.equals(aObj.strokingColor)
-	        		&& this.lineWidth == aObj.lineWidth
-	        		&& this.lineCap == aObj.lineCap
-	        		&& this.lineJoin == aObj.lineJoin
-	        		&& this.miterLimit == aObj.miterLimit) {
+	        if (this.textState != null && aObj.textState != null) {
+	        	if (!this.textState.equals(aObj.textState)) {
+	        		return false;
+	        	}
+	        } else if (this.textState != aObj.textState) {
+	        	return false;
+	        }
+	        
+	        if (this.nonStrokingColor != null && aObj.nonStrokingColor != null) {
+	        	if (!this.nonStrokingColor.equals(aObj.nonStrokingColor)) {
+	        		return false;
+	        	}
+	        } else if (this.nonStrokingColor != aObj.nonStrokingColor) {
+	        	return false;
+	        }
+	        
+	        if (this.strokingColor != null && aObj.strokingColor != null) {
+	        	if (!this.strokingColor.equals(aObj.strokingColor)) {
+	        		return false;
+	        	}
+	        } else if (this.strokingColor != aObj.strokingColor) {
+	        	return false;
+	        }
+	        
+	        if (this.lineWidth != aObj.lineWidth
+	        		|| this.lineCap != aObj.lineCap
+	        		|| this.lineJoin != aObj.lineJoin
+	        		|| this.miterLimit != aObj.miterLimit) {
 	        	return true;
 	        }
-	        return false;
+	        return true;
 	    }
+		
+		public boolean equals(Object obj, boolean fill) {
+			if (this == obj) {
+	        	return true;
+	        }
+	        if (obj == null) {
+	        	return false;
+	        }
+	        
+	        GraphicsStateDesc aObj = (GraphicsStateDesc) obj;
+	        if (this.textState != null && aObj.textState != null) {
+	        	if (!this.textState.equals(aObj.textState)) {
+	        		return false;
+	        	}
+	        } else if (this.textState != aObj.textState) {
+	        	return false;
+	        }
+	        
+	        if (fill) {
+		        if (this.nonStrokingColor != null && aObj.nonStrokingColor != null) {
+		        	if (!this.nonStrokingColor.equals(aObj.nonStrokingColor)) {
+		        		return false;
+		        	}
+		        } else if (this.nonStrokingColor != aObj.nonStrokingColor) {
+		        	return false;
+		        }
+	        } else {
+		        if (this.strokingColor != null && aObj.strokingColor != null) {
+		        	if (!this.strokingColor.equals(aObj.strokingColor)) {
+		        		return false;
+		        	}
+		        } else if (this.strokingColor != aObj.strokingColor) {
+		        	return false;
+		        }
+		        
+		        if (this.lineWidth != aObj.lineWidth
+		        		|| this.lineCap != aObj.lineCap
+		        		|| this.lineJoin != aObj.lineJoin
+		        		|| this.miterLimit != aObj.miterLimit) {
+		        	return true;
+		        }
+	        }
+
+	        return true;
+		}
 		
 //        private Matrix currentTransformationMatrix = new Matrix();
 //        private PDColor strokingColor = PDDeviceGray.INSTANCE.getInitialColor();

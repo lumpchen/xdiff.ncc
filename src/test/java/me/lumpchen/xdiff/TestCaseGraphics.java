@@ -10,12 +10,12 @@ public class TestCaseGraphics {
 	
 	@Test
 	public void test_simple() throws IOException {
-		TestCaseCommon.runTestCase(subFolder, "simple");
+		TestCaseCommon.runTestCase(subFolder, "border");
 	}
 	
 	@Test
-	public void test_complex() throws IOException {
-		TestCaseCommon.runTestCase(subFolder, "complex");
+	public void test_pixel_compare() throws IOException {
+		TestCaseCommon.runTestCase(subFolder, "pixel_compare");
 	}
 	
 	@Test

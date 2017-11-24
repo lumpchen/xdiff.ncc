@@ -1,5 +1,5 @@
 # xdiff.ncc
-A document comparison tool, support comparison of PDF, Postscript and AFP documents. xdiff.ncc not only compares rendering bitmap of each page, but also analyzes and compares all contents in each page. For [detail](https://lumpchen.github.io/xdiff.ncc/), see showcase below.
+A PDL file comparison tool, support comparison of PDF, Postscript and AFP documents. xdiff.ncc not only compares rendering bitmap of each page, but also analyzes and compares all contents in each page. For [detail](https://lumpchen.github.io/xdiff.ncc/), see showcase below.
 
 ## Showcase
 https://lumpchen.github.io/xdiff.ncc/
@@ -28,6 +28,10 @@ Usage
 
     Options:
       -config                            : Comparison configuration file path.
+
+For Postscript file comparion, xdiff.ncc need [GhostScript](https://www.ghostscript.com/download/gsdnld.html) installed in advance, xdiff.ncc will use it as a Postscript to PDF convertor. Set GS_Path in config.properties:
+    
+    GS_Path = C:/Program Files/gs/gs9.18/bin/gswin64c.exe
 
 Resource
 -----

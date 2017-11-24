@@ -24,12 +24,27 @@ public class AFPFileReader {
 	public PrintFile getPrintFile() {
 		return this.printFile;
 	}
-	
+
+	/**
+	 * Read all structure fields at once, all structure fields will be collected into printFile.
+	 * This method might have memory limitation problem if input file size is extreme huge, in that case, 
+	 * try using open/readNextPage/close methods to read page by page. 
+	 * */
 	public void read(File file) throws IOException {
-		this.input = new AFPInputStream(new FileInputStream(file));
+		this.readBegin(file);
 		
-		this.objStack.push(this.printFile);
-		
+		while (true) {
+			AFPContainer next = this.readNext();
+			if (next == null) {
+				break;
+			}
+			AFPObject parent = this.objStack.peek();
+			this.addToParent(parent, next);
+		}
+		this.readEnd();
+	}
+	
+	private AFPContainer readNext() throws IOException {
 		while (true) {
 			if (this.input.available() <= 0) {
 				break;
@@ -38,7 +53,7 @@ public class AFPFileReader {
 			if (AFPConst.Carriage_Control_Character != first) {
 				break;
 			}
-			StructureField next = this.readNext();
+			StructureField next = this.readNextSF();
 			
 			AFPObject obj = this.createObject(next);
 			if (obj instanceof AFPContainer) {
@@ -53,8 +68,7 @@ public class AFPFileReader {
 					if (this.isMatchedStructure(last, obj)) {
 						last = this.objStack.pop();
 						((AFPContainer) last).collect();
-						AFPObject parent = this.objStack.peek();
-						this.addToParent(parent, last);
+						return (AFPContainer) last;
 					} else {
 						throw new AFPException("Not matched structure: " + next.getStructureTag());
 					}
@@ -63,12 +77,51 @@ public class AFPFileReader {
 				AFPObject parent = this.objStack.peek();
 				this.addToParent(parent, obj);
 			}
-			
-//			String xx = obj instanceof AFPContainer ? ((AFPContainer) obj).getNameStr() : "###";
-//			System.out.println(next.getStructureTag().getDesc() + ": " + xx);
 		}
+		return null;
+	}
+	
+	public void readBegin(File file) throws IOException {
+		this.input = new AFPInputStream(new FileInputStream(file));
+		this.objStack.push(this.printFile);
+	}
+	
+	public void readEnd() {
 		this.printFile.collect();
 		this.objStack.pop();
+	}
+	
+	public ResourceGroup readResourceGroup() throws IOException {
+		while (true) {
+			AFPContainer next = this.readNext();
+			if (next == null) {
+				break;
+			}
+			if (next instanceof ResourceGroup) {
+				return (ResourceGroup) next;
+			} else {
+				AFPObject parent = this.objStack.peek();
+				this.addToParent(parent, next);
+			}
+		}
+		
+		return null;
+	}
+	
+	public Page readNextPage() throws IOException {
+		while (true) {
+			AFPContainer next = this.readNext();
+			if (next == null) {
+				break;
+			}
+			if (next instanceof Page) {
+				return (Page) next;
+			} else {
+				AFPObject parent = this.objStack.peek();
+				this.addToParent(parent, next);
+			}
+		}
+		return null;
 	}
 	
 	private void addToParent(AFPObject parent, AFPObject child) {
@@ -79,7 +132,7 @@ public class AFPFileReader {
 		}
 	}
 	
-	private StructureField readNext() throws IOException {
+	private StructureField readNextSF() throws IOException {
 		StructureField sf = StructureFieldReader.read(this.input);
 		return sf;
 	}
@@ -238,11 +291,9 @@ public class AFPFileReader {
 			} else if (Tag.MGO == tag) {
 				obj = new MapGraphicsObject(sf);
 			}
-			
 		}
 		
 		return obj;
 	}
-	
 	
 }

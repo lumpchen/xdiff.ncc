@@ -2,6 +2,7 @@ package me.lumpchen.xafp.func;
 
 import java.io.IOException;
 
+import me.lumpchen.xafp.AFPConst;
 import me.lumpchen.xafp.AFPInputStream;
 import me.lumpchen.xafp.ActiveEnvironmentGroup;
 import me.lumpchen.xafp.MapCodedFontFormat2;
@@ -45,7 +46,7 @@ public class SetCodedFontLocal extends Function {
 			MapDataResource.Attribute mdr = aeg.getMapDataResource(this.LID);
 			if (mdr != null) {
 				AFPFont font = resourceManager.getFontManager().getFont(mdr);
-				graphics.setAFPFont(font, (float) aeg.unit2Point(mdr.fontSize));
+				graphics.setAFPFont(font, mdr.fontSize);
 				if (mdr.ccsid == X01Triplet.CCSID_UTF16) {
 					aeg.setCharacterEncoding(ActiveEnvironmentGroup.CHARACTER_ENCODING_UNICODE16BE);
 				}
@@ -53,9 +54,6 @@ public class SetCodedFontLocal extends Function {
 		}
 	}
 }
-
-
-
 
 
 

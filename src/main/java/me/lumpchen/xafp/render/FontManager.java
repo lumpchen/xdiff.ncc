@@ -1,12 +1,15 @@
 package me.lumpchen.xafp.render;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.fontbox.ttf.NameRecord;
+import org.apache.fontbox.ttf.OTFParser;
+import org.apache.fontbox.ttf.OpenTypeFont;
 import org.apache.fontbox.ttf.TTFParser;
 import org.apache.fontbox.ttf.TrueTypeCollection;
 import org.apache.fontbox.ttf.TrueTypeCollection.TrueTypeFontProcessor;
@@ -22,9 +25,11 @@ import me.lumpchen.xafp.font.AFPFont;
 import me.lumpchen.xafp.font.AFPTruetypeFont;
 import me.lumpchen.xafp.font.AFPType1Font;
 import me.lumpchen.xafp.sf.triplet.X8BTriplet;
+import me.lumpchen.xafp.tool.AFPTool;
 
 public class FontManager {
-
+	
+	private static Logger logger = Logger.getLogger(FontManager.class.getName());
 	private Map<String, CodePage> codePageMap;
 	private Map<String, Font> charsetMap;
 	
@@ -74,6 +79,7 @@ public class FontManager {
 		
 		TrueTypeFont ttf = this.ttfCache.get(familyName);
 		if (ttf == null) {
+			logger.severe("Can't find font: " + familyName);
 			return null;
 		}
 		
@@ -81,7 +87,7 @@ public class FontManager {
 			AFPTruetypeFont afpTTF = new AFPTruetypeFont(ttf, mdr.encEnv, mdr.encID);
 			return afpTTF;
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Failed to load font: " + familyName, e);
 		}
 		return null;
 	}
@@ -105,19 +111,35 @@ public class FontManager {
 				TrueTypeFontProcessor ttcProcessor = new TrueTypeFontProcessor() {
 					@Override
 					public void process(TrueTypeFont ttf) throws IOException {
-						ttfCache.put(getTTFFullName(ttf), ttf);
+						String name = getTTFFullName(ttf);
+						ttfCache.put(name, ttf);
+						
+						logger.info("TrueType collection font loaded: " + name);
 					}
 				};
 				ttc.processAllFonts(ttcProcessor);
 				ttc.close();
 			} else {
-				TTFParser parser = new TTFParser();
-				TrueTypeFont ttf = parser.parse(new ByteArrayInputStream(data));
-//				this.ttfCache.put(ttf.getNaming().getFontFamily(), ttf);
-				this.ttfCache.put(getTTFFullName(ttf), ttf);
+				if (data[0] == 'O' && data[1] == 'T' && data[2] == 'T' && data[0] == 'O') {
+					OTFParser otfParser = new OTFParser();
+					OpenTypeFont otf = otfParser.parse(new ByteArrayInputStream(data));
+					String name = getTTFFullName(otf);
+					this.ttfCache.put(name, otf);
+					
+					logger.info("OpenType font loaded: " + name);
+					otf.close();
+				} else {
+					TTFParser parser = new TTFParser();
+					TrueTypeFont ttf = parser.parse(new ByteArrayInputStream(data));
+					String name = getTTFFullName(ttf);
+					this.ttfCache.put(getTTFFullName(ttf), ttf);
+					
+					logger.info("TrueType font loaded: " + name);
+					ttf.close();
+				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Failed to Loading font...", e);
 		}
 	}
 	
@@ -156,4 +178,5 @@ public class FontManager {
         
         return ttf.getNaming().getFontFamily();
 	}
+	
 }

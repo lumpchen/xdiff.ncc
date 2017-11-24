@@ -35,7 +35,7 @@ public class Main {
 	    }
 	}
 	
-	public static void main(String[] args) {
+	private static void setImageReader() {
 		Iterator<ImageReader> readers = ImageIO.getImageReadersByFormatName("JPEG");
 		while (readers.hasNext()) {
 		    System.out.println("reader: " + readers.next());
@@ -45,41 +45,83 @@ public class Main {
 		ImageReaderSpi sunProvider = lookupProviderByName(registry, "com.sun.imageio.plugins.jpeg.JPEGImageReaderSpi");
 		ImageReaderSpi twelvemonkeysProvider = lookupProviderByName(registry, "com.twelvemonkeys.imageio.plugins.jpeg.JPEGImageReaderSpi");
 		
-		registry.setOrdering(ImageReaderSpi.class, sunProvider, twelvemonkeysProvider);
+		registry.setOrdering(ImageReaderSpi.class, twelvemonkeysProvider, sunProvider);
 		
 		readers = ImageIO.getImageReadersByFormatName("JPEG");
 		System.out.println("reader: " + readers.next());
-		
-		if (args.length == 0) {
+	}
+	
+	private static void showUsage() {
+        String usage = "Usage: java -jar xafp.jar [options] [afp_file_path]\n"
+                + "\nOptions:\n"
+                + "  -dpi                             : \"-dpi 300\", otherwise, use resolution defined in file\n"
+                + "  -page                            : \"-page 1 4\", page number from 1 to n\n"
+        		+ "  -dumpNop                         : \"-dumpNop dump_file_path\", dump all NOPs to file\n"
+        		+ "  -dumpTLE                         : \"-dumpTLE dump_file_path\", dump all TLEs to file\n";
+        System.err.println(usage);
+        System.exit(1);
+	}
+	
+	private static void run(String args[]) {
+
+		if (args == null || args.length < 0) {
 			showViewer();
 			return;
 		}
 		
-		if (args.length == 1) {
-			render(args);
+		boolean usePageResolution = true;
+		int dpi = -1;
+		boolean pageOpt = false;
+		int from = -1, to = -1;
+		boolean dumpNop = false, dumpTLE = false;
+		String dumpNopFile = null;
+		String dumpTLEFile = null;
+		String afpFile = null;
+		for (int i = 0; i < args.length; i++) {
+			String arg = args[i];
+			
+			if (arg.equals("-page")) {
+				pageOpt = true;
+				from = Integer.parseInt(args[++i].trim());
+				to = Integer.parseInt(args[++i].trim());
+			} else if (arg.equals("-dpi")) {
+				usePageResolution = false;
+				dpi = Integer.parseInt(args[++i].trim());
+			} else if (arg.equals("-dumpNop")) {
+				dumpNop = true;
+				dumpNopFile = args[++i];
+			} else if (arg.equals("-dumpTLE")) {
+				dumpTLE = true;
+				dumpTLEFile = args[++i];
+			} else {
+				afpFile = args[i];
+			}
+		}
+		
+		if (afpFile == null
+				|| (!usePageResolution && dpi < 0)
+				|| (pageOpt && (from < 0 || to < 0 || from > to))
+				|| (dumpNop && dumpNopFile == null)
+				|| (dumpTLE && dumpTLEFile == null)) {
+			System.err.println("Invalid parameters! \n");
+			showUsage();
+		}
+		
+		if (dumpNop) {
+			dumpNop(afpFile, dumpNopFile);
 			return;
 		}
 		
-		if (args.length == 4) {
-			renderPage(args);
+		if (dumpTLE) {
+			dumpTLE(afpFile, dumpTLEFile);
 			return;
 		}
 		
-		if (args.length == 3 && args[0].equalsIgnoreCase("-dumpNop")) {
-			String afpFile = args[1];
-			String dumpFile = args[2];
-			dumpNop(afpFile, dumpFile);
-			return;
-		}
-		
-		if (args.length == 3 && args[0].equalsIgnoreCase("-dumpTLE")) {
-			String afpFile = args[1];
-			String dumpFile = args[2];
-			dumpTLE(afpFile, dumpFile);
-			return;
-		}
-
-		System.err.println("Invalid parameters!");
+		render(afpFile, usePageResolution, dpi, from, to);
+	}
+	
+	public static void main(String[] args) {
+		run(args);
 	}
 	
 	static void dumpNop(String afpPath, String dumpPath) {
@@ -136,15 +178,13 @@ public class Main {
 		System.exit(0);
 	}
 	
-	static void render(String[] args) {
-		String path = args[0];
+	static void render(String path, boolean usePageResolution, int resolution, int from, int to) {
 		File afpFile = new File(path);
 		
 		RenderParameter para = new RenderParameter();
 		
-//		para.usePageResolution = true;
-		para.usePageResolution = false;
-		para.resolution = 600f;
+		para.usePageResolution = usePageResolution;
+		para.resolution = resolution;
 		
 		try {
 			if (afpFile.isDirectory()) {
@@ -164,7 +204,8 @@ public class Main {
 					outputFolder.mkdirs();
 					
 					try {
-						AFPTool.render(f, outputFolder, para, "jpg");
+//						AFPTool.render(f, outputFolder, para, "jpg");
+						AFPTool.renderQuick(f, outputFolder, para, "jpg", from, to);
 					} catch (Exception e) {
 						logger.log(Level.SEVERE, f.getAbsolutePath(), e);
 						String error = f.getParentFile().getAbsolutePath() + "/fail";
@@ -178,7 +219,8 @@ public class Main {
 			} else {
 				File outputFolder = afpFile.getParentFile();
 				logger.info("Start rendering: " + afpFile.getAbsolutePath());
-				AFPTool.render(afpFile, outputFolder, para, "jpg");
+//				AFPTool.render(afpFile, outputFolder, para, "jpg");
+				AFPTool.renderQuick(afpFile, outputFolder, para, "jpg", from, to);
 				logger.info("Complete rendering: " + afpFile.getAbsolutePath());
 			}
 		} catch (IOException e) {

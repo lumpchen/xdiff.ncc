@@ -218,6 +218,7 @@ public class IncludeObject extends AFPObject implements Renderable {
 						((StructuredAFPGraphics) graphics).endImage();
 					}
 				} catch (IOException e) {
+					e.printStackTrace();
 					throw new AFPException("can't read image data: " + resName);
 				}
 			}

@@ -13,12 +13,14 @@ import me.lumpchen.xafp.AFPContainer;
 import me.lumpchen.xafp.AFPFileReader;
 import me.lumpchen.xafp.AFPObject;
 import me.lumpchen.xafp.NoOperation;
+import me.lumpchen.xafp.Page;
 import me.lumpchen.xafp.PrintFile;
 import me.lumpchen.xafp.Resource;
 import me.lumpchen.xafp.ResourceGroup;
 import me.lumpchen.xafp.TagLogicalElement;
 import me.lumpchen.xafp.render.AFPRenderer;
 import me.lumpchen.xafp.render.RenderParameter;
+import me.lumpchen.xafp.render.ResourceManager;
 
 public class AFPTool {
 
@@ -131,6 +133,45 @@ public class AFPTool {
 					logger.info("Rendering page " + ++pageNo);
 				}
 			}
+		} finally {
+			reader.close();
+		}
+	}
+	
+	public static void renderQuick(File afpFile, File outputFolder, RenderParameter para, 
+			String imageFomat, int from, int to) throws IOException {
+		AFPFileReader reader = new AFPFileReader();
+		try {
+			reader.readBegin(afpFile);
+			
+			ResourceGroup resGroup = reader.readResourceGroup();
+			ResourceManager resourceManager = new ResourceManager(resGroup);
+			
+			if (from == -1) {
+				from = 1;
+			}
+			if (to == - 1) {
+				to = Integer.MAX_VALUE;
+			}
+			
+			int pageNo = 1;
+			while (true) {
+				logger.info("Extracting page " + pageNo);
+				Page nextPage = reader.readNextPage();
+				if (nextPage == null || pageNo > to) {
+					break;
+				}
+				if (pageNo >= from && pageNo <= to) {
+					logger.info("Rendering page " + pageNo);
+					
+					BufferedImage image = AFPRenderer.renderPage(nextPage, para, resourceManager);
+					File f = createImageFile(outputFolder, afpFile, 0, pageNo, imageFomat);
+					ImageIO.write(image, imageFomat, f);
+				}
+				pageNo++;
+			}
+			
+			reader.readEnd();
 		} finally {
 			reader.close();
 		}

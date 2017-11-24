@@ -69,7 +69,7 @@ public class MapDataResource extends AFPObject {
 		public int objectClassification;
 		
 		public String fontTech;
-		public int fontSize;
+		public float fontSize;
 		public String encEnv;
 		public String encID;
 		
@@ -100,7 +100,7 @@ public class MapDataResource extends AFPObject {
 				} else if (triplet instanceof X8BTriplet) {
 					X8BTriplet x8b = (X8BTriplet) triplet;
 					this.fontTech = x8b.getFontTech();
-					this.fontSize = x8b.getVerticalFontSize();
+					this.fontSize = AFPConst.unit2Point(x8b.getVerticalFontSize());
 					this.encEnv = x8b.getEncEnv();
 					this.encID = x8b.getEncID();
 				}

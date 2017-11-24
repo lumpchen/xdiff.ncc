@@ -109,7 +109,7 @@ public class MapCodedFontFormat2 extends AFPObject {
 						break;
 					}
 				} else if (triplet instanceof X1FTriplet) {
-					this.fontSize = ((X1FTriplet) triplet).getFtHeight() / 20f;
+					this.fontSize = AFPConst.unit2Point(((X1FTriplet) triplet).getFtHeight());
 				}
 			}
 		}

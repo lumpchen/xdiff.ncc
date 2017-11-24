@@ -70,4 +70,7 @@ public class StructureField {
 		}
 	}
 	
+	public int totalSize() {
+		return this.introducer.getLength() + this.getData().length;
+	}
 }

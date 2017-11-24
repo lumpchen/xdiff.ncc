@@ -11,9 +11,14 @@ public class AFPConst {
 	 * */
 	public static final int TenInch = 0x00;
 	public static final int TenCM = 0x01;
+	public static final float unitPerInch = 1440;
 	
 	public static final double cm2Inch(double cm) {
 		return cm / 2.54;
+	}
+
+	public static final float unit2Point(float units) {
+		return (units / unitPerInch) * 72;
 	}
 	
 	public enum ColorSpace {

@@ -54,18 +54,23 @@ public class AFPRenderer {
 	}
 	
 	public BufferedImage renderPage(Page page) {
+		BufferedImage image = renderPage(page, this.parameters, this.resourceManager);
+		return image;
+	}
+	
+	public static BufferedImage renderPage(Page page, RenderParameter parameters, ResourceManager resourceManager) {
 		double pw = page.getPageWidth();
 		double ph = page.getPageHeight();
 		
 		double hRes = 96;
 		double vRes = 96;
-		if (this.parameters != null) {
-			if (this.parameters.usePageResolution) {
+		if (parameters != null) {
+			if (parameters.usePageResolution) {
 				hRes = page.getHorResolution();
 				vRes = page.getVerResolution();
 			} else {
-				hRes = this.parameters.resolution;
-				vRes = this.parameters.resolution;
+				hRes = parameters.resolution;
+				vRes = parameters.resolution;
 			}
 		}
 
@@ -112,7 +117,7 @@ public class AFPRenderer {
         g.clearRect(0, 0, image.getWidth(), image.getHeight());
         
         AFPGraphics graphics = new AFPGraphics2D(g, (float) pw, (float) ph);
-        page.render(graphics, this.resourceManager);
+        page.render(graphics, resourceManager);
         return image;
 	}
 	

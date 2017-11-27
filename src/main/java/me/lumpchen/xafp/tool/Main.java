@@ -64,7 +64,7 @@ public class Main {
 	
 	private static void run(String args[]) {
 
-		if (args == null || args.length < 0) {
+		if (args == null || args.length <= 0) {
 			showViewer();
 			return;
 		}

@@ -3,6 +3,7 @@ package me.lumpchen.xafp.func;
 import java.io.IOException;
 
 import me.lumpchen.xafp.AFPConst;
+import me.lumpchen.xafp.AFPException;
 import me.lumpchen.xafp.AFPInputStream;
 import me.lumpchen.xafp.ActiveEnvironmentGroup;
 import me.lumpchen.xafp.render.AFPGraphics;
@@ -98,14 +99,14 @@ public abstract class Function implements Renderable {
 		} else if (TYPE == PTX_NOPU) {
 			func = new NoOperation();
 		} else {
-			System.err.println("Not implemented function type: " + AFPConst.bytesToHex(TYPE));
+			throw new AFPException("Not implemented function type: " + AFPConst.bytesToHex(TYPE));
 		}
 		func.length = LENGTH;
 		func.remain = LENGTH - 2;
 		func.readFunction(in);
 		
 		if (func.remain != 0) {
-			throw new IOException("Error when parsing Control Sequence: " + func);
+			throw new AFPException("Error when parsing Control Sequence: " + func);
 		}
 		return func;
 	}

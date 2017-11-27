@@ -2,13 +2,16 @@ package me.lumpchen.xafp.render;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
+import me.lumpchen.xafp.AFPException;
 import me.lumpchen.xafp.AFPObject;
 import me.lumpchen.xafp.CodePage;
 import me.lumpchen.xafp.Font;
 import me.lumpchen.xafp.ImageObject;
 import me.lumpchen.xafp.ObjectContainer;
 import me.lumpchen.xafp.ObjectContainer.ObjectTypeIdentifier;
+import me.lumpchen.xafp.tool.AFPTool;
 import me.lumpchen.xafp.Overlay;
 import me.lumpchen.xafp.PageSegment;
 import me.lumpchen.xafp.Resource;
@@ -16,6 +19,8 @@ import me.lumpchen.xafp.ResourceGroup;
 
 public class ResourceManager {
 
+	private static Logger logger = Logger.getLogger(ResourceManager.class.getName());
+	
 	private FontManager fontManager;
 	private Map<String, ObjectContainer> objMap;
 	private Map<String, ImageObject> iocaObjMap;
@@ -136,7 +141,7 @@ public class ResourceManager {
 						}
 					}
 				} else {
-					System.err.println(type);
+					logger.severe("Unsupported type: " + type);
 				}
 			}
 		}

@@ -17,6 +17,11 @@ public class AFPColor {
 		this.compenents = compenents;
 	}
 	
+	public AFPColor(Color awtColor) {
+		this.cs = ColorSpace.RGB;
+		this.compenents = new int[] {awtColor.getRed(), awtColor.getGreen(), awtColor.getBlue()};
+	}
+	
 	public Color toJavaColor() {
 		if (this.cs == ColorSpace.RGB) {
 			int r = compenents[0] & 0xFF;

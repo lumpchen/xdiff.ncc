@@ -1,5 +1,6 @@
 package me.lumpchen.xafp;
 
+import java.awt.Color;
 import java.nio.charset.Charset;
 
 public class AFPConst {
@@ -90,4 +91,45 @@ public class AFPConst {
 		return new String(bytes, Charset.forName("UTF-16BE"));
 	}
 	
+	/**
+  	X'0000' or X'FF00' Device default
+	X'0001' or X'FF01' Blue
+	X'0002' or X'FF02' Red
+	X'0003' or X'FF03' Pink/magenta
+	X'0004' or X'FF04' Green
+	X'0005' or X'FF05' Turquoise/cyan
+	X'0006' or X'FF06' Yellow
+	X'0008' Black
+	X'0010' Brown
+	X'FF07' Device default
+	X'FF08' Reset color, also called color of medium
+	X'FFFF' Default indicator
+	All others Reserved
+	 * */
+	public static final Color toAWTColor(int flag) {
+		switch (flag) {
+		case 0x0001:
+		case 0xFF01:
+			return Color.BLUE;
+		case 0x0002:
+		case 0xFF02:
+			return Color.RED;
+		case 0x0003:
+		case 0xFF03:
+			return Color.MAGENTA;
+		case 0x0004:
+		case 0xFF04:
+			return Color.GREEN;
+		case 0x0005:
+		case 0xFF05:
+			return Color.CYAN;
+		case 0x0006:
+		case 0xFF06:
+			return Color.YELLOW;
+		case 0x0010:
+			return new Color(139,69,19);
+		default:
+			return Color.BLACK;
+		}
+	}
 }

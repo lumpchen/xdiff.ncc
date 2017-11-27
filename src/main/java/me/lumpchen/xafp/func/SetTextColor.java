@@ -1,7 +1,10 @@
 package me.lumpchen.xafp.func;
 
+import java.awt.Color;
 import java.io.IOException;
 
+import me.lumpchen.xafp.AFPColor;
+import me.lumpchen.xafp.AFPConst;
 import me.lumpchen.xafp.AFPInputStream;
 import me.lumpchen.xafp.ActiveEnvironmentGroup;
 import me.lumpchen.xafp.render.AFPGraphics;
@@ -55,5 +58,8 @@ public class SetTextColor extends Function {
 
 	@Override
 	public void render(ActiveEnvironmentGroup aeg, AFPGraphics graphics, ResourceManager resourceManager) {
+		Color awtColor = AFPConst.toAWTColor(this.FRGCOLOR);
+		AFPColor c = new AFPColor(awtColor);
+		graphics.setTextColor(c);
 	}
 }

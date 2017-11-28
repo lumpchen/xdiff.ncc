@@ -1,6 +1,6 @@
 # xdiff.ncc
 A PDL file comparison tool, support comparison of PDF, Postscript and AFP documents. xdiff.ncc not only compares rendering bitmap of each page, but also analyzes and compares all contents in each page. For [detail](https://lumpchen.github.io/xdiff.ncc/), see showcase below.
-![xdiff sample 0](./docs/web/thumb-0.png){:height="24px" width="48px"}
+<img src="./docs/web/thumb-0.png" height="240" width="480">
 
 
 ## Showcase

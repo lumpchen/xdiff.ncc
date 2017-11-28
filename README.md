@@ -10,6 +10,7 @@ Testcase | Control | Test | Report
 ------------ | ------------- | ------------- | ------------- 
 misc | [control.pdf](./src/test/resources/testcases/xdiff/misc/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/misc/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/misc/report/report.html)
 form control | [control.pdf](./src/test/resources/testcases/xdiff/annot/form_control/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/annot/form_control/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/annot/form_control/report/report.html)
+form control 1 | [control.pdf](./src/test/resources/testcases/xdiff/annot/form_control/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/annot/form_control/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/annot/form_control/report/report.html)
 
 Build
 -----

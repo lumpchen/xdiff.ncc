@@ -1,6 +1,6 @@
 # xdiff.ncc
 A PDL file comparison tool, support comparison of PDF, Postscript and AFP documents. xdiff.ncc not only compares rendering bitmap of each page, but also analyzes and compares all contents in each page. For [detail](https://lumpchen.github.io/xdiff.ncc/), see showcase below. <br>
-<img src="./docs/web/thumb-0.png" height="240" width="480">
+<img src="./docs/web/thumb-1.png" height="240" width="480">
 <img src="./docs/web/thumb-0.png" height="240" width="480">
 
 ## Showcase
@@ -8,9 +8,10 @@ https://lumpchen.github.io/xdiff.ncc/
 
 Testcase | Control | Test | Report
 ------------ | ------------- | ------------- | ------------- 
-misc | [control.pdf](./src/test/resources/testcases/xdiff/misc/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/misc/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/misc/report/report.html)
+simple text | [control.pdf](./src/test/resources/testcases/xdiff/text/text_insert/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/text/text_insert/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/text/text_insert/report/report.html)
 simple image | [control.pdf](./src/test/resources/testcases/xdiff/image/simple/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/image/simple/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/image/simple/report/report.html)
 form control | [control.pdf](./src/test/resources/testcases/xdiff/annot/form_control/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/annot/form_control/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/annot/form_control/report/report.html)
+misc | [control.pdf](./src/test/resources/testcases/xdiff/misc/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/misc/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/misc/report/report.html)
 
 Build
 -----

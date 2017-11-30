@@ -32,6 +32,8 @@ Usage
     Options:
       -config                            : Comparison configuration file path.
 
+    Example: java -jar xdiff.jar c:/config.properties c:/xdiff/control.pdf c:/xdiff/test.pdf c:/xdiff/report
+    
 For Postscript file comparion, xdiff.ncc need [GhostScript](https://www.ghostscript.com/download/gsdnld.html) installed in advance, xdiff.ncc will use it as a Postscript to PDF convertor. Set GS_Path in config.properties:
     
     GS_Path = C:/Program Files/gs/gs9.18/bin/gswin64c.exe

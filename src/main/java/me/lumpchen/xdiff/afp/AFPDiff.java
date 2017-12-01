@@ -21,8 +21,7 @@ public class AFPDiff extends ConcurrentDiff {
 	
 	private PrintFile basePrintFile;
 	private PrintFile testPrintFile;
-	private AFPPageContentDrawer baseDrawer;
-	private AFPPageContentDrawer testDrawer;
+	private RenderParameter para;
 	
 	public AFPDiff(File base, File test, DiffSetting setting) {
 		super(base, test, setting);
@@ -41,15 +40,12 @@ public class AFPDiff extends ConcurrentDiff {
 		this.result.getTestDocumentInfo().setFileName(this.test.getName());
 		
 		this.basePrintFile = this.getPrintFile(this.base);
-		RenderParameter para = new RenderParameter();
+		this.para = new RenderParameter();
 		para.usePageResolution = false;
 		para.resolution = this.setting.resolution;
-		this.baseDrawer = new AFPPageContentDrawer(para, basePrintFile);
 		this.result.getBaseDocumentInfo().setProperties(getDocumentProperties(this.base, this.basePrintFile));
 		
 		this.testPrintFile = this.getPrintFile(this.test);
-		this.testDrawer = new AFPPageContentDrawer(para, testPrintFile);
-		
 		this.basePageCount = basePrintFile.getPageCount();
 		this.result.getBaseDocumentInfo().setPageCount(this.basePageCount);
 		this.result.getBaseDocumentInfo().setImageSuffix(this.setting.previewImageFormat);
@@ -63,6 +59,9 @@ public class AFPDiff extends ConcurrentDiff {
 	@Override
 	protected CompareResult compare(int startPage, int endPage) throws Exception {
 		CompareResult compareResult = new CompareResult();
+		
+		AFPPageContentDrawer baseDrawer = new AFPPageContentDrawer(this.para, this.basePrintFile);
+		AFPPageContentDrawer testDrawer = new AFPPageContentDrawer(this.para, this.testPrintFile);
 		for (int i = startPage; i <= endPage; i++) {
 			logger.info("Comparing page " + (i + 1));
         	

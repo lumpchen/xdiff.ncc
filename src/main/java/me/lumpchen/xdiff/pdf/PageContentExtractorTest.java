@@ -89,10 +89,10 @@ public class PageContentExtractorTest {
 			AnnotContent annot = (AnnotContent) content;
 			System.out.println(annot.getTypeString() + ": " + annot.showString());
 			
-			System.out.println("    SubType: " + annot.subType);
-			System.out.println("    FieldType: " + annot.fieldType);
-			System.out.println("    Name: " + annot.annotName);
-			System.out.println("    Contents: " + annot.annotContents);
+//			System.out.println("    SubType: " + annot.getSubType());
+//			System.out.println("    FieldType: " + annot.getFieldType());
+//			System.out.println("    Name: " + annot.getFieldName());
+//			System.out.println("    Contents: " + annot.getAlternateFieldName());
 		} 
 	}
 }

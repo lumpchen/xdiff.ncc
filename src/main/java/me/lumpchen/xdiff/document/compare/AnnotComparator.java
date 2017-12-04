@@ -69,14 +69,14 @@ public class AnnotComparator extends ContentComparator {
 		result &= equals;
 		entry.putAttr(DiffContent.Key.Attr_SubType, equals, s_1, s_2);
 		
-		s_1 = baseAnnot == null ? null : baseAnnot.annotName;
-		s_2 = testAnnot == null ? null : testAnnot.annotName;
+		s_1 = baseAnnot == null ? null : baseAnnot.fieldName;
+		s_2 = testAnnot == null ? null : testAnnot.fieldName;
 		equals = compare(s_1, s_2);
 		result &= equals;
 		entry.putAttr(DiffContent.Key.Attr_AnnotName, equals, s_1, s_2);
 		
-		s_1 = baseAnnot == null ? null : baseAnnot.annotContents;
-		s_2 = testAnnot == null ? null : testAnnot.annotContents;
+		s_1 = baseAnnot == null ? null : baseAnnot.alternateFieldName;
+		s_2 = testAnnot == null ? null : testAnnot.alternateFieldName;
 		equals = compare(s_1, s_2);
 		result &= equals;
 		entry.putAttr(DiffContent.Key.Attr_AnnotContents, equals, s_1, s_2);

@@ -141,9 +141,12 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 	}
 	
 	public void beginAnnot(PDAnnotation annot) {
-		AnnotContent content = new AnnotContent();
+//		AnnotContent content = new AnnotContent();
+//		this.runtimePageContentStack.push(content);
+//		this.markAnnot(annot, content);
+		
+		AnnotContent content = AnnotContentHelper.createAnnotContent(annot);
 		this.runtimePageContentStack.push(content);
-		this.markAnnot(annot, content);
 	}
 
 	public void endAnnot(PDAnnotation annot) {
@@ -279,41 +282,45 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
         content.setGraphicsStateDesc(gstate);
 	}
 	
-	private void markAnnot(PDAnnotation annot, AnnotContent content) {
-		content.subType = annot.getSubtype();
-		
-		COSDictionary parent = null;
-		if (annot.getCOSObject().getDictionaryObject(COSName.PARENT) != null) {
-			parent = (COSDictionary) annot.getCOSObject().getDictionaryObject(COSName.PARENT);			
-		}
-		
-		if (annot.getCOSObject().getCOSName(COSName.FT) == null) {
-			if (parent != null && parent.getCOSName(COSName.FT) != null) {
-				content.fieldType = parent.getCOSName(COSName.FT).getName();	
-			}
-		} else {
-			content.fieldType = annot.getCOSObject().getCOSName(COSName.FT).getName();
-		}
+	private void markAnnot(PDAnnotation annot, AnnotContent content) {/*
+		content.setSubType(annot.getSubtype());
 		
 		if (annot.getRectangle() != null) {
 			GeneralPath rect = annot.getRectangle().toGeneralPath();
 			content.addOutlineShape(rect);
 		}
 		
-		content.annotName = annot.getCOSObject().getString(COSName.T);
-		if (content.annotName == null) {
-			if (parent != null) {
-				content.annotName = parent.getString(COSName.T);	
-			}
-		}
 		
-		content.annotContents = annot.getCOSObject().getString(COSName.TU);
-		if (content.annotContents == null) {
-			if (parent != null) {
-				content.annotContents = parent.getString(COSName.TU);	
+		if (content.getSubType() == COSName.WIDGET.getName()) {
+			COSDictionary parent = null;
+			if (annot.getCOSObject().getDictionaryObject(COSName.PARENT) != null) {
+				parent = (COSDictionary) annot.getCOSObject().getDictionaryObject(COSName.PARENT);			
+			}
+			
+			// collect /Widget information from own node or its parent node
+			if (annot.getCOSObject().getCOSName(COSName.FT) == null) {
+				if (parent != null && parent.getCOSName(COSName.FT) != null) {
+					content.setFieldType(parent.getCOSName(COSName.FT).getName());	
+				}
+			} else {
+				content.setFieldType(annot.getCOSObject().getCOSName(COSName.FT).getName());
+			}
+			
+			content.setFieldName(annot.getCOSObject().getString(COSName.T));
+			if (content.getFieldName() == null) {
+				if (parent != null) {
+					content.setFieldName(parent.getString(COSName.T));	
+				}
+			}
+			
+			content.setAlternateFieldName(annot.getCOSObject().getString(COSName.TU));
+			if (content.getAlternateFieldName() == null) {
+				if (parent != null) {
+					content.setAlternateFieldName(parent.getString(COSName.TU));
+				}
 			}
 		}
-	}
+	*/}
 	
 	private static void toColorDesc(PDColor pdColor, ColorDesc colorDesc) {
     	if (pdColor.isPattern()) {

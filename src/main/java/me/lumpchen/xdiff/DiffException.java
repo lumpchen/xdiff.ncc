@@ -1,6 +1,6 @@
 package me.lumpchen.xdiff;
 
-public class DiffException extends Exception {
+public class DiffException extends RuntimeException {
 	
 	private static final long serialVersionUID = -3060377057814832455L;
 

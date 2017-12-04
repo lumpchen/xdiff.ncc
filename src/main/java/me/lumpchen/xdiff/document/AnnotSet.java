@@ -2,7 +2,11 @@ package me.lumpchen.xdiff.document;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import me.lumpchen.xdiff.document.AnnotContent.Widget;
 
 public class AnnotSet {
 	
@@ -29,18 +33,27 @@ public class AnnotSet {
 	
 	public static class AnnotLob {
 		public String subType;
+
+		private Map<String, String> additionalMap;
+		
 		public String fieldType;
-		public String annotName;
-		public String annotContents;
+		public String fieldName;
+		public String alternateFieldName;
 		
 		private Rectangle2D bBox;
 		private PageContent[] appearance;
 		
 		public AnnotLob(AnnotContent annot) {
-			this.subType = annot.subType;
-			this.fieldType = annot.fieldType;
-			this.annotName = annot.annotName;
-			this.annotContents = annot.annotContents;
+			this.additionalMap = new HashMap<String, String>();
+			
+			this.subType = annot.getSubType();
+			
+			if (annot.getSubType() == AnnotContent.WIDGET) {
+				Widget widget = (Widget) annot;
+				this.fieldType = widget.getFieldType();
+				this.fieldName = widget.getFieldName();
+				this.alternateFieldName = widget.getAlternateFieldName();
+			}
 			
 			this.bBox = annot.getOutlineRect();
 			this.appearance = annot.getAppearanceContents();

@@ -34,7 +34,7 @@ public class AnnotSet {
 	}
 	
 	public static class AnnotLob {
-		public String subType;
+		private String subType;
 
 		private Map<String, String> additionalMap;
 		
@@ -54,6 +54,10 @@ public class AnnotSet {
 			this.appearance = annot.getAppearanceContents();
 			
 			this.addAdditionalAttributes(annot);
+		}
+		
+		public String getSubType() {
+			return this.subType;
 		}
 		
 		private void addAdditionalAttributes(AnnotContent annot) {

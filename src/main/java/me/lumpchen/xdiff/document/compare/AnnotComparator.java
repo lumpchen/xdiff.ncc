@@ -59,8 +59,8 @@ public class AnnotComparator extends ContentComparator {
 		entry.setBBox(bbox_1, bbox_2);
 		boolean result = true;
 		
-		String s_1 = baseAnnot == null ? null : baseAnnot.subType;
-		String s_2 = testAnnot == null ? null : testAnnot.subType;
+		String s_1 = baseAnnot == null ? null : baseAnnot.getSubType();
+		String s_2 = testAnnot == null ? null : testAnnot.getSubType();
 		boolean equals = compare(s_1, s_2);
 		result &= equals;
 		entry.putAttr(DiffContent.Key.Attr_SubType, equals, s_1, s_2);
@@ -144,10 +144,8 @@ public class AnnotComparator extends ContentComparator {
 	
 	private AnnotLob findAnnotLob(AnnotLob base, List<AnnotLob> testAnnotList) {
 		for (AnnotLob test : testAnnotList) {
-			if (compare(base.fieldType, test.fieldType) 
-					&& compare(base.subType, test.subType)
-					&& base.getBBox().intersects(test.getBBox())
-					) {
+			if (compare(base.getSubType(), test.getSubType())
+					&& base.getBBox().intersects(test.getBBox())) {
 				return test;
 			}
 		}

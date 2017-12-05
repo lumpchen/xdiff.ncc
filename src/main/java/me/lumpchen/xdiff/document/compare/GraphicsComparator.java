@@ -3,7 +3,6 @@ package me.lumpchen.xdiff.document.compare;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
@@ -19,16 +18,15 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.apache.pdfbox.tools.imageio.ImageIOUtil;
-
 import me.lumpchen.xdiff.PDocDiffResult.PageInfo;
 import me.lumpchen.xdiff.PageDiffResult.DiffContent;
 import me.lumpchen.xdiff.document.GraphicsContent;
 import me.lumpchen.xdiff.document.GraphicsSet;
-import me.lumpchen.xdiff.document.PageThread;
 import me.lumpchen.xdiff.document.GraphicsSet.GraphicsLob;
 import me.lumpchen.xdiff.document.PageContent.ColorDesc;
 import me.lumpchen.xdiff.document.PageContent.GraphicsStateDesc;
+import me.lumpchen.xdiff.document.PageThread;
+import me.lumpchen.xdiff.document.GraphicsContent.Line;
 
 public class GraphicsComparator extends ContentComparator {
 
@@ -67,8 +65,6 @@ public class GraphicsComparator extends ContentComparator {
 			}
 		}
 
-//		show(this.ass);
-		
 		return result.toArray(new DiffContent[result.size()]);
 	}
 
@@ -231,6 +227,15 @@ public class GraphicsComparator extends ContentComparator {
 			return false;
 		}
 		
+		Line l1 = path_1.asLine();
+		Line l2 = path_2.asLine();
+		if (l1 != null && l2 != null) {
+			if (l1.vertical == l2.vertical && compare(l1.x, l2.x, 2.0) 
+					&& compare(l1.y, l2.y, 2.0)) {
+				return true;
+			}
+		}
+		
 		Rectangle2D area_1 = this.toPageLeftTop(path_1.getOutlineRect(), this.basePageInfo.getHeight());
 		Rectangle2D area_2 = this.toPageLeftTop(path_2.getOutlineRect(), this.testPageInfo.getHeight());
 		if (this.equalsWithTolerance(area_1, area_2)) {
@@ -240,87 +245,30 @@ public class GraphicsComparator extends ContentComparator {
 		return false;
 	}
 
-	private Area toArea(List<Shape> shapeList) {
-		Area area = new Area();
-		for (Shape s : shapeList) {
-			area.add(new Area(s.getBounds2D()));
-		}
-		return area;
-	}
-	
 	private boolean equalsWithTolerance(Rectangle2D r1, Rectangle2D r2) {
 		boolean equals = compare(r1, r2, this.setting.toleranceOfHorPosition, this.setting.toleranceOfVerPosition, 
 				this.setting.toleranceOfRectWidth, this.setting.toleranceOfRectHeight);
 		return equals;
 	}
 	
-	private boolean compareGPath(GeneralPath path1, GeneralPath path2) {
-		if (path1 == null || path2 == null) {
-			return false;
+	private Rectangle2D toPageLeftTop(Rectangle2D rect, float pageHeight) {
+		if (rect == null) {
+			return null;
 		}
+		AffineTransform at = new AffineTransform(1, 0, 0, 1, 0, -pageHeight);
+		Shape leftTop = at.createTransformedShape(rect);
 		
-		if (path1.getWindingRule() != path2.getWindingRule()) {
-			return false;
-		}
-		
-		PathIterator iter1 = path1.getPathIterator(null);
-		PathIterator iter2 = path2.getPathIterator(null);
-		
-		double[] d1 = new double[6];
-		double[] d2 = new double[6];
-		boolean isDone = iter1.isDone() && iter2.isDone();
-		while (!isDone) {
-			if (iter1.isDone() != iter2.isDone()) {
-				return false;
-			}
-			int seg1 = iter1.currentSegment(d1);
-			int seg2 = iter2.currentSegment(d2);
-			if (seg1 != seg2) {
-				return false;
-			}
-			if (!Arrays.equals(d1, d2)) {
-				return false;
-			}
-			iter1.next();
-			iter2.next();
-			isDone = iter1.isDone() && iter2.isDone();
-		}
-		
-		return true;
+		at = new AffineTransform(1, 0, 0, -1, 0, 0);
+		leftTop = at.createTransformedShape(leftTop);
+		return leftTop.getBounds2D();
 	}
 	
-	private void lookGeneralPath(GraphicsContent content) {
-		List<Shape> shapes = content.getOutlineShapeList();
-		
-		this.ass.addAll(shapes);
-		
-		
-		for (int i = 0; i < shapes.size(); i++) {
-			GeneralPath p = (GeneralPath) shapes.get(i);
-			PathIterator iter = p.getPathIterator(null);
-			float[] coords = new float[6];
-			
-			while (!iter.isDone()) {
-				switch (iter.currentSegment(coords)) {
-				case PathIterator.SEG_MOVETO:
-					System.out.println("moveto");
-					break;
-				case PathIterator.SEG_LINETO:
-					System.out.println("lineto");
-					break;
-				case PathIterator.SEG_CUBICTO:
-					System.out.println("cubicto");
-					break;
-				case PathIterator.SEG_CLOSE:
-					System.out.println("close");
-					break;
-				case PathIterator.SEG_QUADTO:
-					System.out.println("quadto");
-					break;
-				}
-				iter.next();
-			}
-		}
+	@Override
+	public DiffContent[] compare(PageThread basePageThread, PageThread testPageThread) {
+		this.basePageInfo = basePageThread.getPageInfo();
+		this.testPageInfo = testPageThread.getPageInfo();
+		DiffContent[] diffs = this.compare(basePageThread.getPathSet(), testPageThread.getPathSet());
+		return diffs;
 	}
 	
 	static void show(List<Shape> shapes ) {
@@ -344,26 +292,6 @@ public class GraphicsComparator extends ContentComparator {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	private Rectangle2D toPageLeftTop(Rectangle2D rect, float pageHeight) {
-		if (rect == null) {
-			return null;
-		}
-		AffineTransform at = new AffineTransform(1, 0, 0, 1, 0, -pageHeight);
-		Shape leftTop = at.createTransformedShape(rect);
-		
-		at = new AffineTransform(1, 0, 0, -1, 0, 0);
-		leftTop = at.createTransformedShape(leftTop);
-		return leftTop.getBounds2D();
-	}
-	
-	@Override
-	public DiffContent[] compare(PageThread basePageThread, PageThread testPageThread) {
-		this.basePageInfo = basePageThread.getPageInfo();
-		this.testPageInfo = testPageThread.getPageInfo();
-		DiffContent[] diffs = this.compare(basePageThread.getPathSet(), testPageThread.getPathSet());
-		return diffs;
 	}
 
 }

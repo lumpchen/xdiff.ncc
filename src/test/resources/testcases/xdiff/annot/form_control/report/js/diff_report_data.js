@@ -69,26 +69,10 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Btn",
-                                "Btn"
-                            ],
-                            "Key": "FieldType"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
                                 "Widget",
                                 "Widget"
                             ],
                             "Key": "SubType"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "Send E_mail",
-                                "Send E_mail to"
-                            ],
-                            "Key": "AnnotName"
                         },
                         {
                             "Equals": true,
@@ -96,7 +80,23 @@ PDF_DIFF.diff_report_data = {
                                 "Send E-mail",
                                 "Send E-mail"
                             ],
-                            "Key": "AnnotContents"
+                            "Key": "Alternate Field Name"
+                        },
+                        {
+                            "Equals": false,
+                            "Value": [
+                                "Send E_mail",
+                                "Send E_mail to"
+                            ],
+                            "Key": "Field Name"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Btn",
+                                "Btn"
+                            ],
+                            "Key": "Field Type"
                         },
                         {
                             "Equals": true,
@@ -223,14 +223,6 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Tx",
-                                "Tx"
-                            ],
-                            "Key": "FieldType"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
                                 "Widget",
                                 "Widget"
                             ],
@@ -239,18 +231,26 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Text1_1",
-                                "Text1_1"
+                                "Virksomhedens navn:",
+                                "Virksomhedens navn:"
                             ],
-                            "Key": "AnnotName"
+                            "Key": "Alternate Field Name"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "Virksomhedens navn:",
-                                "Virksomhedens navn:"
+                                "Text1_1",
+                                "Text1_1"
                             ],
-                            "Key": "AnnotContents"
+                            "Key": "Field Name"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Tx",
+                                "Tx"
+                            ],
+                            "Key": "Field Type"
                         },
                         {
                             "Equals": true,
@@ -313,14 +313,6 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Tx",
-                                "Tx"
-                            ],
-                            "Key": "FieldType"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
                                 "Widget",
                                 "Widget"
                             ],
@@ -329,18 +321,26 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Text1_2",
-                                "Text1_2"
+                                "CVR-nr.:",
+                                "CVR-nr.:"
                             ],
-                            "Key": "AnnotName"
+                            "Key": "Alternate Field Name"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "CVR-nr.:",
-                                "CVR-nr.:"
+                                "Text1_2",
+                                "Text1_2"
                             ],
-                            "Key": "AnnotContents"
+                            "Key": "Field Name"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Tx",
+                                "Tx"
+                            ],
+                            "Key": "Field Type"
                         },
                         {
                             "Equals": true,
@@ -403,14 +403,6 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Tx",
-                                "Tx"
-                            ],
-                            "Key": "FieldType"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
                                 "Widget",
                                 "Widget"
                             ],
@@ -419,18 +411,26 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Text1_6",
-                                "Text1_6"
+                                "E-mail:",
+                                "E-mail:"
                             ],
-                            "Key": "AnnotName"
+                            "Key": "Alternate Field Name"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "E-mail:",
-                                "E-mail:"
+                                "Text1_6",
+                                "Text1_6"
                             ],
-                            "Key": "AnnotContents"
+                            "Key": "Field Name"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Tx",
+                                "Tx"
+                            ],
+                            "Key": "Field Type"
                         },
                         {
                             "Equals": true,
@@ -541,14 +541,6 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Tx",
-                                "Tx"
-                            ],
-                            "Key": "FieldType"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
                                 "Widget",
                                 "Widget"
                             ],
@@ -557,18 +549,26 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Text1_7",
-                                "Text1_7"
+                                "Eventuelt autorisations nr.:",
+                                "Eventuelt autorisations nr.:"
                             ],
-                            "Key": "AnnotName"
+                            "Key": "Alternate Field Name"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "Eventuelt autorisations nr.:",
-                                "Eventuelt autorisations nr.:"
+                                "Text1_7",
+                                "Text1_7"
                             ],
-                            "Key": "AnnotContents"
+                            "Key": "Field Name"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Tx",
+                                "Tx"
+                            ],
+                            "Key": "Field Type"
                         },
                         {
                             "Equals": true,
@@ -719,14 +719,6 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Btn",
-                                "Btn"
-                            ],
-                            "Key": "FieldType"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
                                 "Widget",
                                 "Widget"
                             ],
@@ -735,18 +727,26 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Group_2",
-                                "Group_2"
+                                "Sæt kryds",
+                                "Sæt kryds"
                             ],
-                            "Key": "AnnotName"
+                            "Key": "Alternate Field Name"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "Sæt kryds",
-                                "Sæt kryds"
+                                "Group_2",
+                                "Group_2"
                             ],
-                            "Key": "AnnotContents"
+                            "Key": "Field Name"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Btn",
+                                "Btn"
+                            ],
+                            "Key": "Field Type"
                         },
                         {
                             "Equals": true,
@@ -809,14 +809,6 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Btn",
-                                "Btn"
-                            ],
-                            "Key": "FieldType"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
                                 "Widget",
                                 "Widget"
                             ],
@@ -825,18 +817,26 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Group_3",
-                                "Group_3"
+                                "Sæt kryds:",
+                                "Sæt kryds:"
                             ],
-                            "Key": "AnnotName"
+                            "Key": "Alternate Field Name"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "Sæt kryds:",
-                                "Sæt kryds:"
+                                "Group_3",
+                                "Group_3"
                             ],
-                            "Key": "AnnotContents"
+                            "Key": "Field Name"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Btn",
+                                "Btn"
+                            ],
+                            "Key": "Field Type"
                         },
                         {
                             "Equals": true,

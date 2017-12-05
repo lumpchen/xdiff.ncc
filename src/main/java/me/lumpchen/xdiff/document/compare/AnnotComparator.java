@@ -2,16 +2,18 @@ package me.lumpchen.xdiff.document.compare;
 
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import me.lumpchen.xdiff.PageDiffResult;
 import me.lumpchen.xdiff.PDocDiffResult.PageInfo;
+import me.lumpchen.xdiff.PageDiffResult;
 import me.lumpchen.xdiff.PageDiffResult.ContentAttr;
 import me.lumpchen.xdiff.PageDiffResult.DiffContent;
 import me.lumpchen.xdiff.document.AnnotSet;
+import me.lumpchen.xdiff.document.AnnotSet.AnnotLob;
 import me.lumpchen.xdiff.document.PageContent;
 import me.lumpchen.xdiff.document.PageThread;
-import me.lumpchen.xdiff.document.AnnotSet.AnnotLob;
 
 public class AnnotComparator extends ContentComparator {
 
@@ -57,29 +59,36 @@ public class AnnotComparator extends ContentComparator {
 		entry.setBBox(bbox_1, bbox_2);
 		boolean result = true;
 		
-		String s_1 = baseAnnot == null ? null : baseAnnot.fieldType;
-		String s_2 = testAnnot == null ? null : testAnnot.fieldType;
+		String s_1 = baseAnnot == null ? null : baseAnnot.subType;
+		String s_2 = testAnnot == null ? null : testAnnot.subType;
 		boolean equals = compare(s_1, s_2);
-		result &= equals;
-		entry.putAttr(DiffContent.Key.Attr_FieldType, equals, s_1, s_2);
-		
-		s_1 = baseAnnot == null ? null : baseAnnot.subType;
-		s_2 = testAnnot == null ? null : testAnnot.subType;
-		equals = compare(s_1, s_2);
 		result &= equals;
 		entry.putAttr(DiffContent.Key.Attr_SubType, equals, s_1, s_2);
 		
-		s_1 = baseAnnot == null ? null : baseAnnot.fieldName;
-		s_2 = testAnnot == null ? null : testAnnot.fieldName;
-		equals = compare(s_1, s_2);
-		result &= equals;
-		entry.putAttr(DiffContent.Key.Attr_AnnotName, equals, s_1, s_2);
-		
-		s_1 = baseAnnot == null ? null : baseAnnot.alternateFieldName;
-		s_2 = testAnnot == null ? null : testAnnot.alternateFieldName;
-		equals = compare(s_1, s_2);
-		result &= equals;
-		entry.putAttr(DiffContent.Key.Attr_AnnotContents, equals, s_1, s_2);
+		Set<String> baseAdditionalKeySet = baseAnnot == null ? null : baseAnnot.getAdditionalKeySet();
+		Set<String> testAdditionalKeySet = testAnnot == null ? null : testAnnot.getAdditionalKeySet();
+		if (baseAdditionalKeySet != null && testAdditionalKeySet == null) {
+			result &= false;
+			for (String key : baseAdditionalKeySet) {
+				entry.putAttr(key, false, baseAnnot.getAttribute(key), null);
+			}
+		} else if (baseAdditionalKeySet == null && testAdditionalKeySet != null) {
+			result &= false;
+			for (String key : testAdditionalKeySet) {
+				entry.putAttr(key, false, null, testAnnot.getAttribute(key));
+			}
+		} else if (baseAdditionalKeySet != null && testAdditionalKeySet != null) {
+			Set<String> allKeys = new HashSet<String>();
+			allKeys.addAll(baseAdditionalKeySet);
+			allKeys.addAll(testAdditionalKeySet);
+			for (String key : allKeys) {
+				s_1 = baseAnnot.getAttribute(key);
+				s_2 = testAnnot.getAttribute(key);
+				equals = compare(s_1, s_2);
+				result &= equals;
+				entry.putAttr(key, equals, s_1, s_2);
+			}
+		}
 		
 		Rectangle2D baseRect = baseAnnot == null ? null : baseAnnot.getBBox();
 		Rectangle2D testRect = testAnnot == null ? null : testAnnot.getBBox();

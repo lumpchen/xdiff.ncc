@@ -28,7 +28,7 @@ public class TestCaseCommon {
 
 	static void runTestCase(File folder) throws IOException {
 		if (!folder.exists() || !folder.isDirectory()) {
-			return;
+			Assert.fail("Not found testcase: " + folder.getName());
 		}
 		logger.info("Run testcase: " + folder.getName());
 

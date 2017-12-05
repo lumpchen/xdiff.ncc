@@ -22,5 +22,5 @@ public class TestCaseText {
 	public void test_text_insert() throws IOException {
 		TestCaseCommon.runTestCase(subFolder, "text_insert");
 	}
-
+	
 }

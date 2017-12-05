@@ -38,7 +38,7 @@ PDF_DIFF.diff_report_data = {
         "fileSize": "692586 Bytes",
         "modified": "Mon Nov 20 14:31:49 CST 2017",
         "producer": "Microsoft® Word 2013",
-        "location": "C:\\dev\\xdiff\\testcases\\showcase\\misc\\test.pdf"
+        "location": "C:\\dev\\mine\\git\\xdiff.ncc\\src\\test\\resources\\testcases\\xdiff\\misc\\simple\\test.pdf"
     },
     "Base_Stroke_Color": "red",
     "Base_Fill_Color": "rgba(138, 43, 226, 0.2)",
@@ -98,7 +98,7 @@ PDF_DIFF.diff_report_data = {
         "fileSize": "578773 Bytes",
         "modified": "Mon Nov 20 11:37:51 CST 2017",
         "producer": "Microsoft® Word 2013",
-        "location": "C:\\dev\\xdiff\\testcases\\showcase\\misc\\control.pdf"
+        "location": "C:\\dev\\mine\\git\\xdiff.ncc\\src\\test\\resources\\testcases\\xdiff\\misc\\simple\\control.pdf"
     },
     "diff_content_json_obj": [
         {
@@ -383,36 +383,6 @@ PDF_DIFF.diff_report_data = {
                                     178.94,
                                     17.64,
                                     23.04
-                                ],
-                                [
-                                    72.024,
-                                    201.98,
-                                    0.48,
-                                    0.48
-                                ],
-                                [
-                                    72.504,
-                                    201.98,
-                                    31.56,
-                                    0.48
-                                ],
-                                [
-                                    104.06,
-                                    201.98,
-                                    0.48,
-                                    0.48
-                                ],
-                                [
-                                    72.024,
-                                    178.94,
-                                    0.48,
-                                    23.04
-                                ],
-                                [
-                                    104.06,
-                                    178.94,
-                                    0.48,
-                                    23.04
                                 ]
                             ],
                             [
@@ -462,7 +432,7 @@ PDF_DIFF.diff_report_data = {
                             {
                                 "Equals": true,
                                 "Value": [
-                                    "x=72.024, y=178.94, width=32.516, height=23.52",
+                                    "x=72.504, y=178.94, width=31.56, height=23.04",
                                     "x=72.504, y=178.94, width=31.56, height=23.04"
                                 ],
                                 "Key": "Position & Size"
@@ -470,10 +440,10 @@ PDF_DIFF.diff_report_data = {
                         ],
                         "Outline": [
                             [
-                                72.024,
+                                72.504,
                                 178.94,
-                                32.516,
-                                23.52
+                                31.56,
+                                23.04
                             ],
                             [
                                 72.504,
@@ -497,18 +467,6 @@ PDF_DIFF.diff_report_data = {
                                     178.94,
                                     23.64,
                                     23.04
-                                ],
-                                [
-                                    104.54,
-                                    201.98,
-                                    0.48,
-                                    0.48
-                                ],
-                                [
-                                    105.02,
-                                    201.98,
-                                    37.08,
-                                    0.48
                                 ]
                             ],
                             [
@@ -558,7 +516,7 @@ PDF_DIFF.diff_report_data = {
                             {
                                 "Equals": true,
                                 "Value": [
-                                    "x=104.54, y=178.94, width=37.56, height=23.52",
+                                    "x=104.54, y=178.94, width=37.56, height=23.04",
                                     "x=104.54, y=178.94, width=37.56, height=23.04"
                                 ],
                                 "Key": "Position & Size"
@@ -569,7 +527,7 @@ PDF_DIFF.diff_report_data = {
                                 104.54,
                                 178.94,
                                 37.56,
-                                23.52
+                                23.04
                             ],
                             [
                                 104.54,
@@ -593,18 +551,6 @@ PDF_DIFF.diff_report_data = {
                                     178.94,
                                     166.1,
                                     23.04
-                                ],
-                                [
-                                    142.58,
-                                    201.98,
-                                    0.48,
-                                    0.48
-                                ],
-                                [
-                                    143.06,
-                                    201.98,
-                                    179.54,
-                                    0.48
                                 ]
                             ],
                             [
@@ -654,7 +600,7 @@ PDF_DIFF.diff_report_data = {
                             {
                                 "Equals": true,
                                 "Value": [
-                                    "x=142.58, y=178.94, width=180.02, height=23.52",
+                                    "x=142.58, y=178.94, width=180.02, height=23.04",
                                     "x=142.58, y=178.94, width=180.02, height=23.04"
                                 ],
                                 "Key": "Position & Size"
@@ -665,7 +611,7 @@ PDF_DIFF.diff_report_data = {
                                 142.58,
                                 178.94,
                                 180.02,
-                                23.52
+                                23.04
                             ],
                             [
                                 142.58,
@@ -688,30 +634,6 @@ PDF_DIFF.diff_report_data = {
                                     330.07,
                                     178.94,
                                     57.96,
-                                    23.04
-                                ],
-                                [
-                                    323.09,
-                                    201.98,
-                                    0.48,
-                                    0.48
-                                ],
-                                [
-                                    323.57,
-                                    201.98,
-                                    71.424,
-                                    0.48
-                                ],
-                                [
-                                    394.99,
-                                    201.98,
-                                    0.48,
-                                    0.48
-                                ],
-                                [
-                                    394.99,
-                                    178.94,
-                                    0.48,
                                     23.04
                                 ]
                             ],
@@ -762,7 +684,7 @@ PDF_DIFF.diff_report_data = {
                             {
                                 "Equals": true,
                                 "Value": [
-                                    "x=323.09, y=178.94, width=72.38, height=23.52",
+                                    "x=323.21, y=178.94, width=71.784, height=23.04",
                                     "x=323.21, y=178.94, width=71.784, height=23.04"
                                 ],
                                 "Key": "Position & Size"
@@ -770,10 +692,10 @@ PDF_DIFF.diff_report_data = {
                         ],
                         "Outline": [
                             [
-                                323.09,
+                                323.21,
                                 178.94,
-                                72.38,
-                                23.52
+                                71.784,
+                                23.04
                             ],
                             [
                                 323.21,
@@ -797,18 +719,6 @@ PDF_DIFF.diff_report_data = {
                                     178.94,
                                     57.864,
                                     23.04
-                                ],
-                                [
-                                    395.47,
-                                    201.98,
-                                    0.48,
-                                    0.48
-                                ],
-                                [
-                                    395.95,
-                                    201.98,
-                                    71.304,
-                                    0.48
                                 ]
                             ],
                             [
@@ -858,7 +768,7 @@ PDF_DIFF.diff_report_data = {
                             {
                                 "Equals": true,
                                 "Value": [
-                                    "x=395.47, y=178.94, width=71.784, height=23.52",
+                                    "x=395.47, y=178.94, width=71.784, height=23.04",
                                     "x=395.47, y=178.94, width=71.784, height=23.04"
                                 ],
                                 "Key": "Position & Size"
@@ -869,7 +779,7 @@ PDF_DIFF.diff_report_data = {
                                 395.47,
                                 178.94,
                                 71.784,
-                                23.52
+                                23.04
                             ],
                             [
                                 395.47,
@@ -893,12 +803,6 @@ PDF_DIFF.diff_report_data = {
                                     178.94,
                                     57.96,
                                     23.04
-                                ],
-                                [
-                                    467.74,
-                                    201.98,
-                                    71.88,
-                                    0.48
                                 ]
                             ],
                             [
@@ -948,7 +852,7 @@ PDF_DIFF.diff_report_data = {
                             {
                                 "Equals": true,
                                 "Value": [
-                                    "x=467.74, y=178.94, width=71.88, height=23.52",
+                                    "x=467.74, y=178.94, width=71.88, height=23.04",
                                     "x=467.74, y=178.94, width=71.88, height=23.04"
                                 ],
                                 "Key": "Position & Size"
@@ -959,583 +863,13 @@ PDF_DIFF.diff_report_data = {
                                 467.74,
                                 178.94,
                                 71.88,
-                                23.52
+                                23.04
                             ],
                             [
                                 467.74,
                                 178.94,
                                 71.88,
                                 23.04
-                            ]
-                        ]
-                    },
-                    {
-                        "SubOutline": [
-                            [],
-                            [
-                                [
-                                    72.024,
-                                    201.98,
-                                    0.48,
-                                    0.48
-                                ],
-                                [
-                                    72.504,
-                                    201.98,
-                                    31.56,
-                                    0.48
-                                ],
-                                [
-                                    104.06,
-                                    201.98,
-                                    0.48,
-                                    0.48
-                                ],
-                                [
-                                    72.024,
-                                    178.94,
-                                    0.48,
-                                    23.04
-                                ],
-                                [
-                                    104.06,
-                                    178.94,
-                                    0.48,
-                                    23.04
-                                ]
-                            ]
-                        ],
-                        "AcceptDiffRegion": [
-                            [],
-                            []
-                        ],
-                        "Attributes": [
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "Fill"
-                                ],
-                                "Key": "Paint Operator"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "DeviceRGB"
-                                ],
-                                "Key": "Fill Colorspace"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "0.357 0.608 0.835 "
-                                ],
-                                "Key": "Fill Color"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "x=72.024, y=178.94, width=32.516, height=23.52"
-                                ],
-                                "Key": "Position & Size"
-                            }
-                        ],
-                        "Outline": [
-                            [],
-                            [
-                                72.024,
-                                178.94,
-                                32.516,
-                                23.52
-                            ]
-                        ]
-                    },
-                    {
-                        "SubOutline": [
-                            [],
-                            [
-                                [
-                                    104.54,
-                                    201.98,
-                                    0.48,
-                                    0.48
-                                ],
-                                [
-                                    105.02,
-                                    201.98,
-                                    37.08,
-                                    0.48
-                                ]
-                            ]
-                        ],
-                        "AcceptDiffRegion": [
-                            [],
-                            []
-                        ],
-                        "Attributes": [
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "Fill"
-                                ],
-                                "Key": "Paint Operator"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "DeviceRGB"
-                                ],
-                                "Key": "Fill Colorspace"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "0.357 0.608 0.835 "
-                                ],
-                                "Key": "Fill Color"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "x=104.54, y=201.98, width=37.56, height=0.48"
-                                ],
-                                "Key": "Position & Size"
-                            }
-                        ],
-                        "Outline": [
-                            [],
-                            [
-                                104.54,
-                                201.98,
-                                37.56,
-                                0.48
-                            ]
-                        ]
-                    },
-                    {
-                        "SubOutline": [
-                            [],
-                            [[
-                                142.58,
-                                201.98,
-                                0.48,
-                                0.48
-                            ]]
-                        ],
-                        "AcceptDiffRegion": [
-                            [],
-                            []
-                        ],
-                        "Attributes": [
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "Fill"
-                                ],
-                                "Key": "Paint Operator"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "DeviceRGB"
-                                ],
-                                "Key": "Fill Colorspace"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "0.357 0.608 0.835 "
-                                ],
-                                "Key": "Fill Color"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "x=142.58, y=201.98, width=0.48, height=0.48"
-                                ],
-                                "Key": "Position & Size"
-                            }
-                        ],
-                        "Outline": [
-                            [],
-                            [
-                                142.58,
-                                201.98,
-                                0.48,
-                                0.48
-                            ]
-                        ]
-                    },
-                    {
-                        "SubOutline": [
-                            [],
-                            [[
-                                143.06,
-                                201.98,
-                                179.54,
-                                0.48
-                            ]]
-                        ],
-                        "AcceptDiffRegion": [
-                            [],
-                            []
-                        ],
-                        "Attributes": [
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "Fill"
-                                ],
-                                "Key": "Paint Operator"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "DeviceRGB"
-                                ],
-                                "Key": "Fill Colorspace"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "0.357 0.608 0.835 "
-                                ],
-                                "Key": "Fill Color"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "x=143.06, y=201.98, width=179.54, height=0.48"
-                                ],
-                                "Key": "Position & Size"
-                            }
-                        ],
-                        "Outline": [
-                            [],
-                            [
-                                143.06,
-                                201.98,
-                                179.54,
-                                0.48
-                            ]
-                        ]
-                    },
-                    {
-                        "SubOutline": [
-                            [],
-                            [[
-                                323.09,
-                                201.98,
-                                0.48,
-                                0.48
-                            ]]
-                        ],
-                        "AcceptDiffRegion": [
-                            [],
-                            []
-                        ],
-                        "Attributes": [
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "Fill"
-                                ],
-                                "Key": "Paint Operator"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "DeviceRGB"
-                                ],
-                                "Key": "Fill Colorspace"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "0.357 0.608 0.835 "
-                                ],
-                                "Key": "Fill Color"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "x=323.09, y=201.98, width=0.48, height=0.48"
-                                ],
-                                "Key": "Position & Size"
-                            }
-                        ],
-                        "Outline": [
-                            [],
-                            [
-                                323.09,
-                                201.98,
-                                0.48,
-                                0.48
-                            ]
-                        ]
-                    },
-                    {
-                        "SubOutline": [
-                            [],
-                            [
-                                [
-                                    323.57,
-                                    201.98,
-                                    71.424,
-                                    0.48
-                                ],
-                                [
-                                    394.99,
-                                    201.98,
-                                    0.48,
-                                    0.48
-                                ],
-                                [
-                                    394.99,
-                                    178.94,
-                                    0.48,
-                                    23.04
-                                ]
-                            ]
-                        ],
-                        "AcceptDiffRegion": [
-                            [],
-                            []
-                        ],
-                        "Attributes": [
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "Fill"
-                                ],
-                                "Key": "Paint Operator"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "DeviceRGB"
-                                ],
-                                "Key": "Fill Colorspace"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "0.357 0.608 0.835 "
-                                ],
-                                "Key": "Fill Color"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "x=323.57, y=178.94, width=71.9, height=23.52"
-                                ],
-                                "Key": "Position & Size"
-                            }
-                        ],
-                        "Outline": [
-                            [],
-                            [
-                                323.57,
-                                178.94,
-                                71.9,
-                                23.52
-                            ]
-                        ]
-                    },
-                    {
-                        "SubOutline": [
-                            [],
-                            [[
-                                395.47,
-                                201.98,
-                                0.48,
-                                0.48
-                            ]]
-                        ],
-                        "AcceptDiffRegion": [
-                            [],
-                            []
-                        ],
-                        "Attributes": [
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "Fill"
-                                ],
-                                "Key": "Paint Operator"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "DeviceRGB"
-                                ],
-                                "Key": "Fill Colorspace"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "0.357 0.608 0.835 "
-                                ],
-                                "Key": "Fill Color"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "x=395.47, y=201.98, width=0.48, height=0.48"
-                                ],
-                                "Key": "Position & Size"
-                            }
-                        ],
-                        "Outline": [
-                            [],
-                            [
-                                395.47,
-                                201.98,
-                                0.48,
-                                0.48
-                            ]
-                        ]
-                    },
-                    {
-                        "SubOutline": [
-                            [],
-                            [[
-                                395.95,
-                                201.98,
-                                71.304,
-                                0.48
-                            ]]
-                        ],
-                        "AcceptDiffRegion": [
-                            [],
-                            []
-                        ],
-                        "Attributes": [
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "Fill"
-                                ],
-                                "Key": "Paint Operator"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "DeviceRGB"
-                                ],
-                                "Key": "Fill Colorspace"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "0.357 0.608 0.835 "
-                                ],
-                                "Key": "Fill Color"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "x=395.95, y=201.98, width=71.304, height=0.48"
-                                ],
-                                "Key": "Position & Size"
-                            }
-                        ],
-                        "Outline": [
-                            [],
-                            [
-                                395.95,
-                                201.98,
-                                71.304,
-                                0.48
-                            ]
-                        ]
-                    },
-                    {
-                        "SubOutline": [
-                            [],
-                            [[
-                                467.74,
-                                201.98,
-                                71.88,
-                                0.48
-                            ]]
-                        ],
-                        "AcceptDiffRegion": [
-                            [],
-                            []
-                        ],
-                        "Attributes": [
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "Fill"
-                                ],
-                                "Key": "Paint Operator"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "DeviceRGB"
-                                ],
-                                "Key": "Fill Colorspace"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "0.357 0.608 0.835 "
-                                ],
-                                "Key": "Fill Color"
-                            },
-                            {
-                                "Equals": false,
-                                "Value": [
-                                    "",
-                                    "x=467.74, y=201.98, width=71.88, height=0.48"
-                                ],
-                                "Key": "Position & Size"
-                            }
-                        ],
-                        "Outline": [
-                            [],
-                            [
-                                467.74,
-                                201.98,
-                                71.88,
-                                0.48
                             ]
                         ]
                     }

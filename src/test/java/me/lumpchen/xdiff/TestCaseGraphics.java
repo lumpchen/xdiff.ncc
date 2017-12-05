@@ -10,7 +10,7 @@ public class TestCaseGraphics {
 	
 	@Test
 	public void test_simple() throws IOException {
-		TestCaseCommon.runTestCase(subFolder, "border");
+		TestCaseCommon.runTestCase(subFolder, "simple");
 	}
 	
 	@Test
@@ -19,8 +19,8 @@ public class TestCaseGraphics {
 	}
 	
 	@Test
-	public void test_stroke() throws IOException {
-		TestCaseCommon.runTestCase(subFolder, "stroke");
+	public void test_border() throws IOException {
+		TestCaseCommon.runTestCase(subFolder, "border");
 	}
 	
 	@Test

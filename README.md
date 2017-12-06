@@ -10,7 +10,7 @@ Testcase | Control | Test | Report
 simple text | [control.pdf](./src/test/resources/testcases/xdiff/text/text_insert/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/text/text_insert/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/text/text_insert/report/report.html)
 simple image | [control.pdf](./src/test/resources/testcases/xdiff/image/simple/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/image/simple/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/image/simple/report/report.html)
 form control | [control.pdf](./src/test/resources/testcases/xdiff/annot/form_control/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/annot/form_control/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/annot/form_control/report/report.html)
-misc | [control.pdf](./src/test/resources/testcases/xdiff/misc/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/misc/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/misc/report/report.html)
+misc | [control.pdf](./src/test/resources/testcases/xdiff/misc/simple/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/misc/simple/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/misc/simple/report/report.html)
 
 Build
 -----

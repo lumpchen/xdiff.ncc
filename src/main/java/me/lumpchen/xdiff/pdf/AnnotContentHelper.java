@@ -1,6 +1,9 @@
 package me.lumpchen.xdiff.pdf;
 
 import java.awt.geom.GeneralPath;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
@@ -8,8 +11,11 @@ import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSFloat;
 import org.apache.pdfbox.cos.COSInteger;
 import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSString;
+import org.apache.pdfbox.pdmodel.common.COSArrayList;
 import org.apache.pdfbox.pdmodel.interactive.action.PDAction;
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionURI;
+import org.apache.pdfbox.pdmodel.interactive.action.PDAnnotationAdditionalActions;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationLink;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationWidget;
@@ -90,13 +96,79 @@ public class AnnotContentHelper {
 			}
 		}
 		
+		annotContent.setFieldValue(annotDict.getCOSObject().getString(COSName.V));
+		if (annotContent.getFieldValue() == null) {
+			if (parent != null) {
+				annotContent.setFieldValue(parent.getString(COSName.V));
+			}
+		}
+		
+		annotContent.setFieldDefaultValue(annotDict.getCOSObject().getString(COSName.DV));
+		if (annotContent.getFieldDefaultValue() == null) {
+			if (parent != null) {
+				annotContent.setFieldDefaultValue(parent.getString(COSName.DV));
+			}
+		}
+		
 		annotContent.setAlternateFieldName(annotDict.getCOSObject().getString(COSName.TU));
 		if (annotContent.getAlternateFieldName() == null) {
 			if (parent != null) {
 				annotContent.setAlternateFieldName(parent.getString(COSName.TU));
 			}
 		}
+		
+		PDAnnotationAdditionalActions actions = annotDict.getActions();
+		if (actions != null) {
+			PDAction action = actions.getD();
+			if (action != null) {
+				annotContent.setAction("D", action.getSubType(), getActionDest(action));
+			}
+		}
+		
+		List<String> options = getOptions(annotDict);
+		annotContent.setOptions(options.toArray(new String[options.size()]));
 	}
+	
+    public static List<String> getOptions(PDAnnotationWidget annotDict) {
+        COSBase values = annotDict.getCOSObject().getDictionaryObject(COSName.OPT);
+        if (values == null) {
+        	return new ArrayList<String>(0);
+        }
+        return getPairableItems(values, 0);
+    }
+    
+    static List<String> getPairableItems(COSBase items, int pairIdx)
+    {
+        if (pairIdx < 0 || pairIdx > 1) {
+            throw new IllegalArgumentException("Only 0 and 1 are allowed as an index into two-element arrays");
+        }
+        
+        if (items instanceof COSString) {
+            List<String> array = new ArrayList<String>();
+            array.add(((COSString) items).getString());
+            return array;
+        } else if (items instanceof COSArray) {
+            // test if there is a single text or a two-element array 
+            COSBase entry = ((COSArray) items).get(0);
+            if (entry instanceof COSString) {
+                return COSArrayList.convertCOSStringCOSArrayToList((COSArray)items);
+            } else {
+                return getItemsFromPair(items, pairIdx);
+            }            
+        }
+        return Collections.emptyList();
+    }
+    
+    private static List<String> getItemsFromPair(COSBase items, int pairIdx) {
+        List<String> exportValues = new ArrayList<String>();
+        int numItems = ((COSArray) items).size();
+        for (int i = 0; i < numItems; i++) {
+            COSArray pair = (COSArray) ((COSArray) items).get(i);
+            COSString displayValue = (COSString) pair.get(pairIdx);
+            exportValues.add(displayValue.getString());
+        }
+        return exportValues;        
+    }
 
 	private static String getActionDest(PDAction action) {
 		String actionType = action.getSubType(); // /S

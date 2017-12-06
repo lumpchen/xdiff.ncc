@@ -135,12 +135,25 @@ public class GraphicsContent extends PageContent {
     			if (Math.abs(this.x - aLine.x) > delta / 2) {
     				return false;
     			}
+    			if (this.y <= aLine.y) {
+    				if (this.y + this.length - aLine.y < -delta) {
+    					return false;
+    				}
+    			} else {
+    				if (aLine.y + aLine.length - this.y < -delta) {
+    					return false;
+    				}
+    			} 
     		} else {
     			if (Math.abs(this.y - aLine.y) > delta / 2) {
     				return false;
     			}
-    			if (this.x < aLine.x) {
+    			if (this.x <= aLine.x) {
     				if (this.x + this.length - aLine.x < -delta) {
+    					return false;
+    				}
+    			} else {
+    				if (aLine.x + aLine.length - this.x < -delta) {
     					return false;
     				}
     			}

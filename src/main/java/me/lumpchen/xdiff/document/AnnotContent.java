@@ -122,6 +122,19 @@ public abstract class AnnotContent extends PageContent {
 		private String fieldName;
 		private String alternateFieldName;
 		
+		private int fieldFlag;
+		private String fieldValue;
+		private String fieldDefaultValue;
+		
+		public static class AAction {
+			public String triggerEvent;
+			public String actionType;
+			public String actionDest;			
+		}
+		private List<AAction> additionalAction;
+		
+		private String[] options;
+		
 		public Widget() {
 			super();
 			this.subType = "Widget";
@@ -149,6 +162,53 @@ public abstract class AnnotContent extends PageContent {
 
 		public void setAlternateFieldName(String alternateFieldName) {
 			this.alternateFieldName = alternateFieldName;
+		}
+		
+		public int getFieldFlag() {
+			return fieldFlag;
+		}
+
+		public void setFieldFlag(int fieldFlag) {
+			this.fieldFlag = fieldFlag;
+		}
+
+		public String getFieldValue() {
+			return fieldValue;
+		}
+
+		public void setFieldValue(String fieldValue) {
+			this.fieldValue = fieldValue;
+		}
+
+		public String getFieldDefaultValue() {
+			return fieldDefaultValue;
+		}
+
+		public void setFieldDefaultValue(String fieldDefaultValue) {
+			this.fieldDefaultValue = fieldDefaultValue;
+		}
+		
+		public void setAction(String triggerEvent, String actionType, String actionDest) {
+			if (this.additionalAction == null) {
+				this.additionalAction = new ArrayList<AAction>();
+			}
+			AAction action = new AAction();
+			action.triggerEvent = triggerEvent;
+			action.actionType = actionType;
+			action.actionDest = actionDest;
+			this.additionalAction.add(action);
+		}
+		
+		public List<AAction> getActions() {
+			return this.additionalAction;
+		}
+		
+		public void setOptions(String[] opts) {
+			this.options = opts;
+		}
+		
+		public String[] getOptions() {
+			return this.options;
 		}
 	}
 

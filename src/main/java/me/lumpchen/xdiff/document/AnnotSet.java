@@ -9,6 +9,7 @@ import java.util.Set;
 
 import me.lumpchen.xdiff.document.AnnotContent.Link;
 import me.lumpchen.xdiff.document.AnnotContent.Widget;
+import me.lumpchen.xdiff.document.AnnotContent.Widget.AAction;
 
 public class AnnotSet {
 	
@@ -42,8 +43,15 @@ public class AnnotSet {
 		public static final String fieldName = "Field Name";
 		public static final String alternateFieldName = "Alternate Field Name";
 		
+		public static final String action_pre = "Action";
 		public static final String actionType = "Action Type";
-		public static final String actionDest = "Action Destination";
+		public static final String actionDest = "Action Dest";
+		
+		public static final String fieldFlag = "Field Flag";
+		public static final String fieldValue = "Field Value";
+		public static final String fieldDefaultValue = "Default Value";
+		
+		public static final String options = "Options";
 		
 		private Rectangle2D bBox;
 		private PageContent[] appearance;
@@ -67,6 +75,28 @@ public class AnnotSet {
 				this.additionalMap.put(fieldType, widget.getFieldType());
 				this.additionalMap.put(fieldName, widget.getFieldName());
 				this.additionalMap.put(alternateFieldName, widget.getAlternateFieldName());
+				
+				if (widget.getActions() != null && widget.getActions().size() > 0) {
+					List<AAction> actions = widget.getActions();
+					for (AAction action : actions) {
+						this.additionalMap.put(action_pre + " " + action.triggerEvent, 
+								action.actionType + ": " + action.actionDest);
+					}
+				}
+
+				this.additionalMap.put(fieldFlag, widget.getFieldFlag() + "");
+				this.additionalMap.put(fieldValue, widget.getFieldValue());
+				this.additionalMap.put(fieldDefaultValue, widget.getFieldDefaultValue());
+				if (widget.getOptions() != null && widget.getOptions().length > 0) {
+					StringBuilder opts = new StringBuilder();
+					opts.append("[");
+					for (String opt : widget.getOptions()) {
+						opts.append(opt + ", ");
+					}
+					opts.deleteCharAt(opts.length() - 1).deleteCharAt(opts.length() - 1);
+					opts.append("]");
+					this.additionalMap.put(options, opts.toString());
+				}
 			} else if (annot.getSubType() == AnnotContent.LINK) {
 				Link link = (Link) annot;
 				this.additionalMap.put(actionType, link.getActionType());

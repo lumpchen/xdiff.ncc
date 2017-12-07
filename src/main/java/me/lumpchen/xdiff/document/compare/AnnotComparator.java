@@ -65,6 +65,14 @@ public class AnnotComparator extends ContentComparator {
 		result &= equals;
 		entry.putAttr(DiffContent.Key.Attr_SubType, equals, s_1, s_2);
 		
+		s_1 = baseAnnot == null ? null : baseAnnot.getAppearanceState();
+		s_2 = testAnnot == null ? null : testAnnot.getAppearanceState();
+		if (s_1 != null || s_2 != null) {
+			equals = compare(s_1, s_2);
+			result &= equals;
+			entry.putAttr(DiffContent.Key.Attr_AppearanceState, equals, s_1, s_2);
+		}
+		
 		Set<String> baseAdditionalKeySet = baseAnnot == null ? null : baseAnnot.getAdditionalKeySet();
 		Set<String> testAdditionalKeySet = testAnnot == null ? null : testAnnot.getAdditionalKeySet();
 		if (baseAdditionalKeySet != null && testAdditionalKeySet == null) {
@@ -84,9 +92,11 @@ public class AnnotComparator extends ContentComparator {
 			for (String key : allKeys) {
 				s_1 = baseAnnot.getAttribute(key);
 				s_2 = testAnnot.getAttribute(key);
-				equals = compare(s_1, s_2);
-				result &= equals;
-				entry.putAttr(key, equals, s_1, s_2);
+				if (s_1 != null || s_2 != null) {
+					equals = compare(s_1, s_2);
+					result &= equals;
+					entry.putAttr(key, equals, s_1, s_2);
+				}
 			}
 		}
 		
@@ -97,46 +107,52 @@ public class AnnotComparator extends ContentComparator {
 		result &= equals;
 		entry.putAttr(DiffContent.Key.Attr_Annot_Rect, equals, baseRect, testRect);
 		
-		List<PageContent> baseAppearance = baseAnnot == null ? new ArrayList<PageContent>(0) : baseAnnot.getAppearance();
-		List<PageContent> testAppearance = testAnnot == null ? new ArrayList<PageContent>(0) : testAnnot.getAppearance();
-		PageContentComparator PageContentComparator = new PageContentComparator(this.setting);
-		PageDiffResult appearanceDiffResult = PageContentComparator.compare(baseAppearance, this.basePageInfo, testAppearance, this.testPageInfo);
-		if (appearanceDiffResult.countDiffs() > 0) {
-			result &= false;
-			entry.putAttr(DiffContent.Key.Attr_Annot_Appearance, false, "", "");
+		if (this.setting.enableAnnotAppearanceCompare) {
+			List<PageContent> baseAppearance = baseAnnot == null ? new ArrayList<PageContent>(0) : baseAnnot.getAppearance();
+			List<PageContent> testAppearance = testAnnot == null ? new ArrayList<PageContent>(0) : testAnnot.getAppearance();
+			boolean enablePathPixelCompare = this.setting.enablePathPixelCompare;
+			this.setting.enablePathPixelCompare = true;
+			PageContentComparator PageContentComparator = new PageContentComparator(this.setting);
+			PageDiffResult appearanceDiffResult = PageContentComparator.compare(baseAppearance, this.basePageInfo, testAppearance, this.testPageInfo);
+			this.setting.enablePathPixelCompare = enablePathPixelCompare;
 			
-			List<DiffContent> contentList = appearanceDiffResult.getContentList();
-			for (DiffContent content : contentList) {
-				if (content.getCategory() == DiffContent.Category.Text) {
-					List<ContentAttr> attrList = content.getAttrList();
-					if (attrList.size() > 0) {
-						entry.putAttr("|-----Text", false, "", "");
-					}
-					for (ContentAttr attr : attrList) {
-						entry.putAttr("|----------" + attr.key, attr.equals, attr.baseVal, attr.testVal);
-					}
-				}
+			if (appearanceDiffResult.countDiffs() > 0) {
+				result &= false;
+				entry.putAttr(DiffContent.Key.Attr_Annot_Appearance, false, "", "");
 				
-				if (content.getCategory() == DiffContent.Category.Image) {
-					List<ContentAttr> attrList = content.getAttrList();
-					if (attrList.size() > 0) {
-						entry.putAttr("|-----Image", false, "", "");
+				List<DiffContent> contentList = appearanceDiffResult.getContentList();
+				for (DiffContent content : contentList) {
+					if (content.getCategory() == DiffContent.Category.Text) {
+						List<ContentAttr> attrList = content.getAttrList();
+						if (attrList.size() > 0) {
+							entry.putAttr("|-----Text", false, "", "");
+						}
+						for (ContentAttr attr : attrList) {
+							entry.putAttr("|----------" + attr.key, attr.equals, attr.baseVal, attr.testVal);
+						}
 					}
-					for (ContentAttr attr : attrList) {
-						entry.putAttr("|----------" + attr.key, attr.equals, attr.baseVal, attr.testVal);
+					
+					if (content.getCategory() == DiffContent.Category.Image) {
+						List<ContentAttr> attrList = content.getAttrList();
+						if (attrList.size() > 0) {
+							entry.putAttr("|-----Image", false, "", "");
+						}
+						for (ContentAttr attr : attrList) {
+							entry.putAttr("|----------" + attr.key, attr.equals, attr.baseVal, attr.testVal);
+						}
 					}
-				}
-				
-				if (content.getCategory() == DiffContent.Category.Path) {
-					List<ContentAttr> attrList = content.getAttrList();
-					if (attrList.size() > 0) {
-						entry.putAttr("|-----Path", false, "", "");
+					
+					if (content.getCategory() == DiffContent.Category.Path) {
+						List<ContentAttr> attrList = content.getAttrList();
+						if (attrList.size() > 0) {
+							entry.putAttr("|-----Path", false, "", "");
+						}
+						for (ContentAttr attr : attrList) {
+							entry.putAttr("|----------" + attr.key, attr.equals, attr.baseVal, attr.testVal);
+						}
 					}
-					for (ContentAttr attr : attrList) {
-						entry.putAttr("|----------" + attr.key, attr.equals, attr.baseVal, attr.testVal);
-					}
-				}
-			}			
+				}			
+			}
 		}
 		
 		return result;

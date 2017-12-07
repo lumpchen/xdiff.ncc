@@ -63,6 +63,11 @@ public class AnnotContentHelper {
 		}
 		
 		annotContent.setFlags(annotDict.getAnnotationFlags());
+		
+		COSName as = annotDict.getAppearanceState();
+		if (as != null) {
+			annotContent.setAppearenceState(as.getName());
+		}
 	}
 	
 	private static void mapAdditionalAttrs(AnnotContent.Link annotContent, PDAnnotationLink annotDict) {
@@ -121,7 +126,52 @@ public class AnnotContentHelper {
 		if (actions != null) {
 			PDAction action = actions.getD();
 			if (action != null) {
-				annotContent.setAction("D", action.getSubType(), getActionDest(action));
+				annotContent.setAction("D", action.getSubType(), getActionDest(action), "mouse button down");
+			}
+			
+			action = actions.getU();
+			if (action != null) {
+				annotContent.setAction("U", action.getSubType(), getActionDest(action), "mouse button up");
+			}
+			
+			action = actions.getE();
+			if (action != null) {
+				annotContent.setAction("E", action.getSubType(), getActionDest(action), "cursor enter");
+			}
+			
+			action = actions.getX();
+			if (action != null) {
+				annotContent.setAction("X", action.getSubType(), getActionDest(action), "cursor exit");
+			}
+			
+			action = actions.getFo();
+			if (action != null) {
+				annotContent.setAction("Fo", action.getSubType(), getActionDest(action), "focus input");
+			}
+			
+			action = actions.getBl();
+			if (action != null) {
+				annotContent.setAction("Bl", action.getSubType(), getActionDest(action), "blurred");
+			}
+			
+			action = actions.getPO();
+			if (action != null) {
+				annotContent.setAction("PO", action.getSubType(), getActionDest(action), "page opened");
+			}
+			
+			action = actions.getPC();
+			if (action != null) {
+				annotContent.setAction("PC", action.getSubType(), getActionDest(action), "page closed");
+			}
+			
+			action = actions.getPV();
+			if (action != null) {
+				annotContent.setAction("PV", action.getSubType(), getActionDest(action), "page visible");
+			}
+			
+			action = actions.getPI();
+			if (action != null) {
+				annotContent.setAction("PI", action.getSubType(), getActionDest(action), "page invisible");
 			}
 		}
 		

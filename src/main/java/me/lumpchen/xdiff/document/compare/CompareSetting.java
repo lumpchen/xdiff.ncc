@@ -14,6 +14,7 @@ public class CompareSetting {
 	public boolean enableTextPositionCompare = true;
 	
 	public boolean enableImageAppearanceCompare = false;
+	public boolean enableAnnotAppearanceCompare = true;
 	
 	public boolean disableLineBreaking = false;
 	

@@ -36,6 +36,7 @@ public class AnnotSet {
 	
 	public static class AnnotLob {
 		private String subType;
+		private String appearanceState;
 
 		private Map<String, String> additionalMap;
 		
@@ -58,6 +59,8 @@ public class AnnotSet {
 		
 		public AnnotLob(AnnotContent annot) {
 			this.subType = annot.getSubType();
+			this.appearanceState = annot.getAppearanceState();
+			
 			this.bBox = annot.getOutlineRect();
 			this.appearance = annot.getAppearanceContents();
 			
@@ -66,6 +69,10 @@ public class AnnotSet {
 		
 		public String getSubType() {
 			return this.subType;
+		}
+		
+		public String getAppearanceState() {
+			return this.appearanceState;
 		}
 		
 		private void addAdditionalAttributes(AnnotContent annot) {
@@ -79,7 +86,7 @@ public class AnnotSet {
 				if (widget.getActions() != null && widget.getActions().size() > 0) {
 					List<AAction> actions = widget.getActions();
 					for (AAction action : actions) {
-						this.additionalMap.put(action_pre + " " + action.triggerEvent, 
+						this.additionalMap.put(action_pre + " " + action.triggerEvent + ": " + action.eventDesc, 
 								action.actionType + ": " + action.actionDest);
 					}
 				}

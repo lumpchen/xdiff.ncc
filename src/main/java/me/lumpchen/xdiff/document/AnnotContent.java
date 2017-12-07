@@ -15,6 +15,7 @@ public abstract class AnnotContent extends PageContent {
 	protected String border;
 	protected String name;
 	protected String contents;
+	protected String appearanceState;
 	protected int flags;
 	private List<PageContent> appearenceContents;
 	
@@ -68,6 +69,14 @@ public abstract class AnnotContent extends PageContent {
 	
 	public void addAppearanceContent(PageContent content) {
 		this.appearenceContents.add(content);
+	}
+	
+	public void setAppearenceState(String appearanceState) {
+		this.appearanceState = appearanceState;
+	}
+	
+	public String getAppearanceState() {
+		return this.appearanceState;
 	}
 	
 	public PageContent[] getAppearanceContents() {
@@ -128,6 +137,7 @@ public abstract class AnnotContent extends PageContent {
 		
 		public static class AAction {
 			public String triggerEvent;
+			public String eventDesc;
 			public String actionType;
 			public String actionDest;			
 		}
@@ -188,12 +198,13 @@ public abstract class AnnotContent extends PageContent {
 			this.fieldDefaultValue = fieldDefaultValue;
 		}
 		
-		public void setAction(String triggerEvent, String actionType, String actionDest) {
+		public void setAction(String triggerEvent, String actionType, String actionDest, String eventDesc) {
 			if (this.additionalAction == null) {
 				this.additionalAction = new ArrayList<AAction>();
 			}
 			AAction action = new AAction();
 			action.triggerEvent = triggerEvent;
+			action.eventDesc = eventDesc;
 			action.actionType = actionType;
 			action.actionDest = actionDest;
 			this.additionalAction.add(action);

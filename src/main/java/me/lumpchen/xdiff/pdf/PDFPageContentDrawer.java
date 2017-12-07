@@ -141,10 +141,6 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 	}
 	
 	public void beginAnnot(PDAnnotation annot) {
-//		AnnotContent content = new AnnotContent();
-//		this.runtimePageContentStack.push(content);
-//		this.markAnnot(annot, content);
-		
 		AnnotContent content = AnnotContentHelper.createAnnotContent(annot);
 		this.runtimePageContentStack.push(content);
 	}

@@ -68,6 +68,7 @@ public class DiffSettingLoader {
 			compareSetting.enableCompareAnnots = getBoolean(properties, "enableCompareAnnots", compareSetting.enableCompareAnnots);
 			compareSetting.enableTextPositionCompare = getBoolean(properties, "enableTextPositionCompare", compareSetting.enableTextPositionCompare);
 			compareSetting.enableImageAppearanceCompare = getBoolean(properties, "enableImageAppearanceCompare", compareSetting.enableImageAppearanceCompare);
+			compareSetting.enableAnnotAppearanceCompare = getBoolean(properties, "enableAnnotAppearanceCompare", compareSetting.enableAnnotAppearanceCompare);
 			
 			compareSetting.toleranceOfRectWidth = getFloat(properties, "toleranceOfRectWidth", compareSetting.toleranceOfRectWidth);
 			compareSetting.toleranceOfRectHeight = getFloat(properties, "toleranceOfRectHeight", compareSetting.toleranceOfRectHeight);

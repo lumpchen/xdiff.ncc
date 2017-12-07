@@ -13,6 +13,7 @@ public abstract class AnnotContent extends PageContent {
 	
 	protected String subType;
 	protected String border;
+	protected String color;
 	protected String name;
 	protected String contents;
 	protected String appearanceState;
@@ -49,6 +50,14 @@ public abstract class AnnotContent extends PageContent {
 	
 	public String getBorder() {
 		return this.border;
+	}
+	
+	public void setColor(String color) {
+		this.color = color;
+	}
+	
+	public String getColor() {
+		return this.color;
 	}
 	
 	public int getFlags() {

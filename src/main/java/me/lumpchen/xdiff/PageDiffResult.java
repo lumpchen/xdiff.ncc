@@ -135,6 +135,8 @@ public class PageDiffResult {
 			
 			public static String Attr_SubType = "SubType";
 			public static String Attr_AppearanceState = "Appearance State";
+			public static String Attr_Annot_Border = "Border";
+			public static String Attr_Annot_Color = "Color";
 			public static String Attr_FieldType = "FieldType";
 			public static String Attr_AnnotName = "AnnotName";
 			public static String Attr_AnnotContents = "AnnotContents";

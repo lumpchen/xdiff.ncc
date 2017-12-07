@@ -13,6 +13,7 @@ import org.apache.pdfbox.cos.COSInteger;
 import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.pdmodel.common.COSArrayList;
+import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
 import org.apache.pdfbox.pdmodel.interactive.action.PDAction;
 import org.apache.pdfbox.pdmodel.interactive.action.PDActionURI;
 import org.apache.pdfbox.pdmodel.interactive.action.PDAnnotationAdditionalActions;
@@ -50,6 +51,11 @@ public class AnnotContentHelper {
 		COSArray border = annotDict.getBorder();
 		if (border != null) {
 			annotContent.setBorder(getArrayStr(border));
+		}
+		
+		PDColor c = annotDict.getColor();
+		if (c != null) {
+			annotContent.setColor(getArrayStr(c.toCOSArray()));
 		}
 		
 		String name = annotDict.getAnnotationName();

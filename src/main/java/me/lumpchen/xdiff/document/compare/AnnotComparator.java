@@ -73,6 +73,22 @@ public class AnnotComparator extends ContentComparator {
 			entry.putAttr(DiffContent.Key.Attr_AppearanceState, equals, s_1, s_2);
 		}
 		
+		s_1 = baseAnnot == null ? null : baseAnnot.getBorder();
+		s_2 = testAnnot == null ? null : testAnnot.getBorder();
+		if (s_1 != null || s_2 != null) {
+			equals = compare(s_1, s_2);
+			result &= equals;
+			entry.putAttr(DiffContent.Key.Attr_Annot_Border, equals, s_1, s_2);
+		}
+		
+		s_1 = baseAnnot == null ? null : baseAnnot.getColor();
+		s_2 = testAnnot == null ? null : testAnnot.getColor();
+		if (s_1 != null || s_2 != null) {
+			equals = compare(s_1, s_2);
+			result &= equals;
+			entry.putAttr(DiffContent.Key.Attr_Annot_Color, equals, s_1, s_2);
+		}
+		
 		Set<String> baseAdditionalKeySet = baseAnnot == null ? null : baseAnnot.getAdditionalKeySet();
 		Set<String> testAdditionalKeySet = testAnnot == null ? null : testAnnot.getAdditionalKeySet();
 		if (baseAdditionalKeySet != null && testAdditionalKeySet == null) {

@@ -37,6 +37,8 @@ public class AnnotSet {
 	public static class AnnotLob {
 		private String subType;
 		private String appearanceState;
+		private String border;
+		private String color;
 
 		private Map<String, String> additionalMap;
 		
@@ -60,6 +62,8 @@ public class AnnotSet {
 		public AnnotLob(AnnotContent annot) {
 			this.subType = annot.getSubType();
 			this.appearanceState = annot.getAppearanceState();
+			this.border = annot.getBorder();
+			this.color = annot.getColor();
 			
 			this.bBox = annot.getOutlineRect();
 			this.appearance = annot.getAppearanceContents();
@@ -73,6 +77,14 @@ public class AnnotSet {
 		
 		public String getAppearanceState() {
 			return this.appearanceState;
+		}
+		
+		public String getBorder() {
+			return border;
+		}
+		
+		public String getColor() {
+			return this.color;
 		}
 		
 		private void addAdditionalAttributes(AnnotContent annot) {

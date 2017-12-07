@@ -6,26 +6,26 @@ PDF_DIFF.diff_report_data = {
         "keywords": "",
         "author": "",
         "subject": "",
-        "created": "Tue Mar 04 19:18:11 CST 2014",
-        "title": "ANSØGNING OM GODKENDELSE SOM VE-MONTØRVIRKSOMHED ELLER VE-INSTALLATØRVIRKSOMHED",
-        "version": "1.6",
+        "created": "Fri Dec 01 15:34:40 CST 2017",
+        "title": "",
+        "version": "1.7",
         "pages": [{
             "num": 0,
-            "width": 595.2760009765625,
+            "width": 612,
             "imageTag": "test-0.png",
-            "height": 841.8900146484375
+            "height": 792
         }],
-        "fileSize": "610868 Bytes",
-        "modified": "Wed Nov 15 15:05:06 CST 2017",
+        "fileSize": "51766 Bytes",
+        "modified": "Thu Dec 07 14:52:18 CST 2017",
         "producer": "Adobe PDF Library 10.0.1",
-        "location": "C:\\dev\\mine\\git\\xdiff.ncc\\src\\test\\resources\\testcases\\xdiff\\annot\\form_control\\test.pdf"
+        "location": "C:\\dev\\mine\\git\\xdiff.ncc\\src\\test\\resources\\testcases\\xdiff\\annot\\indd_forms\\test.pdf"
     },
     "Base_Stroke_Color": "red",
     "Base_Fill_Color": "rgba(138, 43, 226, 0.2)",
     "Test_Fill_Color": "rgba(138, 43, 226, 0.2)",
     "FileFormat": "pdf",
     "diff_accepted_page_nums": [],
-    "ShowDifferentPagesOnly": true,
+    "ShowDifferentPagesOnly": false,
     "Test_Stroke_Color": "red",
     "diff_page_count": 1,
     "page_xor_images": {"0": "0-xor.png"},
@@ -37,19 +37,19 @@ PDF_DIFF.diff_report_data = {
         "keywords": "",
         "author": "",
         "subject": "",
-        "created": "Tue Mar 04 19:18:11 CST 2014",
-        "title": "ANSØGNING OM GODKENDELSE SOM VE-MONTØRVIRKSOMHED ELLER VE-INSTALLATØRVIRKSOMHED",
-        "version": "1.6",
+        "created": "Fri Dec 01 15:34:40 CST 2017",
+        "title": "",
+        "version": "1.7",
         "pages": [{
             "num": 0,
-            "width": 595.2760009765625,
+            "width": 612,
             "imageTag": "base-0.png",
-            "height": 841.8900146484375
+            "height": 792
         }],
-        "fileSize": "609708 Bytes",
-        "modified": "Wed Nov 15 15:04:42 CST 2017",
+        "fileSize": "51752 Bytes",
+        "modified": "Thu Dec 07 16:30:38 CST 2017",
         "producer": "Adobe PDF Library 10.0.1",
-        "location": "C:\\dev\\mine\\git\\xdiff.ncc\\src\\test\\resources\\testcases\\xdiff\\annot\\form_control\\control.pdf"
+        "location": "C:\\dev\\mine\\git\\xdiff.ncc\\src\\test\\resources\\testcases\\xdiff\\annot\\indd_forms\\control.pdf"
     },
     "diff_content_json_obj": [{
         "PageNo": 0,
@@ -69,6 +69,154 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
+                                "Link",
+                                "Link"
+                            ],
+                            "Key": "SubType"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "[0 0 2 ]",
+                                "[0 0 2 ]"
+                            ],
+                            "Key": "Border"
+                        },
+                        {
+                            "Equals": false,
+                            "Value": [
+                                "[0.600006 0.399994 0.0 ]",
+                                "[0.0 1.0 0.0 ]"
+                            ],
+                            "Key": "Color"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "URI",
+                                "URI"
+                            ],
+                            "Key": "Action Type"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "http://baidu.com",
+                                "http://baidu.com"
+                            ],
+                            "Key": "Action Dest"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "x=63.6, y=635.941, width=58.289, height=29.52",
+                                "x=63.6, y=635.941, width=58.289, height=29.52"
+                            ],
+                            "Key": "Rectangle"
+                        }
+                    ],
+                    "Outline": [
+                        [
+                            63.6,
+                            635.941,
+                            58.289,
+                            29.52
+                        ],
+                        [
+                            63.6,
+                            635.941,
+                            58.289,
+                            29.52
+                        ]
+                    ]
+                },
+                {
+                    "SubOutline": [
+                        [],
+                        []
+                    ],
+                    "AcceptDiffRegion": [
+                        [],
+                        []
+                    ],
+                    "Attributes": [
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Link",
+                                "Link"
+                            ],
+                            "Key": "SubType"
+                        },
+                        {
+                            "Equals": false,
+                            "Value": [
+                                "[0 0 3 [3.0 ] ]",
+                                "[0 0 0 [3.0 ] ]"
+                            ],
+                            "Key": "Border"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "[1.0 0.600006 0.0 ]",
+                                "[1.0 0.600006 0.0 ]"
+                            ],
+                            "Key": "Color"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "URI",
+                                "URI"
+                            ],
+                            "Key": "Action Type"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "http://bing.com",
+                                "http://bing.com"
+                            ],
+                            "Key": "Action Dest"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "x=63.6, y=607.141, width=46.734, height=29.52",
+                                "x=62.719, y=607.141, width=46.734, height=29.52"
+                            ],
+                            "Key": "Rectangle"
+                        }
+                    ],
+                    "Outline": [
+                        [
+                            63.6,
+                            607.141,
+                            46.734,
+                            29.52
+                        ],
+                        [
+                            62.719,
+                            607.141,
+                            46.734,
+                            29.52
+                        ]
+                    ]
+                },
+                {
+                    "SubOutline": [
+                        [],
+                        []
+                    ],
+                    "AcceptDiffRegion": [
+                        [],
+                        []
+                    ],
+                    "Attributes": [
+                        {
+                            "Equals": true,
+                            "Value": [
                                 "Widget",
                                 "Widget"
                             ],
@@ -77,16 +225,32 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "[0 0 1 ]",
-                                "[0 0 1 ]"
+                                "[0.0 0.0 0.0 ]",
+                                "[0.0 0.0 0.0 ]"
                             ],
                             "Key": "Border"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "Send E-mail",
-                                "Send E-mail"
+                                "[]",
+                                "[]"
+                            ],
+                            "Key": "Color"
+                        },
+                        {
+                            "Equals": false,
+                            "Value": [
+                                "URI: http://google.com",
+                                "URI: http://baidu.com"
+                            ],
+                            "Key": "Action D: mouse button down"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "This is a button",
+                                "This is a button"
                             ],
                             "Key": "Alternate Field Name"
                         },
@@ -99,10 +263,10 @@ PDF_DIFF.diff_report_data = {
                             "Key": "Field Flag"
                         },
                         {
-                            "Equals": false,
+                            "Equals": true,
                             "Value": [
-                                "Send E_mail",
-                                "Send E_mail to"
+                                "Button Test",
+                                "Button Test"
                             ],
                             "Key": "Field Name"
                         },
@@ -117,112 +281,24 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "x=463.979, y=726.581, width=91.9, height=19.636",
-                                "x=463.979, y=726.581, width=91.9, height=19.636"
+                                "x=67.2, y=39.636, width=229.8, height=81.834",
+                                "x=67.2, y=39.636, width=229.8, height=81.834"
                             ],
                             "Key": "Rectangle"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "Appearance"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "|-----Text"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "Send E-mail ",
-                                "Send E-mail "
-                            ],
-                            "Key": "|----------Text"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "Helvetica-Bold",
-                                "Helvetica-Bold"
-                            ],
-                            "Key": "|----------Font"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "10.0",
-                                "10.0"
-                            ],
-                            "Key": "|----------Font Size"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "DeviceGray",
-                                "DeviceGray"
-                            ],
-                            "Key": "|----------Fill Colorspace"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "0.0 ",
-                                "0.0 "
-                            ],
-                            "Key": "|----------Fill Color"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "481.697",
-                                "474.209"
-                            ],
-                            "Key": "|----------X Position"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "109.07",
-                                "109.071"
-                            ],
-                            "Key": "|----------Y Position"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "|-----Text"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "#INSERT#",
-                                "To"
-                            ],
-                            "Key": "|----------Text"
                         }
                     ],
                     "Outline": [
                         [
-                            463.979,
-                            726.581,
-                            91.9,
-                            19.636
+                            67.2,
+                            39.636,
+                            229.8,
+                            81.834
                         ],
                         [
-                            463.979,
-                            726.581,
-                            91.9,
-                            19.636
+                            67.2,
+                            39.636,
+                            229.8,
+                            81.834
                         ]
                     ]
                 },
@@ -255,16 +331,24 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": false,
                             "Value": [
-                                "",
-                                "123-7890"
+                                "Google",
+                                "Baidu"
                             ],
                             "Key": "Field Value"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "Virksomhedens navn:",
-                                "Virksomhedens navn:"
+                                "[Google, Baidu, Bing]",
+                                "[Google, Baidu, Bing]"
+                            ],
+                            "Key": "Options"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "This is a combo box",
+                                "This is a combo box"
                             ],
                             "Key": "Alternate Field Name"
                         },
@@ -279,72 +363,48 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": false,
                             "Value": [
-                                "",
-                                "123-7890"
+                                "Google",
+                                "Baidu"
                             ],
                             "Key": "Default Value"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "Text1_1",
-                                "Text1_1"
+                                "Combo Box Test",
+                                "Combo Box Test"
                             ],
                             "Key": "Field Name"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "Tx",
-                                "Tx"
+                                "Ch",
+                                "Ch"
                             ],
                             "Key": "Field Type"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "x=200.854, y=638.733, width=212.51, height=14.173",
-                                "x=200.854, y=638.733, width=212.51, height=14.173"
+                                "x=90.7, y=208.3, width=206.2, height=40.6",
+                                "x=90.7, y=208.3, width=206.2, height=40.6"
                             ],
                             "Key": "Rectangle"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "Appearance"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "|-----Text"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "#INSERT#",
-                                "123-7890"
-                            ],
-                            "Key": "|----------Text"
                         }
                     ],
                     "Outline": [
                         [
-                            200.854,
-                            638.733,
-                            212.51,
-                            14.173
+                            90.7,
+                            208.3,
+                            206.2,
+                            40.6
                         ],
                         [
-                            200.854,
-                            638.733,
-                            212.51,
-                            14.173
+                            90.7,
+                            208.3,
+                            206.2,
+                            40.6
                         ]
                     ]
                 },
@@ -367,6 +427,14 @@ PDF_DIFF.diff_report_data = {
                             "Key": "SubType"
                         },
                         {
+                            "Equals": false,
+                            "Value": [
+                                "Yes",
+                                "Off"
+                            ],
+                            "Key": "Appearance State"
+                        },
+                        {
                             "Equals": true,
                             "Value": [
                                 "[0 0 1 ]",
@@ -375,18 +443,10 @@ PDF_DIFF.diff_report_data = {
                             "Key": "Border"
                         },
                         {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                "123-456-789"
-                            ],
-                            "Key": "Field Value"
-                        },
-                        {
                             "Equals": true,
                             "Value": [
-                                "CVR-nr.:",
-                                "CVR-nr.:"
+                                "Google",
+                                "Google"
                             ],
                             "Key": "Alternate Field Name"
                         },
@@ -401,428 +461,40 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Text1_2",
-                                "Text1_2"
+                                "Check Box 1",
+                                "Check Box 1"
                             ],
                             "Key": "Field Name"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "Tx",
-                                "Tx"
+                                "Btn",
+                                "Btn"
                             ],
                             "Key": "Field Type"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "x=460.329, y=638.755, width=88.145, height=14.173",
-                                "x=460.329, y=638.755, width=88.145, height=14.173"
+                                "x=63.1, y=309.1, width=44.2, height=41.8",
+                                "x=63.1, y=309.1, width=44.2, height=41.8"
                             ],
                             "Key": "Rectangle"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "Appearance"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "|-----Text"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "#INSERT#",
-                                "123-456-789"
-                            ],
-                            "Key": "|----------Text"
                         }
                     ],
                     "Outline": [
                         [
-                            460.329,
-                            638.755,
-                            88.145,
-                            14.173
+                            63.1,
+                            309.1,
+                            44.2,
+                            41.8
                         ],
                         [
-                            460.329,
-                            638.755,
-                            88.145,
-                            14.173
-                        ]
-                    ]
-                },
-                {
-                    "SubOutline": [
-                        [],
-                        []
-                    ],
-                    "AcceptDiffRegion": [
-                        [],
-                        []
-                    ],
-                    "Attributes": [
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "Widget",
-                                "Widget"
-                            ],
-                            "Key": "SubType"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "[0 0 1 ]",
-                                "[0 0 1 ]"
-                            ],
-                            "Key": "Border"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "lumpchen@google.com",
-                                "lumpchen@google.com"
-                            ],
-                            "Key": "Field Value"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "E-mail:",
-                                "E-mail:"
-                            ],
-                            "Key": "Alternate Field Name"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "0",
-                                "0"
-                            ],
-                            "Key": "Field Flag"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "Text1_6",
-                                "Text1_6"
-                            ],
-                            "Key": "Field Name"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "Tx",
-                                "Tx"
-                            ],
-                            "Key": "Field Type"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "x=200.854, y=566.628, width=347.564, height=14.173",
-                                "x=200.854, y=566.628, width=347.564, height=14.173"
-                            ],
-                            "Key": "Rectangle"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "Appearance"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "|-----Text"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "lumpchen@google.com ",
-                                "lumpchen@google.com "
-                            ],
-                            "Key": "|----------Text"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "Helvetica",
-                                "Helvetica"
-                            ],
-                            "Key": "|----------Font"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "10.0",
-                                "10.0"
-                            ],
-                            "Key": "|----------Font Size"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "DeviceGray",
-                                "DeviceRGB"
-                            ],
-                            "Key": "|----------Fill Colorspace"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "0.0 ",
-                                "1.0 0.0 0.0 "
-                            ],
-                            "Key": "|----------Fill Color"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "203.494",
-                                "203.494"
-                            ],
-                            "Key": "|----------X Position"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "273.99",
-                                "273.99"
-                            ],
-                            "Key": "|----------Y Position"
-                        }
-                    ],
-                    "Outline": [
-                        [
-                            200.854,
-                            566.628,
-                            347.564,
-                            14.173
-                        ],
-                        [
-                            200.854,
-                            566.628,
-                            347.564,
-                            14.173
-                        ]
-                    ]
-                },
-                {
-                    "SubOutline": [
-                        [],
-                        []
-                    ],
-                    "AcceptDiffRegion": [
-                        [],
-                        []
-                    ],
-                    "Attributes": [
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "Widget",
-                                "Widget"
-                            ],
-                            "Key": "SubType"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "[0 0 1 ]",
-                                "[0 0 1 ]"
-                            ],
-                            "Key": "Border"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                "NA"
-                            ],
-                            "Key": "Field Value"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "Eventuelt autorisations nr.:",
-                                "Eventuelt autorisations nr.:"
-                            ],
-                            "Key": "Alternate Field Name"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "0",
-                                "0"
-                            ],
-                            "Key": "Field Flag"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "Text1_7",
-                                "Text1_7"
-                            ],
-                            "Key": "Field Name"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "Tx",
-                                "Tx"
-                            ],
-                            "Key": "Field Type"
-                        },
-                        {
-                            "Equals": true,
-                            "Value": [
-                                "x=200.854, y=548.1, width=347.564, height=14.173",
-                                "x=200.854, y=548.1, width=347.564, height=14.173"
-                            ],
-                            "Key": "Rectangle"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "Appearance"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "|-----Text"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "#INSERT#",
-                                "NA"
-                            ],
-                            "Key": "|----------Text"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "|-----Path"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                "Fill"
-                            ],
-                            "Key": "|----------Paint Operator"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                "DeviceRGB"
-                            ],
-                            "Key": "|----------Fill Colorspace"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                "0.25 0.75 0.75 "
-                            ],
-                            "Key": "|----------Fill Color"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                "x=200.854, y=548.1, width=347.564, height=14.173"
-                            ],
-                            "Key": "|----------Position & Size"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "|-----Path"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                "Stroke"
-                            ],
-                            "Key": "|----------Paint Operator"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                "2.0"
-                            ],
-                            "Key": "|----------Line Width"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                "DeviceRGB"
-                            ],
-                            "Key": "|----------Stroke Colorspace"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                "1.0 0.333328 0.0 "
-                            ],
-                            "Key": "|----------Stroke Color"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                "x=201.854, y=549.1, width=345.564, height=12.173"
-                            ],
-                            "Key": "|----------Position & Size"
-                        }
-                    ],
-                    "Outline": [
-                        [
-                            200.854,
-                            548.1,
-                            347.564,
-                            14.173
-                        ],
-                        [
-                            200.854,
-                            548.1,
-                            347.564,
-                            14.173
+                            63.1,
+                            309.1,
+                            44.2,
+                            41.8
                         ]
                     ]
                 },
@@ -848,7 +520,7 @@ PDF_DIFF.diff_report_data = {
                             "Equals": false,
                             "Value": [
                                 "Off",
-                                "Nej"
+                                "Yes"
                             ],
                             "Key": "Appearance State"
                         },
@@ -863,8 +535,8 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Sæt kryds",
-                                "Sæt kryds"
+                                "Bing",
+                                "Bing"
                             ],
                             "Key": "Alternate Field Name"
                         },
@@ -879,8 +551,8 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Group_2",
-                                "Group_2"
+                                "Check Box 2",
+                                "Check Box 2"
                             ],
                             "Key": "Field Name"
                         },
@@ -895,48 +567,24 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "x=209.128, y=500.216, width=12.274, height=11.934",
-                                "x=209.128, y=500.216, width=12.274, height=11.934"
+                                "x=227.5, y=309.1, width=44.2, height=41.8",
+                                "x=227.5, y=309.1, width=44.2, height=41.8"
                             ],
                             "Key": "Rectangle"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "Appearance"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "|-----Text"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "#INSERT#",
-                                "■"
-                            ],
-                            "Key": "|----------Text"
                         }
                     ],
                     "Outline": [
                         [
-                            209.128,
-                            500.216,
-                            12.274,
-                            11.934
+                            227.5,
+                            309.1,
+                            44.2,
+                            41.8
                         ],
                         [
-                            209.128,
-                            500.216,
-                            12.274,
-                            11.934
+                            227.5,
+                            309.1,
+                            44.2,
+                            41.8
                         ]
                     ]
                 },
@@ -959,26 +607,34 @@ PDF_DIFF.diff_report_data = {
                             "Key": "SubType"
                         },
                         {
-                            "Equals": false,
-                            "Value": [
-                                "Off",
-                                "VE-Installat?rvirksomhed"
-                            ],
-                            "Key": "Appearance State"
-                        },
-                        {
                             "Equals": true,
                             "Value": [
-                                "[0 0 1 ]",
-                                "[0 0 1 ]"
+                                "[0.0 0.0 0.0 ]",
+                                "[0.0 0.0 0.0 ]"
                             ],
                             "Key": "Border"
                         },
                         {
                             "Equals": true,
                             "Value": [
-                                "Sæt kryds:",
-                                "Sæt kryds:"
+                                "[]",
+                                "[]"
+                            ],
+                            "Key": "Color"
+                        },
+                        {
+                            "Equals": false,
+                            "Value": [
+                                "URI: http://baidu.com",
+                                "URI: http://google.com"
+                            ],
+                            "Key": "Action D: mouse button down"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "This is a button",
+                                "This is a button"
                             ],
                             "Key": "Alternate Field Name"
                         },
@@ -993,8 +649,8 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "Group_3",
-                                "Group_3"
+                                "Button Test 2",
+                                "Button Test 2"
                             ],
                             "Key": "Field Name"
                         },
@@ -1009,48 +665,408 @@ PDF_DIFF.diff_report_data = {
                         {
                             "Equals": true,
                             "Value": [
-                                "x=153.164, y=420.034, width=12.274, height=11.933",
-                                "x=153.164, y=420.034, width=12.274, height=11.933"
+                                "x=321.6, y=39.636, width=229.8, height=81.834",
+                                "x=321.6, y=39.636, width=229.8, height=81.834"
                             ],
                             "Key": "Rectangle"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "Appearance"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "",
-                                ""
-                            ],
-                            "Key": "|-----Text"
-                        },
-                        {
-                            "Equals": false,
-                            "Value": [
-                                "#INSERT#",
-                                "■"
-                            ],
-                            "Key": "|----------Text"
                         }
                     ],
                     "Outline": [
                         [
-                            153.164,
-                            420.034,
-                            12.274,
-                            11.933
+                            321.6,
+                            39.636,
+                            229.8,
+                            81.834
                         ],
                         [
-                            153.164,
-                            420.034,
-                            12.274,
-                            11.933
+                            321.6,
+                            39.636,
+                            229.8,
+                            81.834
+                        ]
+                    ]
+                },
+                {
+                    "SubOutline": [
+                        [],
+                        []
+                    ],
+                    "AcceptDiffRegion": [
+                        [],
+                        []
+                    ],
+                    "Attributes": [
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Widget",
+                                "Widget"
+                            ],
+                            "Key": "SubType"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "[0 0 1 ]",
+                                "[0 0 1 ]"
+                            ],
+                            "Key": "Border"
+                        },
+                        {
+                            "Equals": false,
+                            "Value": [
+                                "Bing",
+                                "Google"
+                            ],
+                            "Key": "Field Value"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "[Google, Bing, Baidu]",
+                                "[Google, Bing, Baidu]"
+                            ],
+                            "Key": "Options"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "This is a list box.",
+                                "This is a list box."
+                            ],
+                            "Key": "Alternate Field Name"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "0",
+                                "0"
+                            ],
+                            "Key": "Field Flag"
+                        },
+                        {
+                            "Equals": false,
+                            "Value": [
+                                "Bing",
+                                "Google"
+                            ],
+                            "Key": "Default Value"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "List Box 1",
+                                "List Box 1"
+                            ],
+                            "Key": "Field Name"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Ch",
+                                "Ch"
+                            ],
+                            "Key": "Field Type"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "x=62.6, y=371.0, width=274.4, height=119.6",
+                                "x=62.6, y=371.0, width=274.4, height=119.6"
+                            ],
+                            "Key": "Rectangle"
+                        }
+                    ],
+                    "Outline": [
+                        [
+                            62.6,
+                            371,
+                            274.4,
+                            119.6
+                        ],
+                        [
+                            62.6,
+                            371,
+                            274.4,
+                            119.6
+                        ]
+                    ]
+                },
+                {
+                    "SubOutline": [
+                        [],
+                        []
+                    ],
+                    "AcceptDiffRegion": [
+                        [],
+                        []
+                    ],
+                    "Attributes": [
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Widget",
+                                "Widget"
+                            ],
+                            "Key": "SubType"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "[0 0 1 ]",
+                                "[0 0 1 ]"
+                            ],
+                            "Key": "Border"
+                        },
+                        {
+                            "Equals": false,
+                            "Value": [
+                                "",
+                                "GOOGLE"
+                            ],
+                            "Key": "Field Value"
+                        },
+                        {
+                            "Equals": false,
+                            "Value": [
+                                "",
+                                "Google tooltip"
+                            ],
+                            "Key": "Alternate Field Name"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "0",
+                                "0"
+                            ],
+                            "Key": "Field Flag"
+                        },
+                        {
+                            "Equals": false,
+                            "Value": [
+                                "",
+                                "GOOGLE"
+                            ],
+                            "Key": "Default Value"
+                        },
+                        {
+                            "Equals": false,
+                            "Value": [
+                                "Text Field 1",
+                                "Google"
+                            ],
+                            "Key": "Field Name"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Tx",
+                                "Tx"
+                            ],
+                            "Key": "Field Type"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "x=63.6, y=508.8, width=159.0, height=41.4",
+                                "x=63.6, y=508.8, width=159.0, height=41.4"
+                            ],
+                            "Key": "Rectangle"
+                        }
+                    ],
+                    "Outline": [
+                        [
+                            63.6,
+                            508.8,
+                            159,
+                            41.4
+                        ],
+                        [
+                            63.6,
+                            508.8,
+                            159,
+                            41.4
+                        ]
+                    ]
+                },
+                {
+                    "SubOutline": [
+                        [],
+                        []
+                    ],
+                    "AcceptDiffRegion": [
+                        [],
+                        []
+                    ],
+                    "Attributes": [
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Widget",
+                                "Widget"
+                            ],
+                            "Key": "SubType"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "[0 0 1 ]",
+                                "[0 0 1 ]"
+                            ],
+                            "Key": "Border"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "",
+                                ""
+                            ],
+                            "Key": "Field Value"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "0",
+                                "0"
+                            ],
+                            "Key": "Field Flag"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "",
+                                ""
+                            ],
+                            "Key": "Default Value"
+                        },
+                        {
+                            "Equals": false,
+                            "Value": [
+                                "Text Field 2",
+                                "Baidu"
+                            ],
+                            "Key": "Field Name"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Tx",
+                                "Tx"
+                            ],
+                            "Key": "Field Type"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "x=237.0, y=508.8, width=159.0, height=41.4",
+                                "x=237.0, y=508.8, width=159.0, height=41.4"
+                            ],
+                            "Key": "Rectangle"
+                        }
+                    ],
+                    "Outline": [
+                        [
+                            237,
+                            508.8,
+                            159,
+                            41.4
+                        ],
+                        [
+                            237,
+                            508.8,
+                            159,
+                            41.4
+                        ]
+                    ]
+                },
+                {
+                    "SubOutline": [
+                        [],
+                        []
+                    ],
+                    "AcceptDiffRegion": [
+                        [],
+                        []
+                    ],
+                    "Attributes": [
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Widget",
+                                "Widget"
+                            ],
+                            "Key": "SubType"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "[0 0 1 ]",
+                                "[0 0 1 ]"
+                            ],
+                            "Key": "Border"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "",
+                                ""
+                            ],
+                            "Key": "Field Value"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "0",
+                                "0"
+                            ],
+                            "Key": "Field Flag"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "",
+                                ""
+                            ],
+                            "Key": "Default Value"
+                        },
+                        {
+                            "Equals": false,
+                            "Value": [
+                                "Text Field 3",
+                                "bing"
+                            ],
+                            "Key": "Field Name"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "Tx",
+                                "Tx"
+                            ],
+                            "Key": "Field Type"
+                        },
+                        {
+                            "Equals": true,
+                            "Value": [
+                                "x=408.0, y=508.8, width=159.0, height=41.4",
+                                "x=408.0, y=508.8, width=159.0, height=41.4"
+                            ],
+                            "Key": "Rectangle"
+                        }
+                    ],
+                    "Outline": [
+                        [
+                            408,
+                            508.8,
+                            159,
+                            41.4
+                        ],
+                        [
+                            408,
+                            508.8,
+                            159,
+                            41.4
                         ]
                     ]
                 }

@@ -12,4 +12,8 @@ public class TestCaseAnnot {
 		TestCaseCommon.runTestCase(subFolder, "form_control");
 	}
 	
+	@Test
+	public void test_indd_forms() throws IOException {
+		TestCaseCommon.runTestCase(subFolder, "indd_forms");
+	}
 }

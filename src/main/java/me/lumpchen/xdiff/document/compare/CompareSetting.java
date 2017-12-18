@@ -2,6 +2,7 @@ package me.lumpchen.xdiff.document.compare;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,15 +29,15 @@ public class CompareSetting {
 	
 	public float scaleOfSpaceingBetweenWords = 0.5f;
 	
-	public Map<String, List<Rectangle>> acceptanceDifferenceArea;
+	public Map<String, List<Rectangle>> acceptanceDifferenceArea = new HashMap<String, List<Rectangle>>(0);
 	
 	public boolean ignoreInvisibleGraphics = false;
 	
 	public float globalSearchDistance = -1;
 	
-	public List<String[]> acceptanceDifferenceFontNameMap;
+	public List<String[]> acceptanceDifferenceFontNameMap = new ArrayList<String[]>(0);
 	
-	public List<Character[]> acceptanceDifferenceCharMap;
+	public List<Character[]> acceptanceDifferenceCharMap = new ArrayList<Character[]>(0);
 	
 	public boolean enablePathPixelCompare = false;
 	

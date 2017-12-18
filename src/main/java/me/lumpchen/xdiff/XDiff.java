@@ -124,11 +124,15 @@ public class XDiff {
 						+ "Report folder: " + reportDir.getAbsolutePath());
 		
 		DiffSetting setting;
-		try {
-			setting = DiffSettingLoader.load(config);
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "", e);
-			return -1;
+		if (config == null) {
+			setting = DiffSetting.getDefaultSetting();
+		} else {
+			try {
+				setting = DiffSettingLoader.load(config);
+			} catch (Exception e) {
+				logger.log(Level.SEVERE, "", e);
+				return -1;
+			}
 		}
 		
 		if (pageNo > 0) {

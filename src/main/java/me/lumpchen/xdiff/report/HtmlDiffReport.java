@@ -6,6 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,10 +18,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import me.lumpchen.xdiff.PDocDiffResult;
-import me.lumpchen.xdiff.PageDiffResult;
 import me.lumpchen.xdiff.PDocDiffResult.DocumentInfo;
 import me.lumpchen.xdiff.PDocDiffResult.DocumentProperties;
 import me.lumpchen.xdiff.PDocDiffResult.PageInfo;
+import me.lumpchen.xdiff.PageDiffResult;
 import me.lumpchen.xdiff.PageDiffResult.ContentAttr;
 import me.lumpchen.xdiff.PageDiffResult.DiffContent;
 import me.lumpchen.xdiff.afp.AFPCommentComparator.NopCompareEntry;
@@ -146,8 +149,9 @@ public class HtmlDiffReport {
 			}
 		}
 		FileOutputStream fos = null;
+		Writer writer = null;
 		try {
-			fos = new FileOutputStream(dataJS);
+/*			fos = new FileOutputStream(dataJS);
 
 			StringBuilder data = new StringBuilder();
 			
@@ -156,15 +160,25 @@ public class HtmlDiffReport {
 			data.append(diff_report_data_ns + "." + diff_report_data + " = ");
 			
 			data.append(this.toJSonString());
-			fos.write(data.toString().getBytes("UTF-8"));
+			fos.write(data.toString().getBytes("UTF-8"));*/
+			
+			writer = new OutputStreamWriter(new FileOutputStream(dataJS), StandardCharsets.UTF_8);
+			writer.write("var " + diff_report_data_ns + " = " + diff_report_data_ns + " || {};");
+			writer.write("\n");
+			writer.write(diff_report_data_ns + "." + diff_report_data + " = ");
+			toJSonString(writer);
+			writer.flush();
 		} finally {
 			if (fos != null) {
 				fos.close();
 			}
+			if (writer != null) {
+				writer.close();
+			}
 		}
 	}
 
-	private String toJSonString() throws IOException {
+	private void toJSonString(Writer writer) throws IOException {
 		JSONObject json = new JSONObject();
 		
 		// change by setting
@@ -208,7 +222,8 @@ public class HtmlDiffReport {
 			
 		}
 
-		return json.toString(4);
+		json.write(writer);
+//		return json.toString(4);
 	}
 	
 	private JSONArray toJSon(List<TLECompareEntry> entries) {

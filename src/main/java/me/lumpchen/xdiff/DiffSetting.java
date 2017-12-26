@@ -21,7 +21,8 @@ public class DiffSetting {
 	
 	public boolean useTwelvemonkeysImageIOProvider = true;
 	
-	public int pageNo = -1;
+	public int fromPage = -1;
+	public int toPage = -1;
 	
 	public boolean enableAFPTLEComparison = false;
 	public boolean enableAFPNOPComparison = false;
@@ -39,7 +40,8 @@ public class DiffSetting {
 		
 		setting.diffBitmapBackground = "black";
 		
-		setting.pageNo = -1;
+		setting.fromPage = -1;
+		setting.toPage = -1;
 		
 		return setting;
 	}

@@ -54,9 +54,10 @@ public abstract class ConcurrentDiff {
 
     		final List<Callable<CompareResult>> partitions = new ArrayList<Callable<CompareResult>>();
         	
-        	if (this.setting.pageNo != -1) {
-        		final int startPage = this.setting.pageNo;
-        		final int endPage = startPage;
+        	if (this.setting.fromPage > -1 && this.setting.toPage > -1) {
+        		final int startPage = this.setting.fromPage < maxPageNum ? this.setting.fromPage : maxPageNum;
+        		final int endPage = this.setting.toPage < maxPageNum ? this.setting.toPage : maxPageNum;
+        		
         		partitions.add(new Callable<CompareResult>() {
 					@Override
 					public CompareResult call() throws Exception {

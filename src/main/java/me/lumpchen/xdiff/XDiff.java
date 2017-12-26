@@ -35,7 +35,8 @@ public class XDiff {
 		String test = null;
 		String result = null;
 		String config = null;
-		int pageNo = -1;
+		int fromPage = -1;
+		int toPage = -1;
 		
 		for (int i = 0; i < args.length; i++) {
 			String arg = args[i];
@@ -44,10 +45,17 @@ public class XDiff {
 				folderCompare = true;
 			} else if (arg.equals("-config")) {
 				config = args[++i];
-			} else if (arg.equals("-page")) {
+			} else if (arg.equals("-from_page")) {
 				String pageStr = args[++i];
 				try {
-					pageNo = Integer.parseInt(pageStr);	
+					fromPage = Integer.parseInt(pageStr);	
+				} catch (Exception e) {
+					System.err.println("Invalid page number: " + pageStr + "\n");
+				}
+			} else if (arg.equals("-to_page")) {
+				String pageStr = args[++i];
+				try {
+					toPage = Integer.parseInt(pageStr);	
 				} catch (Exception e) {
 					System.err.println("Invalid page number: " + pageStr + "\n");
 				}
@@ -64,12 +72,18 @@ public class XDiff {
 			System.err.println("Invalid parameters! \n");
 			showUsage();
 		}
+		
+		if (fromPage < toPage) {
+			System.err.println("Invalid page range "
+					+ "from" + fromPage + " to " + toPage + " \n");
+			showUsage();
+		}
 
 		int diff;
 		if (folderCompare) {
-			diff = diff_folder(base, test, result, config, pageNo);
+			diff = diff_folder(base, test, result, config, fromPage, toPage);
 		} else {
-			diff = diff(base, test, result, config, pageNo);
+			diff = diff(base, test, result, config, fromPage, toPage);
 		}
 		
 		System.exit(diff);
@@ -78,7 +92,7 @@ public class XDiff {
 	private static Logger logger = Logger.getLogger(PDFDiffTool.class.getName());
 	public static enum FILE_FORMAT{PDF, PS, AFP};
 	
-	public static int diff(String base, String test, String reportDir, String config, int pageNo) {
+	public static int diff(String base, String test, String reportDir, String config, int fromPage, int toPage) {
 		File baseFile = new File(base);
 		File testFile = new File(test);
 		
@@ -97,17 +111,43 @@ public class XDiff {
 		}
 		
 		if (baseFile.isFile() && testFile.isFile()) {
-			return diff(new File(base), new File(test), new File(reportDir), config, pageNo);
+			return diff(new File(base), new File(test), new File(reportDir), config, fromPage, toPage);
 		} else if (baseFile.isDirectory() && testFile.isDirectory()) {
-			return diff_folder(base, test, reportDir, config, pageNo);
+			return diff_folder(base, test, reportDir, config, fromPage, toPage);
 		} else {
 			logger.severe("Invalid parameters, please check parameters!");
 			return -1;
 		}
 	}
 	
-	public static int diff(File base, File test, File reportDir, String config, int pageNo) {
+	public static int diff(File base, File test, File reportDir, String config, int fromPage, int toPage) {
+		DiffSetting setting;
+		if (config == null) {
+			setting = DiffSetting.getDefaultSetting();
+		} else {
+			try {
+				setting = DiffSettingLoader.load(config);
+			} catch (Exception e) {
+				logger.log(Level.SEVERE, "", e);
+				return -1;
+			}
+		}
 		
+		if (fromPage > 0 && toPage > 0) {
+			if (toPage >= fromPage) {
+				setting.fromPage = fromPage - 1;
+				setting.toPage = toPage - 1;
+			} else {
+				logger.log(Level.SEVERE, "Invalid page range "
+						+ "from" + fromPage + " to " + toPage + " \n");
+				return -1;
+			}
+		}
+		
+		return diff(base, test, reportDir, setting);
+	}
+	
+	public static int diff(File base, File test, File reportDir, DiffSetting setting) {
 		FileHandler handler = null;
 		try {
 			File workFolder = base.getParentFile();
@@ -122,22 +162,6 @@ public class XDiff {
 		logger.info("Base PDF: " + base.getAbsolutePath() + "\n"
 						+ "Test PDF: " + test.getAbsolutePath() + "\n"
 						+ "Report folder: " + reportDir.getAbsolutePath());
-		
-		DiffSetting setting;
-		if (config == null) {
-			setting = DiffSetting.getDefaultSetting();
-		} else {
-			try {
-				setting = DiffSettingLoader.load(config);
-			} catch (Exception e) {
-				logger.log(Level.SEVERE, "", e);
-				return -1;
-			}
-		}
-		
-		if (pageNo > 0) {
-			setting.pageNo = pageNo - 1;
-		}
 		
 		FILE_FORMAT baseFormat = checkSuffix(base);
 		FILE_FORMAT testFormat = checkSuffix(test);
@@ -189,7 +213,7 @@ public class XDiff {
 		return null;
 	}
 
-	public static int diff_folder(String base, String test, String report, String config, int pageNo) {
+	public static int diff_folder(String base, String test, String report, String config, int fromPage, int toPage) {
 		File baseDir = new File(base);
 		File testDir = new File(test);
 		File reportDir = new File(report);
@@ -207,7 +231,7 @@ public class XDiff {
 			}
 			
 			File reportFile = new File(reportDir, name);
-			count += diff(baseFile, testFile, reportFile, config, pageNo);
+			count += diff(baseFile, testFile, reportFile, config, fromPage, toPage);
 		}
 		
 		return count;

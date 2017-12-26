@@ -104,14 +104,14 @@ public class SignleThreadPDFDiff {
 		int maxPageNum = pageNum_1 > pageNum_2 ? pageNum_1 : pageNum_2; 
         try {
         	int startPage = 0;
-        	int endPage = maxPageNum;
-        	if (this.setting.pageNo != -1) {
-        		startPage = this.setting.pageNo;
-        		endPage = startPage + 1;
+        	int endPage = maxPageNum - 1;
+        	if (this.setting.fromPage != -1 && this.setting.toPage != -1) {
+        		startPage = this.setting.fromPage < maxPageNum ? this.setting.fromPage : maxPageNum;
+        		endPage = this.setting.toPage < endPage ? this.setting.toPage : endPage;
         	}
         	
-            for (int i = startPage; i < endPage; i++) {
-            	logger.info("Comparing page " + (i + 1) + " in " + (endPage - startPage));
+            for (int i = startPage; i <= endPage; i++) {
+            	logger.info("Comparing page " + (i + 1) + " in " + (endPage - startPage + 1));
             	
                 PDPage page_1 = i < pageNum_1 ? base.getPage(i) : null;
                 PDPage page_2 = i < pageNum_2 ? test.getPage(i) : null;

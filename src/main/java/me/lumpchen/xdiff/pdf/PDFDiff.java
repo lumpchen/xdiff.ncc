@@ -73,7 +73,7 @@ public class PDFDiff extends ConcurrentDiff {
 		CompareResult compareResult = new CompareResult();
         try {
         	for (int i = startPage; i <= endPage; i++) {
-            	logger.info("Comparing page " + (i + 1));
+        		logger.info("Comparing page " + (i + 1) + " in page range " + (startPage + 1) + "-" + (endPage + 1));
 
             	CompareResult.Result cres = new CompareResult.Result();
             	

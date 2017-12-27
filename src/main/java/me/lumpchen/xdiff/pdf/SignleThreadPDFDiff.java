@@ -111,7 +111,7 @@ public class SignleThreadPDFDiff {
         	}
         	
             for (int i = startPage; i <= endPage; i++) {
-            	logger.info("Comparing page " + (i + 1) + " in " + (endPage - startPage + 1));
+            	logger.info("Comparing page " + (i + 1) + " in page range " + (startPage + 1) + "-" + (endPage + 1));
             	
                 PDPage page_1 = i < pageNum_1 ? base.getPage(i) : null;
                 PDPage page_2 = i < pageNum_2 ? test.getPage(i) : null;

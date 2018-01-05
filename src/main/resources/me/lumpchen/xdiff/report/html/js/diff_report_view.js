@@ -268,6 +268,7 @@ PDF_DIFF.diff_report_view = function(report_data) {
 		$( "#tle_dialog" ).dialog({ autoOpen: false , width: 800});
 		$( "#nop_dialog" ).dialog({ autoOpen: false , width: 800});
 		$( "#doc_info_dialog" ).dialog({ autoOpen: false , width: 800});
+		$( "#footer" ).draggable();
 	};
 	
 	var initDocInfoDialog = function() {

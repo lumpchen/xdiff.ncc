@@ -1,6 +1,13 @@
+
+body {
+	font-family: Helvetica, sans-serif;
+	font-size: 9pt;	
+	background-color: #eeeeee;
+}
+
 h1 {
 	margin: .1em 0;
-	font-size: 1.5em;
+	font-size: 1.2em;
 }
 
 .flat-table {
@@ -9,15 +16,16 @@ h1 {
 	-webkit-font-smoothing: antialiased;
 	font-size: 100%;
 	overflow: auto;
-	width: auto;
+	width: 100%;
 }
 
 .flat-table th {
 	background-color: gray;
 	color: white;
 	font-weight: Bold;
-	padding: 10px 10px;
+	padding: 5px 5px;
 	text-align: center;
+	font-size: 1.2em;
 }
 
 .flat-table td {
@@ -40,27 +48,22 @@ h1 {
 }
 
 #page-list {
-	max-height: 480px;
 	overflow: auto;
-	padding-left: 20px;
+	width: 100%;
+	#padding-left: 20px;
 }
 
 #body {
-	border: 2px solid;
 	background-color: #eeeeee;
-	max-height: 600px;
 	overflow: auto;
 	padding: 10px;
 }
 
 #nav {
-	#position: absolute;
-	#max-height: 500px;
-	#border: 1px blue solid;	
-	max-height: 100%;
 	background-color: #eeeeee;
-	min-width: 20%;
-	max-width: 20%;
+	#min-width: 20%;
+	#max-width: 20%;
+	max-height: 100vh;
 	float: left;
 	padding: 2px;
 	text-align: center;
@@ -69,29 +72,33 @@ h1 {
 }
 
 #section {
-	#border: 1px blue solid;
 	min-width: 80%;
 	max-width: 80%;
-	min-height: 600px;
 	float: left;
 	padding: 2px;
 }
 
 .page-canvas-table {
 	width: 100%;
-	min-height: 600px;
-	
+	min-height: 100px;
 }
 
 #footer {
-	background-color: gray;
-	max-height: 500px;
+	border: 1px black solid;
+	background-color: rgba(128, 128, 128, .6);
+	#max-height: 400px;
 	overflow: auto;
-	padding: 20px;
+	padding: 10px;
+	position: fixed;
+	bottom: 10px;
+	left: 20%;
+	right: 20px;
+	height: 200px;
+	margin-bottom: 0px;
+	cursor: pointer;
 }
 
 #content_tree {
-	max-height: 500px;
 	background-color: gray;
 	width: 25%;
 	float: left;
@@ -111,8 +118,9 @@ h1 {
 	display: block;
 	font-family: sans-serif;
 	-webkit-font-smoothing: antialiased;
-	font-size: 100%;
+	font-size: 1em;
 	width: 100%;
+	padding-left: 20px;
 }
 
 .cont-table th {

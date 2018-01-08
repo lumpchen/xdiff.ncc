@@ -244,7 +244,7 @@ PDF_DIFF.diff_report_view = function(report_data) {
 			}
 			cell.appendChild(x);
 			cell.style.textAlign = "center";
-			pageRow.onclick = pageSelectHandler(i - invisibleRow);
+			pageRow.onclick = pageSelectHandler(i, i - invisibleRow);
 		}
 
 		$(function() {
@@ -268,6 +268,7 @@ PDF_DIFF.diff_report_view = function(report_data) {
 		$( "#tle_dialog" ).dialog({ autoOpen: false , width: 800});
 		$( "#nop_dialog" ).dialog({ autoOpen: false , width: 800});
 		$( "#doc_info_dialog" ).dialog({ autoOpen: false , width: 800});
+		$( "#footer" ).draggable();
 	};
 	
 	var initDocInfoDialog = function() {
@@ -451,13 +452,13 @@ PDF_DIFF.diff_report_view = function(report_data) {
 		});
 	};
 
-	var updatePageSelection = function(pageNo) {
+	var updatePageSelection = function(tableRowIndex) {
 		var tableBody = document.getElementById("page_list_table").getElementsByTagName("tbody")[0];
 
 		for (var i = 0; i < tableBody.rows.length; i++) {
 			var td = tableBody.rows[i].cells[0];
 			var td_1 = tableBody.rows[i].cells[1];
-			if (i == pageNo) {
+			if (i == tableRowIndex) {
 				updateCellColor(td, true);
 				updateCellColor(td_1, true);
 			} else {
@@ -479,9 +480,9 @@ PDF_DIFF.diff_report_view = function(report_data) {
 		}
 	}
 	
-	var pageSelectHandler = function(pageNo) {
+	var pageSelectHandler = function(pageNo, tableRowIndex) {
 		return function() {
-			updatePageSelection(pageNo);
+			updatePageSelection(tableRowIndex);
 			
 			page_view_paras["PageNo"] = pageNo;
 			page_view_paras["DiffContent"] = null;
@@ -537,8 +538,13 @@ PDF_DIFF.diff_report_view = function(report_data) {
 			drawBlankPage(baseCanvas);
 		} else {
 			var imageTag = base_pdf_json_obj.pages[pageNo].imageTag;
-			drawPage(cell, imageTag, baseCanvas, paras.baseCanvasScale);
-			
+			if (imageTag) {
+				drawPage(cell, imageTag, baseCanvas, paras.baseCanvasScale);
+			} else {
+				baseCanvas.width = 792;
+				baseCanvas.height = 841;
+				drawBlankPage(baseCanvas, "Page " + (pageNo + 1) + " is not compared");
+			}
 			// addCanvasMouseListener(baseCanvas);
 		}
 	};
@@ -569,8 +575,13 @@ PDF_DIFF.diff_report_view = function(report_data) {
 			drawBlankPage(testCanvas);
 		} else {
 			var imageTag = test_pdf_json_obj.pages[pageNo].imageTag;
-			drawPage(cell, imageTag, testCanvas, paras.testCanvasScale);
-
+			if (imageTag) {
+				drawPage(cell, imageTag, testCanvas, paras.testCanvasScale);
+			} else {
+				testCanvas.width = 792;
+				testCanvas.height = 841;
+				drawBlankPage(testCanvas, "Page " + (pageNo + 1) + " not compared");
+			}
 			// addCanvasMouseListener(testCanvas);
 		}
 	}
@@ -710,7 +721,7 @@ PDF_DIFF.diff_report_view = function(report_data) {
 		}
 	};
 
-	var drawBlankPage = function(canvas) {
+	var drawBlankPage = function(canvas, message) {
 		var ctx = canvas.getContext("2d");
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		ctx.save();
@@ -724,7 +735,11 @@ PDF_DIFF.diff_report_view = function(report_data) {
 		ctx.scale(3, 3);
 		ctx.font = "16pt Calibri";
 		ctx.fillStyle = 'red';
-		ctx.fillText("NOT FOUND", 0, 0);
+		if (message) {
+			ctx.fillText(message, 0, 0);
+		} else {
+			ctx.fillText("NOT FOUND", 0, 0);
+		}
 		
 		ctx.restore();
 	};

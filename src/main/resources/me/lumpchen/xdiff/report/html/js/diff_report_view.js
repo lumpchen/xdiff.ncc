@@ -188,7 +188,14 @@ PDF_DIFF.diff_report_view = function(report_data) {
 		var invisibleRow = 0;
 		for (var i = 0; i < max_page_count; i++) {
 			
-			if  (ShowDifferentPagesOnly && diff_page_nums.indexOf(i) < 0 && !xor_images.hasOwnProperty(i + "")) {
+			if (ShowDifferentPagesOnly && diff_page_nums.indexOf(i) < 0 && !xor_images.hasOwnProperty(i + "")) {
+				invisibleRow++;
+				continue;
+			}
+			
+			// handle pages not be compared
+			if ((base_pdf_json_obj.pages[i] === undefined || base_pdf_json_obj.pages[i].imageTag === undefined) 
+					&& (test_pdf_json_obj.pages[i] === undefined || test_pdf_json_obj.pages[i].imageTag === undefined)) {
 				invisibleRow++;
 				continue;
 			}

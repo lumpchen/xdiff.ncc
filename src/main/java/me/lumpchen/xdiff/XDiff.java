@@ -19,7 +19,9 @@ public class XDiff {
 	private static void showUsage() {
         String usage = "Usage: java -jar xdiff.jar [options] <baseline-pdf> <test-pdf> <result-folder>\n"
                 + "\nOptions:\n"
-                + "  -config                            : Comparison configuration file path.\n";
+                + "  -config                            : Comparison configuration file path.\n"
+        		+ "  -from_page                         : Start page to compare, begin page 1.\n"
+        		+ "  -to_page                           : End page to compare.\n";
         System.err.println(usage);
         System.exit(1);
 	}
@@ -73,9 +75,9 @@ public class XDiff {
 			showUsage();
 		}
 		
-		if (fromPage < toPage) {
+		if (fromPage > toPage) {
 			System.err.println("Invalid page range "
-					+ "from" + fromPage + " to " + toPage + " \n");
+					+ "from " + fromPage + " to " + toPage + " \n");
 			showUsage();
 		}
 

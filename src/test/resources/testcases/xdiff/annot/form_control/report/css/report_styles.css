@@ -62,7 +62,7 @@ h1 {
 #nav {
 	background-color: #eeeeee;
 	#min-width: 20%;
-	#max-width: 20%;
+	max-width: 20%;
 	max-height: 100vh;
 	float: left;
 	padding: 2px;
@@ -99,19 +99,21 @@ h1 {
 }
 
 #content_tree {
-	background-color: gray;
+	#background-color: gray;
 	width: 25%;
 	float: left;
 	text-align: left;
+	padding-bottom: 20px;
 }
 
 #content_table_div {
 	position: absolute;
 	left: 26%;
-	background-color: gray;
+	#background-color: gray;
 	clear: both;
 	float: right;
 	text-align: left;
+	padding-bottom: 20px;
 }
 
 .cont-table {
@@ -154,4 +156,3 @@ h1 {
 	font-weight: Bold;
     color: blue;
 }
-

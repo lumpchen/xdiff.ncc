@@ -39,18 +39,18 @@ public class AFPDiff extends ConcurrentDiff {
 		this.result.getTestDocumentInfo().setCategory("test");
 		this.result.getTestDocumentInfo().setFileName(this.test.getName());
 		
-		this.basePrintFile = this.getPrintFile(this.base);
 		this.para = new RenderParameter();
-		para.usePageResolution = false;
-		para.resolution = this.setting.resolution;
+		this.para.usePageResolution = false;
+		this.para.resolution = this.setting.resolution;
+		
+		this.basePrintFile = this.getPrintFile(this.base);
+		this.basePageCount = this.basePrintFile.getPageCount();
+		this.result.getBaseDocumentInfo().setPageCount(this.basePageCount);
+		this.result.getBaseDocumentInfo().setImageSuffix(this.setting.previewImageFormat);
 		this.result.getBaseDocumentInfo().setProperties(getDocumentProperties(this.base, this.basePrintFile));
 		
 		this.testPrintFile = this.getPrintFile(this.test);
-		this.basePageCount = basePrintFile.getPageCount();
-		this.result.getBaseDocumentInfo().setPageCount(this.basePageCount);
-		this.result.getBaseDocumentInfo().setImageSuffix(this.setting.previewImageFormat);
-		
-		this.testPageCount = testPrintFile.getPageCount();
+		this.testPageCount = this.testPrintFile.getPageCount();
 		this.result.getTestDocumentInfo().setPageCount(testPageCount);
 		this.result.getTestDocumentInfo().setImageSuffix(this.setting.previewImageFormat);
 		this.result.getTestDocumentInfo().setProperties(getDocumentProperties(this.test, this.testPrintFile));

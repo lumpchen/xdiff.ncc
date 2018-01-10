@@ -8,7 +8,7 @@ public class DiffSetting {
 	public String previewImageFormat = "png";
 	public boolean noReportOnSameResult = true;
 	public boolean printReport = false;
-	public boolean showDifferentPagesOnly = true;
+	public boolean showDifferentPagesOnly = false;
 	
 	public CompareSetting compSetting;
 	

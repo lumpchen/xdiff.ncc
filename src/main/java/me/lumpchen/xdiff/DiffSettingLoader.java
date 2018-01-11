@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -14,6 +15,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
 import javax.imageio.spi.IIORegistry;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.spi.ServiceRegistry;
@@ -183,13 +186,14 @@ public class DiffSettingLoader {
 			setting.useTwelvemonkeysImageIOProvider = getBoolean(properties, "useTwelvemonkeysImageIOProvider", true);
 			
 			IIORegistry registry = IIORegistry.getDefaultInstance();
-			ImageReaderSpi sunProvider = lookupProviderByName(registry, "com.sun.imageio.plugins.jpeg.JPEGImageReaderSpi");
-			ImageReaderSpi twelvemonkeysProvider = lookupProviderByName(registry, "com.twelvemonkeys.imageio.plugins.jpeg.JPEGImageReaderSpi");
-			
-			if (setting.useTwelvemonkeysImageIOProvider) {
-				registry.setOrdering(ImageReaderSpi.class, twelvemonkeysProvider, sunProvider);
-			} else {
-				registry.setOrdering(ImageReaderSpi.class, sunProvider, twelvemonkeysProvider);
+			ImageReaderSpi twelvemonkeysProviderJPEG = registry.getServiceProviderByClass(com.twelvemonkeys.imageio.plugins.jpeg.JPEGImageReaderSpi.class);
+			ImageReaderSpi sunProviderJPEG = registry.getServiceProviderByClass(com.sun.imageio.plugins.jpeg.JPEGImageReaderSpi.class);
+			if (sunProviderJPEG != null && twelvemonkeysProviderJPEG != null) {
+				if (setting.useTwelvemonkeysImageIOProvider) {
+					registry.setOrdering(ImageReaderSpi.class, twelvemonkeysProviderJPEG, sunProviderJPEG);
+				} else {
+					registry.setOrdering(ImageReaderSpi.class, sunProviderJPEG, twelvemonkeysProviderJPEG);
+				}
 			}
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "Fail to load configure file: " + fileName, e);
@@ -198,7 +202,7 @@ public class DiffSettingLoader {
 
 		return setting;
 	}
-	
+
 	static Integer getInteger(Properties properties, String key, int defaultValue) {
 		try {
 			String val = properties.getProperty(key);
@@ -250,12 +254,8 @@ public class DiffSettingLoader {
 		logger.log(Level.WARNING, "Config value error: " + key + ", using default value: " + defaultValue + ".");
 		return defaultValue;
 	}
-	
-	private static <T> T lookupProviderByName(final ServiceRegistry registry, final String providerClassName) {
-	    try {
-	        return (T) registry.getServiceProviderByClass(Class.forName(providerClassName));
-	    } catch (ClassNotFoundException ignore) {
-	        return null;
-	    }
+
+	private static <T> T lookupProviderByName(final ServiceRegistry registry, final Class providerClass) {
+		return (T) registry.getServiceProviderByClass(providerClass);
 	}
 }

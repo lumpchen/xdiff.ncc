@@ -100,7 +100,7 @@ public class AFPContentGraphics2D extends StructuredAFPPageGraphics {
 			imageContent = (ImageContent) content;
 		}
 		
-		if (imageContent != null) {
+		if (imageContent != null && img != null) {
 			imageContent.bitsPerComponent = img.getColorModel().getComponentSize(0);
 			imageContent.byteCount = -1;
 			imageContent.colorSpace = img.getColorModel().getColorSpace().toString();

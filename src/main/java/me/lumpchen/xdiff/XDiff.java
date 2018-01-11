@@ -6,11 +6,27 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import javax.imageio.spi.IIORegistry;
+import javax.imageio.spi.ImageReaderSpi;
+
+import com.twelvemonkeys.imageio.plugins.tiff.TIFFImageReaderSpi;
+
 import me.lumpchen.xdiff.afp.AFPDiffTool;
 import me.lumpchen.xdiff.pdf.PDFDiffTool;
 import me.lumpchen.xdiff.ps.PSDiffTool;
 
 public class XDiff {
+	
+	static {
+		IIORegistry registry = IIORegistry.getDefaultInstance();
+		ImageReaderSpi twelvemonkeysJPEGProvider = new com.twelvemonkeys.imageio.plugins.jpeg.JPEGImageReaderSpi();
+		
+		TIFFImageReaderSpi twelvemonkeysTIFFProvider = new com.twelvemonkeys.imageio.plugins.tiff.TIFFImageReaderSpi();
+		twelvemonkeysTIFFProvider.onRegistration(registry, ImageReaderSpi.class);
+		
+		registry.registerServiceProvider(twelvemonkeysTIFFProvider);
+		registry.registerServiceProvider(twelvemonkeysJPEGProvider);
+	}
 
 	public static void main(String[] args) {
 		run(args);
@@ -161,8 +177,8 @@ public class XDiff {
 			e.printStackTrace();
 		}
 		
-		logger.info("Base PDF: " + base.getAbsolutePath() + "\n"
-						+ "Test PDF: " + test.getAbsolutePath() + "\n"
+		logger.info("Control file: " + base.getAbsolutePath() + "\n"
+						+ "Test file: " + test.getAbsolutePath() + "\n"
 						+ "Report folder: " + reportDir.getAbsolutePath());
 		
 		FILE_FORMAT baseFormat = checkSuffix(base);

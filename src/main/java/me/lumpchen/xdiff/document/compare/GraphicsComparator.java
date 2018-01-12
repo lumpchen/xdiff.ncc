@@ -88,11 +88,11 @@ public class GraphicsComparator extends ContentComparator {
 				if (f1 == null && f2 == null) {
 					return true;
 				}
-				if ((f1 != null && f1.floatValue() != 0) || 
-						(f2 != null && f2.floatValue() != 0)) {
+				if ((f1 != null && f1.floatValue() != 0 && bbox_1 != null) || 
+						(f2 != null && f2.floatValue() != 0 && bbox_2 != null)) {
 					// should be a line, continue comparing
 				} else {
-					return true;	
+					return true;
 				}
 			}
 		}

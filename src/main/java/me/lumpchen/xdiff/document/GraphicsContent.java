@@ -102,6 +102,9 @@ public class GraphicsContent extends PageContent {
     		return null;
     	}
     	Rectangle2D r = this.getOutlineRect();
+    	if (r == null) {
+    		return null;
+    	}
     	if (r.getWidth() > 0 && r.getHeight() > 0) {
     		return null;
     	}

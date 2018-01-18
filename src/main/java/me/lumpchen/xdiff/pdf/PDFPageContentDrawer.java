@@ -124,7 +124,7 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 	private void addToContentList(PageContent content) {
 		if (!this.runtimePageContentStack.isEmpty()) {
 			PageContent last = this.runtimePageContentStack.peek();
-			if (last.getType() == Type.Annot) {
+			if (last != null && last.getType() == Type.Annot) {
 				((AnnotContent) last).addAppearanceContent(content);
 				return;
 			}
@@ -142,7 +142,9 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 	
 	public void beginAnnot(PDAnnotation annot) {
 		AnnotContent content = AnnotContentHelper.createAnnotContent(annot);
-		this.runtimePageContentStack.push(content);
+		if (content != null) {
+			this.runtimePageContentStack.push(content);			
+		}
 	}
 
 	public void endAnnot(PDAnnotation annot) {

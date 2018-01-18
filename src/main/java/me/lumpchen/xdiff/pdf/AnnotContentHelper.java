@@ -4,6 +4,8 @@ import java.awt.geom.GeneralPath;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.pdfbox.cos.COSArray;
 import org.apache.pdfbox.cos.COSBase;
@@ -26,10 +28,15 @@ import me.lumpchen.xdiff.document.AnnotContent;
 public class AnnotContentHelper {
 
 	public static AnnotContent createAnnotContent(PDAnnotation annotDict) {
-		AnnotContent annotContent =  AnnotContent.newInstance(annotDict.getSubtype());
-		mapAttrs(annotContent, annotDict);
-		
-		return annotContent;
+		try {
+			AnnotContent annotContent =  AnnotContent.newInstance(annotDict.getSubtype());
+			mapAttrs(annotContent, annotDict);
+			
+			return annotContent;
+		} catch (Exception e) {
+			Logger.getLogger(AnnotContent.class.getName()).warning(e.getMessage());
+		}
+		return null;
 	}
 
 	private static void mapAttrs(AnnotContent annotContent, PDAnnotation annotDict) {

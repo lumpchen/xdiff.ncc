@@ -27,6 +27,8 @@ public class DiffSetting {
 	public boolean enableAFPTLEComparison = false;
 	public boolean enableAFPNOPComparison = false;
 	
+	public ProgressListener progressListener;
+	
 	public static final DiffSetting getDefaultSetting() {
 		DiffSetting setting = new DiffSetting();
 		

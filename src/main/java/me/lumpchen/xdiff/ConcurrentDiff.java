@@ -35,6 +35,9 @@ public abstract class ConcurrentDiff {
 	protected int testPageCount;
 	protected PDocDiffResult result;
 	
+	protected volatile int pageCompleted;
+	private int maxPageNum;
+	
 	private static final int TIMEOUT = 10000;
 	private static final int CPU_CORE_NUM = Runtime.getRuntime().availableProcessors();
 	
@@ -50,7 +53,7 @@ public abstract class ConcurrentDiff {
     		this.result = new PDocDiffResult(this.setting, this.getFormat());
     		this.prepareCompare();
     		
-    		int maxPageNum = basePageCount > testPageCount ? basePageCount : testPageCount;
+    		this.maxPageNum = basePageCount > testPageCount ? basePageCount : testPageCount;
 
     		final List<Callable<CompareResult>> partitions = new ArrayList<Callable<CompareResult>>();
         	
@@ -138,6 +141,11 @@ public abstract class ConcurrentDiff {
 		} catch (Exception e) {
 			throw new DiffException("Page content extract failure: " + pageNo, e);
 		}
+	}
+	
+	protected synchronized void updateProgress() {
+		float progress = (float) this.pageCompleted / this.maxPageNum;
+		this.setting.progressListener.progress(progress);
 	}
 	
 	protected abstract String getFormat();

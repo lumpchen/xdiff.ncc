@@ -111,6 +111,15 @@ public class XDiff {
 	public static enum FILE_FORMAT{PDF, PS, AFP};
 	
 	public static int diff(String base, String test, String reportDir, String config, int fromPage, int toPage) {
+		return diff(base, test, reportDir, config, fromPage, toPage, null);
+	}
+	
+	public static int diff(String base, String test, String reportDir, String config, 
+			int fromPage, int toPage, ProgressListener progressListener) {
+		if (progressListener == null) {
+			progressListener = new DefaultProgressListener();
+		}
+		
 		File baseFile = new File(base);
 		File testFile = new File(test);
 		
@@ -129,16 +138,17 @@ public class XDiff {
 		}
 		
 		if (baseFile.isFile() && testFile.isFile()) {
-			return diff(new File(base), new File(test), new File(reportDir), config, fromPage, toPage);
+			return diff(new File(base), new File(test), new File(reportDir), config, fromPage, toPage, progressListener);
 		} else if (baseFile.isDirectory() && testFile.isDirectory()) {
-			return diff_folder(base, test, reportDir, config, fromPage, toPage);
+			return diff_folder(base, test, reportDir, config, fromPage, toPage, progressListener);
 		} else {
 			logger.severe("Invalid parameters, please check parameters!");
 			return -1;
 		}
 	}
 	
-	public static int diff(File base, File test, File reportDir, String config, int fromPage, int toPage) {
+	public static int diff(File base, File test, File reportDir, String config, 
+			int fromPage, int toPage, ProgressListener progressListener) {
 		DiffSetting setting;
 		if (config == null) {
 			setting = DiffSetting.getDefaultSetting();
@@ -162,7 +172,16 @@ public class XDiff {
 			}
 		}
 		
+		if (progressListener == null) {
+			progressListener = new DefaultProgressListener();
+		}
+		setting.progressListener = progressListener;
+		
 		return diff(base, test, reportDir, setting);
+	}
+	
+	public static int diff(File base, File test, File reportDir, String config, int fromPage, int toPage) {
+		return diff(base, test, reportDir, config, fromPage, toPage, null);
 	}
 	
 	public static int diff(File base, File test, File reportDir, DiffSetting setting) {
@@ -230,8 +249,9 @@ public class XDiff {
 		
 		return null;
 	}
-
-	public static int diff_folder(String base, String test, String report, String config, int fromPage, int toPage) {
+	
+	public static int diff_folder(String base, String test, String report, String config, 
+			int fromPage, int toPage, ProgressListener progressListener) {
 		File baseDir = new File(base);
 		File testDir = new File(test);
 		File reportDir = new File(report);
@@ -249,10 +269,23 @@ public class XDiff {
 			}
 			
 			File reportFile = new File(reportDir, name);
-			count += diff(baseFile, testFile, reportFile, config, fromPage, toPage);
+			count += diff(baseFile, testFile, reportFile, config, fromPage, toPage, progressListener);
 		}
 		
 		return count;
+	}
+
+	public static int diff_folder(String base, String test, String report, String config, int fromPage, int toPage) {
+		return diff_folder(base, test, report, config, fromPage, toPage);
+	}
+	
+	public static class DefaultProgressListener implements ProgressListener {
+
+		@Override
+		public void progress(float progress) {
+			System.out.println("Progress: " + progress);
+		}
+		
 	}
 }
 

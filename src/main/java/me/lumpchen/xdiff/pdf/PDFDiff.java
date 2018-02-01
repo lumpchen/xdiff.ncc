@@ -123,6 +123,9 @@ public class PDFDiff extends ConcurrentDiff {
             	
             	cres.status = CompareResult.Complete;
             	compareResult.addResult(i + 1, cres);
+            	
+            	this.pageCompleted++;
+            	this.updateProgress();
             }
         } catch (Exception e) {
         	logger.log(Level.SEVERE, "Can't render page: ", e);

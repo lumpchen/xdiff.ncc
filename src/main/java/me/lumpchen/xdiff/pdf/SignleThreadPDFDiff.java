@@ -155,6 +155,9 @@ public class SignleThreadPDFDiff {
             	if (testPageInfo != null) {
             		testPageInfo.cleanImageData();            		
             	}
+            	
+            	float progress = (float) (i + 1) / (endPage - startPage + 1);
+            	setting.progressListener.progress(progress);
             }
         } catch (Exception e) {
         	logger.log(Level.SEVERE, "Can't render page: ", e);

@@ -117,8 +117,8 @@ public class PDFDiffTool {
 			setting = DiffSetting.getDefaultSetting();	
 		}
 		
-//		PDFDiff differ = new PDFDiff(base, test, setting);
-		SignleThreadPDFDiff differ = new SignleThreadPDFDiff(base, test, setting);
+		PDFDiff differ = new PDFDiff(base, test, setting);
+//		SignleThreadPDFDiff differ = new SignleThreadPDFDiff(base, test, setting);
 		
 		try {
 			logger.info("Comparing PDF: " + base.getName() + " To " + test.getName());

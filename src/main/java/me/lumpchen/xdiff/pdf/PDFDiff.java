@@ -146,7 +146,7 @@ public class PDFDiff extends ConcurrentDiff {
 		}
 	}
 	
-	private BufferedImage renderPage(int pageNo, PDDocument pdoc, List<PageContent> contentList) throws Exception {
+	private synchronized BufferedImage renderPage(int pageNo, PDDocument pdoc, List<PageContent> contentList) throws Exception {
 //		PDFRenderer baseRenderer = new PDFRenderer(pdoc);
 //        BufferedImage image = baseRenderer.renderImageWithDPI(pageNo, this.setting.resolution, ImageType.RGB);
 //        return image;

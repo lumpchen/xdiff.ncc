@@ -175,9 +175,9 @@ public abstract class ContentComparator {
 			return null;
 		}
 		if (fontName.indexOf("+") > 0) {
-			return fontName.substring(fontName.indexOf("+") + 1, fontName.length());
+			return fontName.substring(fontName.indexOf("+") + 1, fontName.length()).trim();
 		}
-		return fontName;
+		return fontName.trim();
 	}
 
 	protected BufferedImage diffImages(BufferedImage bim1, BufferedImage bim2) throws IOException {

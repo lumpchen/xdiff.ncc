@@ -17,23 +17,28 @@ public class TestCaseCommon {
 	
 	private static Logger logger = Logger.getLogger(TestCaseCommon.class.getName());
 
-	public static void runTestCase(String subFolder, String name) throws IOException {
+	public static void runTestCase(String subFolder, String name, String format) throws IOException {
 		File f = new File(root, subFolder);
 		if (!f.exists()) {
 			return;
 		}
 
-		runTestCase(new File(f, name));
+		runTestCase(f, name, format);
+	}
+	
+	public static void runTestCase(String subFolder, String name) throws IOException {
+		runTestCase(subFolder, name, "pdf");
 	}
 
-	static void runTestCase(File folder) throws IOException {
+	static void runTestCase(File folder, String name, String format) throws IOException {
+		folder = getFile(folder, name);
 		if (!folder.exists() || !folder.isDirectory()) {
 			Assert.fail("Not found testcase: " + folder.getName());
 		}
 		logger.info("Run testcase: " + folder.getName());
 
-		File control = getFile(folder, "control.pdf");
-		File test = getFile(folder, "test.pdf");
+		File control = getFile(folder, "control" + "." + format);
+		File test = getFile(folder, "test" + "." + format);
 		File config = getFile(folder, "config.properties");
 		File report = getFile(folder, "report");
 

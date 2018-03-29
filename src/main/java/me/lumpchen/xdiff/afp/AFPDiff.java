@@ -116,6 +116,9 @@ public class AFPDiff extends ConcurrentDiff {
         	
         	cres.status = CompareResult.Complete;
         	compareResult.addResult(i + 1, cres);
+        	
+        	this.pageCompleted++;
+        	this.updateProgress();
         }
 		return compareResult;
 	}

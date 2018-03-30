@@ -79,6 +79,9 @@ public abstract class ConcurrentDiff {
             	}
             	for (int i = 0; i < partition; i++) {
             		final int begin = i * pagesPerPartition;
+            		if (begin >= this.maxPageNum) {
+            			break;
+            		}
             		int nend = begin + pagesPerPartition - 1;
             		final int end = nend > maxPageNum ? maxPageNum : nend;
             		

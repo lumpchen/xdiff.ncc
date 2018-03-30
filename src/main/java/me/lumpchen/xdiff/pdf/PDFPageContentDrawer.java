@@ -61,7 +61,6 @@ import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotation;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationLink;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationMarkup;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDBorderStyleDictionary;
-import org.apache.pdfbox.rendering.PageDrawer;
 import org.apache.pdfbox.util.Matrix;
 import org.apache.pdfbox.util.Vector;
 
@@ -70,13 +69,13 @@ import me.lumpchen.xdiff.document.AnnotContent;
 import me.lumpchen.xdiff.document.GraphicsContent;
 import me.lumpchen.xdiff.document.ImageContent;
 import me.lumpchen.xdiff.document.PageContent;
-import me.lumpchen.xdiff.document.TextContent;
 import me.lumpchen.xdiff.document.PageContent.ColorDesc;
 import me.lumpchen.xdiff.document.PageContent.Type;
+import me.lumpchen.xdiff.document.TextContent;
 
 public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements PageContentDrawer {
 	
-	private static final Logger LOG = Logger.getLogger(PageDrawer.class.getName());
+	private static final Logger LOG = Logger.getLogger(PDFPageContentDrawer.class.getName());
 
     // the graphics device to draw to, xform is the initial transform of the device (i.e. DPI)
     private Graphics2D graphics;

@@ -76,6 +76,10 @@ public abstract class PageContent {
 	    }
 		
 		public boolean equals(Object obj, boolean fill) {
+			return this.equals(obj, fill, true);
+		}
+		
+		public boolean equals(Object obj, boolean fill, boolean compareTextState) {
 			if (this == obj) {
 	        	return true;
 	        }
@@ -84,12 +88,15 @@ public abstract class PageContent {
 	        }
 	        
 	        GraphicsStateDesc aObj = (GraphicsStateDesc) obj;
-	        if (this.textState != null && aObj.textState != null) {
-	        	if (!this.textState.equals(aObj.textState)) {
-	        		return false;
-	        	}
-	        } else if (this.textState != aObj.textState) {
-	        	return false;
+	        
+	        if (compareTextState) {
+		        if (this.textState != null && aObj.textState != null) {
+		        	if (!this.textState.equals(aObj.textState)) {
+		        		return false;
+		        	}
+		        } else if (this.textState != aObj.textState) {
+		        	return false;
+		        }
 	        }
 	        
 	        if (fill) {

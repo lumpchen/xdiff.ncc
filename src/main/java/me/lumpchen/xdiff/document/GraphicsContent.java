@@ -45,7 +45,7 @@ public class GraphicsContent extends PageContent {
 			return false;
 		}
 		
-		if (!this.getGraphicsStateDesc().equals(pathContent.getGraphicsStateDesc(), this.isFill())) {
+		if (!this.getGraphicsStateDesc().equals(pathContent.getGraphicsStateDesc(), this.isFill(), false)) {
 			return false;
 		}
 		

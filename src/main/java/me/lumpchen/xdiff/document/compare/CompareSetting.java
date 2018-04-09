@@ -10,7 +10,7 @@ public class CompareSetting {
 
 	public boolean enableCompareImage = true;
 	public boolean enableComparePath = true;
-	public boolean enableMergePath = false;
+	public boolean enableMergePath = true;
 	public boolean enableCompareAnnots = true;
 	public boolean enableTextPositionCompare = true;
 	
@@ -25,13 +25,13 @@ public class CompareSetting {
 	public float toleranceOfRectWidth = 0.5f;
 	public float toleranceOfRectHeight = 0.5f;
 	
-	public boolean ignoreZeroSizeArea = false;
+	public boolean ignoreZeroSizeArea = true;
 	
 	public float scaleOfSpaceingBetweenWords = 0.5f;
 	
 	public Map<String, List<Rectangle>> acceptanceDifferenceArea = new HashMap<String, List<Rectangle>>(0);
 	
-	public boolean ignoreInvisibleGraphics = false;
+	public boolean ignoreInvisibleGraphics = true;
 	
 	public float globalSearchDistance = -1;
 	

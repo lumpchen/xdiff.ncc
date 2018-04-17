@@ -170,7 +170,7 @@ public abstract class ContentComparator {
 		return Math.round(d * 1000) / 1000d;
 	}
 
-	protected static String removeFontNameSuffix(String fontName) {
+	public static String removeFontNameSuffix(String fontName) {
 		if (fontName == null) {
 			return null;
 		}

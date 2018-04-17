@@ -121,14 +121,11 @@ public class TextContent extends PageContent {
 		return this.averageFontWidth;
 	}
 	
-	public String getCIDString() {
-		StringBuilder buf = new StringBuilder();
-		if (this.cidArray != null) {
-			for (Integer i : this.cidArray) {
-				buf.append(i + " ");
-			}
+	public Integer[] getCIDArray() {
+		if (this.cidArray == null) {
+			return new Integer[0];
 		}
-		return buf.toString();
+		return this.cidArray.toArray(new Integer[this.cidArray.size()]);
 	}
 }
 

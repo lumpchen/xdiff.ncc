@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import me.lumpchen.xdiff.PageDiffResult.DiffContent;
+import me.lumpchen.xdiff.document.ImageSet.ImageLob;
 import me.lumpchen.xdiff.document.PageThread;
 import me.lumpchen.xdiff.document.TextContent;
 import me.lumpchen.xdiff.document.TextThread;
@@ -17,6 +18,9 @@ import me.lumpchen.xdiff.document.compare.name.fraser.neil.plaintext.diff_match_
 import me.lumpchen.xdiff.document.compare.name.fraser.neil.plaintext.diff_match_patch.Operation;
 
 public class TextComparator extends ContentComparator {
+	
+	public static final String TAG_INSERT = "#INSERT#";
+	public static final String TAG_DELETE = "#DELETE#";
 	
 	private float basePageHeight;
 	private float testPageHeight;
@@ -110,6 +114,10 @@ public class TextComparator extends ContentComparator {
 			}
 		}
 		
+		List<TextLob> baseFlyContents = baseTextThread.getFlyContents();
+		List<TextLob> testFlyContents = testTextThread.getFlyContents();
+		this.compareFlyContents(baseFlyContents, testFlyContents, result);
+		
 		this.match(result);
 		return result.toArray(new DiffContent[result.size()]);
 	}
@@ -139,7 +147,8 @@ public class TextComparator extends ContentComparator {
 				String text = entry.getKey().getText();
 				TextLob lob = entry.getValue();
 				DiffContent diffContent = new DiffContent(DiffContent.Category.Text);
-				diffContent.putAttr(DiffContent.Key.Attr_Text, false, "#INSERT#", text);
+				diffContent.putAttr(DiffContent.Key.Attr_Text, false, TAG_INSERT, text);
+				this.setAttributes(lob, diffContent, TAG_INSERT);
 				diffContent.setBBox(null, lob.getBoundingBox());
 				result.add(diffContent);
 			}
@@ -152,7 +161,8 @@ public class TextComparator extends ContentComparator {
 				String text = entry.getKey().getText();
 				TextLob lob = entry.getValue();
 				DiffContent diffContent = new DiffContent(DiffContent.Category.Text);
-				diffContent.putAttr(DiffContent.Key.Attr_Text, false, text, "#DELETE#");
+				diffContent.putAttr(DiffContent.Key.Attr_Text, false, text, TAG_DELETE);
+				this.setAttributes(lob, diffContent, TAG_DELETE);
 				diffContent.setBBox(lob.getBoundingBox(), null);
 				result.add(diffContent);
 			}
@@ -167,6 +177,102 @@ public class TextComparator extends ContentComparator {
 			
 			if (findText.equals(key)) {
 				return entry;
+			}
+		}
+		return null;
+	}
+	
+	private void setAttributes(TextLob lob, DiffContent entry, String tag) {
+		TextContent textContent = lob.getContent();
+		if (textContent == null) {
+			return;
+		}
+		String val = textContent.getFontName();
+		if ("#DELETE#".equals(tag)) {
+			entry.putAttr(DiffContent.Key.Attr_Font, false, val, null);	
+		} else {
+			entry.putAttr(DiffContent.Key.Attr_Font, false, null, val);			
+		}
+		
+		Float size = textContent.getFontSize();
+		if ("#DELETE#".equals(tag)) {
+			entry.putAttr(DiffContent.Key.Attr_Font_size, false, size == null ? null : size.toString(), null);
+		} else {
+			entry.putAttr(DiffContent.Key.Attr_Font_size, false, null, size == null ? null : size.toString());		
+		}
+		
+		val = textContent.getNonStrokingColorspace();
+		if ("#DELETE#".equals(tag)) {
+			entry.putAttr(DiffContent.Key.Attr_Fill_Colorspace, false, val, null);
+		} else {
+			entry.putAttr(DiffContent.Key.Attr_Fill_Colorspace, false, null, val);			
+		}
+		
+		val = textContent.getNonStrokingColorValue();
+		if ("#DELETE#".equals(tag)) {
+			entry.putAttr(DiffContent.Key.Attr_Fill_Color, false, val, null);
+		} else {
+			entry.putAttr(DiffContent.Key.Attr_Fill_Color, false, null, val);			
+		}
+		
+		if (this.setting.enableTextPositionCompare) {
+			double x = lob.getBoundingBox().getX();
+			if ("#DELETE#".equals(tag)) {
+				entry.putAttr(DiffContent.Key.Attr_Pos_X, false, roundM(x), null);
+			} else {
+				entry.putAttr(DiffContent.Key.Attr_Pos_X, false, null, roundM(x));			
+			}
+			
+			double y = this.basePageHeight - lob.getBoundingBox().getY();
+			if ("#DELETE#".equals(tag)) {
+				entry.putAttr(DiffContent.Key.Attr_Pos_Y, false, roundM(y), null);
+			} else {
+				entry.putAttr(DiffContent.Key.Attr_Pos_Y, false, null, roundM(y));		
+			}
+		}
+	}
+	
+	private void compareFlyContents(List<TextLob> baseFlyContents, List<TextLob> testFlyContents, List<DiffContent> result) {
+		for (TextLob baseLob : baseFlyContents) {
+			TextLob testLob = this.findTextLob(baseLob, testFlyContents);
+			if (testLob != null) {
+				DiffContent diffContent = new DiffContent(DiffContent.Category.Text);
+				diffContent.putAttr(DiffContent.Key.Attr_Text, true, baseLob.getText(), testLob.getText()); // TODO, toUnicodeHex?
+				if (!this.compare(baseLob, testLob, diffContent)) {
+					result.add(diffContent);
+				}
+				testFlyContents.remove(testLob);
+			} else {
+				this.insertMap.put(new StringHolder(baseLob.getText()), baseLob);
+			}
+		}
+		if (testFlyContents.size() > 0) {
+			for (TextLob testLob : testFlyContents) {
+				this.deleteMap.put(new StringHolder(testLob.getText()), testLob);
+			}
+		}
+
+	}
+	
+	private TextLob findTextLob(TextLob baseContent, List<TextLob> testContentList) {
+		for (TextLob test : testContentList) {
+			if (baseContent.getBoundingBox() == null || test.getBoundingBox() == null) {
+				continue;
+			}
+			boolean equals = compare(baseContent.getBoundingBox(), test.getBoundingBox(), 
+					this.setting.toleranceOfHorPosition, this.setting.toleranceOfVerPosition, 
+					this.setting.toleranceOfRectWidth, this.setting.toleranceOfRectHeight);
+			if (equals) {
+				return test;
+			}
+		}
+		
+		for (TextLob test : testContentList) {
+			if (baseContent.getBoundingBox() == null || test.getBoundingBox() == null) {
+				continue;
+			}
+			if (baseContent.getBoundingBox().intersects(test.getBoundingBox())) {
+				return test;
 			}
 		}
 		return null;

@@ -71,6 +71,7 @@ import me.lumpchen.xdiff.document.ImageContent;
 import me.lumpchen.xdiff.document.PageContent;
 import me.lumpchen.xdiff.document.PageContent.ColorDesc;
 import me.lumpchen.xdiff.document.PageContent.Type;
+import me.lumpchen.xdiff.document.compare.ContentComparator;
 import me.lumpchen.xdiff.document.TextContent;
 
 public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements PageContentDrawer {
@@ -98,6 +99,8 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
     
     // last clipping path
     private Area lastClip;
+    
+    private Shape lastGlyph;
     
     // buffered clipping area for text being drawn
     private Area textClippingArea;
@@ -183,7 +186,7 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 			textContent.appendText(unicode, cid, origin, at, glyph.getBounds2D());
 		} else {
     		if (textContent.getText() == null 
-    				|| textContent.getText().trim().length() == 0
+//    				|| textContent.getText().trim().length() == 0
     				|| textContent.getHeight() == 0) { //empty TJ
     			this.runtimePageContentStack.pop();
     		} else {
@@ -517,7 +520,7 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
     	if (content.getType() == PageContent.Type.Text) {
     		TextContent textContent = (TextContent) content;
     		if (textContent.getText() == null 
-    				|| textContent.getText().trim().length() == 0
+//    				|| textContent.getText().trim().length() == 0
     				|| textContent.getHeight() == 0) { //empty TJ
     			return;
     		}
@@ -594,6 +597,13 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 			spaceWidth = wGlyph.getBounds2D().getWidth();
 		}*/
 
+/*		String fontName = ContentComparator.removeFontNameSuffix(font.getName());
+		if ("Webdings".equals(fontName)
+				|| "Wingdings2".equals(fontName)
+				|| "Wingdings-Regular".equals(fontName)) {
+			System.out.println(fontName);
+		}*/
+		
 		this.markText(unicode, code, ptDst, at, this.lastGlyph);
     }
 
@@ -655,8 +665,6 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
             this.lastGlyph = glyph;
         }
     }
-    
-    private Shape lastGlyph;
     
     @Override
     public void appendRectangle(Point2D p0, Point2D p1, Point2D p2, Point2D p3)
@@ -805,7 +813,9 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
     private void fillPath(GeneralPath linePath, boolean mark, int windingRule) throws IOException
     {
         graphics.setComposite(getGraphicsState().getNonStrokingJavaComposite());
-        graphics.setPaint(getNonStrokingPaint());
+        
+        Paint p = getNonStrokingPaint();
+        graphics.setPaint(p);
         setClip();
         linePath.setWindingRule(windingRule);
 

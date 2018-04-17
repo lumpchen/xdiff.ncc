@@ -24,6 +24,8 @@ public class TextThread {
 	private PageInfo pageInfo;
 	private CompareSetting setting;
 	
+	private List<TextLob> flyContentList;
+	
 	public TextThread(PageThread pageThread) {
 		this.pageText = new StringBuilder();
 		this.textSpanList = new ArrayList<TextSpan>();
@@ -196,7 +198,34 @@ public class TextThread {
 		}
 	}
 	
+	private boolean isFlyContent(TextContent textContent) {
+		if (textContent.getFontName() == null) {
+			return false;
+		}
+		if (textContent.getCIDArray() != null && textContent.getCIDArray().length == 1) {
+			return true;
+		}
+		return false;
+	}
+	
+	public List<TextLob> getFlyContents() {
+		if (this.flyContentList == null) {
+			return new ArrayList<TextLob>(0);
+		}
+		List<TextLob> readonly = new ArrayList<TextLob>();
+		readonly.addAll(this.flyContentList);
+		return readonly;
+	}
+	
 	public void addTextSpan(TextContent textContent) {
+		if (this.isFlyContent(textContent)) {
+			if (this.flyContentList == null) {
+				this.flyContentList = new ArrayList<TextLob>();
+			}
+			this.flyContentList.add(new TextLob(textContent));
+			return;
+		}
+		
 		TextSpan span = new TextSpan(textContent, this.nextBegin);
 		this.pageText.append(span.getText());
 		this.textSpanList.add(span);
@@ -317,9 +346,6 @@ public class TextThread {
 			int mY = (int) Math.round(this.content.getOrigin().getY());
 			int nextMY = (int) Math.round(next.content.getOrigin().getY());
 			
-//			double dh = Math.abs(this.getBoundingBox().getY() - rect.getY());
-//			if (dh <= rect.getHeight()) {
-				
 			if (mY == nextMY) {
 				this.text += next.text;
 				this.bBox = this.bBox.createUnion(rect);

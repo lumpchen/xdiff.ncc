@@ -237,7 +237,7 @@ public class TextComparator extends ContentComparator {
 			TextLob testLob = this.findTextLob(baseLob, testFlyContents);
 			if (testLob != null) {
 				DiffContent diffContent = new DiffContent(DiffContent.Category.Text);
-				diffContent.putAttr(DiffContent.Key.Attr_Text, true, baseLob.getText(), testLob.getText()); // TODO, toUnicodeHex?
+				diffContent.putAttr(DiffContent.Key.Attr_Text, true, baseLob.getText(), testLob.getText());
 				if (!this.compare(baseLob, testLob, diffContent)) {
 					result.add(diffContent);
 				}

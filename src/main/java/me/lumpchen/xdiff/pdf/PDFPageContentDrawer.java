@@ -71,7 +71,6 @@ import me.lumpchen.xdiff.document.ImageContent;
 import me.lumpchen.xdiff.document.PageContent;
 import me.lumpchen.xdiff.document.PageContent.ColorDesc;
 import me.lumpchen.xdiff.document.PageContent.Type;
-import me.lumpchen.xdiff.document.compare.ContentComparator;
 import me.lumpchen.xdiff.document.TextContent;
 
 public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements PageContentDrawer {
@@ -597,13 +596,6 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 			spaceWidth = wGlyph.getBounds2D().getWidth();
 		}*/
 
-/*		String fontName = ContentComparator.removeFontNameSuffix(font.getName());
-		if ("Webdings".equals(fontName)
-				|| "Wingdings2".equals(fontName)
-				|| "Wingdings-Regular".equals(fontName)) {
-			System.out.println(fontName);
-		}*/
-		
 		this.markText(unicode, code, ptDst, at, this.lastGlyph);
     }
 

@@ -14,6 +14,7 @@ import java.util.Map;
 
 import me.lumpchen.xdiff.PDocDiffResult.PageInfo;
 import me.lumpchen.xdiff.document.compare.CompareSetting;
+import me.lumpchen.xdiff.document.compare.ContentComparator;
 
 public class TextThread {
 	
@@ -202,9 +203,16 @@ public class TextThread {
 		if (textContent.getFontName() == null) {
 			return false;
 		}
-		if (textContent.getCIDArray() != null && textContent.getCIDArray().length == 1) {
+		
+		String fontName = ContentComparator.removeFontNameSuffix(textContent.getFontName());
+		if (this.setting.symbolFontList.contains(fontName)) {
+			textContent.setSymbol(true);
 			return true;
 		}
+		
+/*		if (textContent.getCIDArray() != null && textContent.getCIDArray().length == 1) {
+			return true;
+		}*/
 		return false;
 	}
 	
@@ -309,6 +317,10 @@ public class TextThread {
 			this.content = content;
 			this.text = content.getText();
 			this.bBox = content.getOutlineRect();
+			
+			if (content.isSymbol()) {
+				
+			}
 		}
 		
 		public TextLob(String text, Rectangle2D bBox) {

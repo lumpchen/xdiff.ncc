@@ -41,6 +41,8 @@ public class CompareSetting {
 	
 	public boolean enablePathPixelCompare = false;
 	
+	public List<String> symbolFontList = new ArrayList<String>(0);
+	
 	public CompareSetting() {
 	}
 	

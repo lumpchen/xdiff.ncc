@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -15,8 +14,6 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
 import javax.imageio.spi.IIORegistry;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.spi.ServiceRegistry;
@@ -184,6 +181,19 @@ public class DiffSettingLoader {
 			setting.ignorePageBlankArea = getBoolean(properties, "ignorePageBlankArea", setting.ignorePageBlankArea);
 			
 			setting.useTwelvemonkeysImageIOProvider = getBoolean(properties, "useTwelvemonkeysImageIOProvider", true);
+			
+			val = getString(properties, "symbolFonts", "");
+			if (val != null) {
+				String[] entries = val.trim().split(",");
+				for (String name : entries) {
+					if (compareSetting.symbolFontList == null) {
+						compareSetting.symbolFontList = new ArrayList<String>();
+					}
+					if (name.trim().length() > 0) {
+						compareSetting.symbolFontList.add(name.trim());						
+					}
+				}
+			}
 			
 			IIORegistry registry = IIORegistry.getDefaultInstance();
 			ImageReaderSpi twelvemonkeysProviderJPEG = registry.getServiceProviderByClass(com.twelvemonkeys.imageio.plugins.jpeg.JPEGImageReaderSpi.class);

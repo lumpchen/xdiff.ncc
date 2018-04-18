@@ -19,6 +19,7 @@ public class TextContent extends PageContent {
 	private double baseline = -1;
 	private AffineTransform at;
 	private double averageFontWidth = -1;
+	private boolean isSymbol = false;
 	
 	public TextContent() {
 		super();
@@ -52,7 +53,18 @@ public class TextContent extends PageContent {
 	}
 
 	public String getText() {
-		return this.text.toString();
+		if (this.isSymbol) {
+			StringBuilder buf = new StringBuilder();
+			buf.append("Symbol( ");
+			for (Integer i : this.cidArray) {
+				buf.append("0x" + Integer.toHexString(i));
+				buf.append(" ");
+			}
+			buf.append(")");
+			return buf.toString();
+		} else {
+			return this.text.toString();	
+		}
 	}
 	
 	public AffineTransform getTransform() {
@@ -65,7 +77,7 @@ public class TextContent extends PageContent {
 	
 	@Override
 	public String showString() {
-		return this.text.toString();
+		return this.getText();
 	}
 	
 	public int cidAt(int index) {
@@ -126,6 +138,14 @@ public class TextContent extends PageContent {
 			return new Integer[0];
 		}
 		return this.cidArray.toArray(new Integer[this.cidArray.size()]);
+	}
+	
+	public void setSymbol(boolean isSymbol) {
+		this.isSymbol = isSymbol;
+	}
+	
+	public boolean isSymbol() {
+		return this.isSymbol;
 	}
 }
 

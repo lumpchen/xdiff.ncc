@@ -18,6 +18,8 @@ import me.lumpchen.xdiff.ps.PSDiffTool;
 public class XDiff {
 	
 	static {
+		System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
+		
 		IIORegistry registry = IIORegistry.getDefaultInstance();
 		ImageReaderSpi twelvemonkeysJPEGProvider = new com.twelvemonkeys.imageio.plugins.jpeg.JPEGImageReaderSpi();
 		

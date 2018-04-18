@@ -23,4 +23,8 @@ public class TestCaseText {
 		TestCaseCommon.runTestCase(subFolder, "text_insert");
 	}
 	
+	@Test
+	public void test_symbol() throws IOException {
+		TestCaseCommon.runTestCase(subFolder, "symbol");
+	}
 }

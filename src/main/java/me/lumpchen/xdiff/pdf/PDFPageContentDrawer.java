@@ -281,46 +281,6 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
         content.setGraphicsStateDesc(gstate);
 	}
 	
-	private void markAnnot(PDAnnotation annot, AnnotContent content) {/*
-		content.setSubType(annot.getSubtype());
-		
-		if (annot.getRectangle() != null) {
-			GeneralPath rect = annot.getRectangle().toGeneralPath();
-			content.addOutlineShape(rect);
-		}
-		
-		
-		if (content.getSubType() == COSName.WIDGET.getName()) {
-			COSDictionary parent = null;
-			if (annot.getCOSObject().getDictionaryObject(COSName.PARENT) != null) {
-				parent = (COSDictionary) annot.getCOSObject().getDictionaryObject(COSName.PARENT);			
-			}
-			
-			// collect /Widget information from own node or its parent node
-			if (annot.getCOSObject().getCOSName(COSName.FT) == null) {
-				if (parent != null && parent.getCOSName(COSName.FT) != null) {
-					content.setFieldType(parent.getCOSName(COSName.FT).getName());	
-				}
-			} else {
-				content.setFieldType(annot.getCOSObject().getCOSName(COSName.FT).getName());
-			}
-			
-			content.setFieldName(annot.getCOSObject().getString(COSName.T));
-			if (content.getFieldName() == null) {
-				if (parent != null) {
-					content.setFieldName(parent.getString(COSName.T));	
-				}
-			}
-			
-			content.setAlternateFieldName(annot.getCOSObject().getString(COSName.TU));
-			if (content.getAlternateFieldName() == null) {
-				if (parent != null) {
-					content.setAlternateFieldName(parent.getString(COSName.TU));
-				}
-			}
-		}
-	*/}
-	
 	private static void toColorDesc(PDColor pdColor, ColorDesc colorDesc) {
     	if (pdColor.isPattern()) {
     		colorDesc.patternName = pdColor.getPatternName().getName();
@@ -524,6 +484,7 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
     			return;
     		}
     	}
+    	
     	this.addToContentList(content);
     }
     

@@ -1,15 +1,11 @@
 package me.lumpchen.xdiff.document.compare;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import me.lumpchen.xdiff.PageDiffResult.DiffContent;
-import me.lumpchen.xdiff.document.ImageSet.ImageLob;
 import me.lumpchen.xdiff.document.PageThread;
 import me.lumpchen.xdiff.document.TextContent;
 import me.lumpchen.xdiff.document.TextThread;
@@ -25,8 +21,8 @@ public class TextComparator extends ContentComparator {
 	private float basePageHeight;
 	private float testPageHeight;
 	
-	private Map<StringHolder, TextLob> insertMap = new HashMap<StringHolder, TextLob>();
-	private Map<StringHolder, TextLob> deleteMap = new HashMap<StringHolder, TextLob>();
+	private List<TextLob> insertTextLobList = new ArrayList<TextLob>();
+	private List<TextLob> deleteTextLobList = new ArrayList<TextLob>();
 	
 	public TextComparator(CompareSetting setting) {
 		super(setting);
@@ -58,8 +54,8 @@ public class TextComparator extends ContentComparator {
 				List<TextLob> lobList = mergeLobs(lobs);
 				for (TextLob lob : lobList) {
 					String text = lob.getText();
-					if (!text.trim().isEmpty()) {
-						this.insertMap.put(new StringHolder(text.trim()), lob);
+					if (!text.isEmpty()) {
+						this.insertTextLobList.add(lob);
 					}
 				}
 			} else if (diff.operation == Operation.DELETE) {
@@ -74,8 +70,8 @@ public class TextComparator extends ContentComparator {
 				List<TextLob> lobList = mergeLobs(lobs);
 				for (TextLob lob : lobList) {
 					String text = lob.getText();
-					if (!text.trim().isEmpty()) {
-						this.deleteMap.put(new StringHolder(text.trim()), lob);
+					if (!text.isEmpty()) {
+						this.deleteTextLobList.add(lob);
 					}
 				}
 			} else {
@@ -97,12 +93,11 @@ public class TextComparator extends ContentComparator {
 					}
 					
 					String text = diff.text.substring(walk, walk + slot);
-					if (text != null && !text.trim().isEmpty()) {
+					if (text != null && !text.isEmpty()) {
 						TextLob baseLob = baseTextThread.getTextLob(baseBegin + ibase, slot)[0];
 						TextLob testLob = testTextThread.getTextLob(testBegin + itest, slot)[0];
 						DiffContent diffContent = new DiffContent(DiffContent.Category.Text);
-						diffContent.putAttr(DiffContent.Key.Attr_Text, true, text, text);
-						if (!this.compare(baseLob, testLob, diffContent)) {
+						if (!this.compare(text, text, baseLob, testLob, diffContent)) {
 							result.add(diffContent);
 						}
 					}
@@ -114,72 +109,48 @@ public class TextComparator extends ContentComparator {
 			}
 		}
 		
-		List<TextLob> baseFlyContents = baseTextThread.getFlyContents();
-		List<TextLob> testFlyContents = testTextThread.getFlyContents();
-		this.compareFlyContents(baseFlyContents, testFlyContents, result);
-		
 		this.match(result);
 		return result.toArray(new DiffContent[result.size()]);
 	}
 	
 	public void match(List<DiffContent> result) {
-		Iterator<Entry<StringHolder, TextLob>> it = this.insertMap.entrySet().iterator();
+		Iterator<TextLob> it = this.insertTextLobList.iterator();
 		while (it.hasNext()) {
-			Entry<StringHolder, TextLob> entry = it.next();
-			String key = entry.getKey().getText();
-			
-			Entry<StringHolder, TextLob> findEntry = this.findEntry(key, this.deleteMap);
-			if (findEntry != null) {
+			TextLob next = it.next();
+			TextLob found = this.findTextLob(next, this.deleteTextLobList);
+			if (found != null) {
 				DiffContent diffContent = new DiffContent(DiffContent.Category.Text);
-				diffContent.putAttr(DiffContent.Key.Attr_Text, true, key, key);
-				if (!this.compare(findEntry.getValue(), entry.getValue(), diffContent)) {
+				if (!this.compare(found, next, diffContent)) {
 					result.add(diffContent);
 				}
 				it.remove();
-				this.deleteMap.remove(findEntry.getKey());
+				this.deleteTextLobList.remove(found);
 			}
 		}
 		
-		if (this.insertMap.size() > 0) {
-			it = this.insertMap.entrySet().iterator();
+		if (this.insertTextLobList.size() > 0) {
+			it = this.insertTextLobList.iterator();
 			while (it.hasNext()) {
-				Entry<StringHolder, TextLob> entry = it.next();
-				String text = entry.getKey().getText();
-				TextLob lob = entry.getValue();
+				TextLob lob = it.next();
 				DiffContent diffContent = new DiffContent(DiffContent.Category.Text);
-				diffContent.putAttr(DiffContent.Key.Attr_Text, false, TAG_INSERT, text);
+				diffContent.putAttr(DiffContent.Key.Attr_Text, false, TAG_INSERT, lob.getText());
 				this.setAttributes(lob, diffContent, TAG_INSERT);
 				diffContent.setBBox(null, lob.getBoundingBox());
 				result.add(diffContent);
 			}
 		}
 		
-		if (this.deleteMap.size() > 0) {
-			it = this.deleteMap.entrySet().iterator();
+		if (this.deleteTextLobList.size() > 0) {
+			it = this.deleteTextLobList.iterator();
 			while (it.hasNext()) {
-				Entry<StringHolder, TextLob> entry = it.next();
-				String text = entry.getKey().getText();
-				TextLob lob = entry.getValue();
+				TextLob lob = it.next();
 				DiffContent diffContent = new DiffContent(DiffContent.Category.Text);
-				diffContent.putAttr(DiffContent.Key.Attr_Text, false, text, TAG_DELETE);
+				diffContent.putAttr(DiffContent.Key.Attr_Text, false, lob.getText(), TAG_DELETE);
 				this.setAttributes(lob, diffContent, TAG_DELETE);
 				diffContent.setBBox(lob.getBoundingBox(), null);
 				result.add(diffContent);
 			}
 		}
-	}
-	
-	private Entry<StringHolder, TextLob> findEntry(String findText, Map<StringHolder, TextLob> dstMap) {
-		Iterator<Entry<StringHolder, TextLob>> it = dstMap.entrySet().iterator();
-		while (it.hasNext()) {
-			Entry<StringHolder, TextLob> entry = it.next();
-			String key = entry.getKey().getText();
-			
-			if (findText.equals(key)) {
-				return entry;
-			}
-		}
-		return null;
 	}
 	
 	private void setAttributes(TextLob lob, DiffContent entry, String tag) {
@@ -232,28 +203,6 @@ public class TextComparator extends ContentComparator {
 		}
 	}
 	
-	private void compareFlyContents(List<TextLob> baseFlyContents, List<TextLob> testFlyContents, List<DiffContent> result) {
-		for (TextLob baseLob : baseFlyContents) {
-			TextLob testLob = this.findTextLob(baseLob, testFlyContents);
-			if (testLob != null) {
-				DiffContent diffContent = new DiffContent(DiffContent.Category.Text);
-				diffContent.putAttr(DiffContent.Key.Attr_Text, true, baseLob.getText(), testLob.getText());
-				if (!this.compare(baseLob, testLob, diffContent)) {
-					result.add(diffContent);
-				}
-				testFlyContents.remove(testLob);
-			} else {
-				this.insertMap.put(new StringHolder(baseLob.getText()), baseLob);
-			}
-		}
-		if (testFlyContents.size() > 0) {
-			for (TextLob testLob : testFlyContents) {
-				this.deleteMap.put(new StringHolder(testLob.getText()), testLob);
-			}
-		}
-
-	}
-	
 	private TextLob findTextLob(TextLob baseContent, List<TextLob> testContentList) {
 		for (TextLob test : testContentList) {
 			if (baseContent.getBoundingBox() == null || test.getBoundingBox() == null) {
@@ -278,11 +227,48 @@ public class TextComparator extends ContentComparator {
 		return null;
 	}
 	
-	private boolean compare(TextLob baseLob, TextLob testLob, DiffContent entry) {
+	private boolean compare(String baseText, String testText, TextLob baseLob, TextLob testLob, DiffContent entry) {
 		boolean result = true;
+		if (baseText == null) {
+			baseText = baseLob.getText();
+		}
+		if (testText == null) {
+			testText = testLob.getText();
+		}
 		
 		TextContent textContent_1 = baseLob.getContent();
 		TextContent textContent_2 = testLob.getContent();
+		
+		boolean baseSymbol = false;
+		boolean testSymbol = false;
+		if (textContent_1 != null && textContent_1.isSymbol()) {
+			baseSymbol = textContent_1.isSymbol();
+			if (baseSymbol) {
+				baseText = getSymbolText(baseText);
+			}
+		}
+		if (textContent_2 != null && textContent_2.isSymbol()) {
+			testSymbol = textContent_2.isSymbol();
+			if (testSymbol) {
+				testText = getSymbolText(testText);
+			}
+		}
+		
+		baseText = baseText.trim();
+		testText = testText.trim();
+		if (baseText.length() == 0 && testText.length() == 0) {
+			return true; // ignore space 
+		}
+		
+		boolean equal = compare(baseText, testText);
+		result |= equal;
+		entry.putAttr(DiffContent.Key.Attr_Text, equal, baseText, testText);
+		
+		if (baseSymbol || testSymbol) {
+			equal = baseSymbol == testSymbol;
+			result |= equal;
+			entry.putAttr(DiffContent.Key.Attr_Symbol_Text, equal, baseSymbol, testSymbol);
+		}
 		
 		String val_1 = textContent_1 == null ? null : textContent_1.getFontName();
 		String val_2 = textContent_2 == null ? null : textContent_2.getFontName();
@@ -328,6 +314,10 @@ public class TextComparator extends ContentComparator {
 		entry.setBBox(baseLob.getBoundingBox(), testLob.getBoundingBox());
 		
 		return result;
+	}
+	
+	private boolean compare(TextLob baseLob, TextLob testLob, DiffContent entry) {
+		return this.compare(null, null, baseLob, testLob, entry);
 	}
 	
 	private static List<TextLob> mergeLobs(TextLob[] lobs) {

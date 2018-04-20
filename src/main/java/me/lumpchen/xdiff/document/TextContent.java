@@ -53,6 +53,10 @@ public class TextContent extends PageContent {
 	}
 
 	public String getText() {
+		return this.text.toString();
+	}
+	
+	public String getSymbolText() {
 		if (this.isSymbol) {
 			StringBuilder buf = new StringBuilder();
 			buf.append("Symbol( ");
@@ -62,9 +66,8 @@ public class TextContent extends PageContent {
 			}
 			buf.append(")");
 			return buf.toString();
-		} else {
-			return this.text.toString();	
 		}
+		return null;
 	}
 	
 	public AffineTransform getTransform() {

@@ -25,8 +25,6 @@ public class TextThread {
 	private PageInfo pageInfo;
 	private CompareSetting setting;
 	
-	private List<TextLob> flyContentList;
-	
 	public TextThread(PageThread pageThread) {
 		this.pageText = new StringBuilder();
 		this.textSpanList = new ArrayList<TextSpan>();
@@ -199,39 +197,10 @@ public class TextThread {
 		}
 	}
 	
-	private boolean isFlyContent(TextContent textContent) {
-		if (textContent.getFontName() == null) {
-			return false;
-		}
-		
+	public void addTextSpan(TextContent textContent) {
 		String fontName = ContentComparator.removeFontNameSuffix(textContent.getFontName());
 		if (this.setting.symbolFontList.contains(fontName)) {
 			textContent.setSymbol(true);
-			return true;
-		}
-		
-/*		if (textContent.getCIDArray() != null && textContent.getCIDArray().length == 1) {
-			return true;
-		}*/
-		return false;
-	}
-	
-	public List<TextLob> getFlyContents() {
-		if (this.flyContentList == null) {
-			return new ArrayList<TextLob>(0);
-		}
-		List<TextLob> readonly = new ArrayList<TextLob>();
-		readonly.addAll(this.flyContentList);
-		return readonly;
-	}
-	
-	public void addTextSpan(TextContent textContent) {
-		if (this.isFlyContent(textContent)) {
-			if (this.flyContentList == null) {
-				this.flyContentList = new ArrayList<TextLob>();
-			}
-			this.flyContentList.add(new TextLob(textContent));
-			return;
 		}
 		
 		TextSpan span = new TextSpan(textContent, this.nextBegin);
@@ -317,19 +286,11 @@ public class TextThread {
 			this.content = content;
 			this.text = content.getText();
 			this.bBox = content.getOutlineRect();
-			
-			if (content.isSymbol()) {
-				
-			}
-		}
-		
-		public TextLob(String text, Rectangle2D bBox) {
-			this.text = text;
-			this.bBox = bBox;
 		}
 		
 		public TextLob(String text, Rectangle2D bBox, TextContent content) {
-			this(text, bBox);
+			this.text = text;
+			this.bBox = bBox;
 			this.content = content;
 		}
 

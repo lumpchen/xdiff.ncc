@@ -117,6 +117,7 @@ public class PageDiffResult {
 			public static String Attr_Stroke_Color = "Stroke Color";
 			public static String Attr_Fill_Colorspace = "Fill Colorspace";
 			public static String Attr_Fill_Color = "Fill Color";
+			public static String Attr_Symbol_Text = "Symbol";
 			
 			public static String Attr_Painting_OP = "Paint Operator";
 			public static String Attr_Line_Width = "Line Width";

@@ -227,4 +227,21 @@ public abstract class ContentComparator {
 		graphics.dispose();
 		return bim3;
 	}
+	
+	public static String getSymbolText(String text) {
+		if (text == null || text.isEmpty()) {
+			return "";
+		}
+		
+		char[] cs = text.toCharArray();
+		StringBuilder buf = new StringBuilder();
+		buf.append("Symbol( ");
+		for (Character c : cs) {
+			buf.append("0x" + Integer.toHexString(c));
+			buf.append(" ");
+		}
+		buf.append(")");
+		return buf.toString();
+	}
+	
 }

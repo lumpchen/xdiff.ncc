@@ -4,7 +4,7 @@ A PDL file comparison tool, support comparison of PDF, Postscript and AFP docume
 
 ## Online compare
 [http://xdiffweb.com/](http://xdiffweb.com/)<br>
-[http://myapp-lumpchen.a3c1.starter-us-west-1.openshiftapps.com/](http://myapp-lumpchen.a3c1.starter-us-west-1.openshiftapps.com/)
+[http://xdiff-lumpchen.7e14.starter-us-west-2.openshiftapps.com/](http://xdiff-lumpchen.7e14.starter-us-west-2.openshiftapps.com/)
 
 ## Showcase
 https://lumpchen.github.io/xdiff.ncc/

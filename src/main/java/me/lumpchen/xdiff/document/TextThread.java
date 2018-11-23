@@ -281,6 +281,7 @@ public class TextThread {
 		private String text;
 		private Rectangle2D bBox;
 		private TextContent content;
+		private double baseline;
 
 		public TextLob(TextContent content) {
 			this.content = content;
@@ -292,6 +293,7 @@ public class TextThread {
 			this.text = text;
 			this.bBox = bBox;
 			this.content = content;
+			this.baseline = content.getBaseline();
 		}
 
 		public String getText() {
@@ -322,6 +324,17 @@ public class TextThread {
 			if (mY == nextMY) {
 				this.text += next.text;
 				this.bBox = this.bBox.createUnion(rect);
+				return true;
+			}
+			return false;
+		}
+		
+		public double getBaseline() {
+			return this.baseline;
+		}
+		
+		public boolean isInvisible() {
+			if (this.bBox != null && this.bBox.isEmpty()) {
 				return true;
 			}
 			return false;

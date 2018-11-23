@@ -78,6 +78,7 @@ public class DiffSettingLoader {
 			
 			compareSetting.ignoreZeroSizeArea = getBoolean(properties, "ignoreZeroSizeArea", compareSetting.ignoreZeroSizeArea);
 			compareSetting.ignoreInvisibleGraphics = getBoolean(properties, "ignoreInvisibleGraphics", compareSetting.ignoreInvisibleGraphics);
+			compareSetting.ignoreInvisibleText = getBoolean(properties, "ignoreInvisibleText", compareSetting.ignoreInvisibleText);
 			
 			compareSetting.scaleOfSpaceingBetweenWords = getFloat(properties, "scaleOfSpaceingBetweenWords", compareSetting.scaleOfSpaceingBetweenWords);
 			

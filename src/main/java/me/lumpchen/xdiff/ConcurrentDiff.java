@@ -98,9 +98,9 @@ public abstract class ConcurrentDiff {
         	final ExecutorService executorPool = Executors.newFixedThreadPool(CPU_CORE_NUM);
 			final List<Future<CompareResult>> resultFromParts = executorPool.invokeAll(partitions, TIMEOUT, TimeUnit.SECONDS);
 			executorPool.shutdown();
-			for (final Future<CompareResult> ret : resultFromParts) {
-				System.out.println(ret.get());
-			}
+//			for (final Future<CompareResult> ret : resultFromParts) {
+//				System.out.println(ret.get());
+//			}
 
 			this.postCompare();
 			

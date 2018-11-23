@@ -285,7 +285,7 @@ public class XDiff {
 
 		@Override
 		public void progress(float progress) {
-			System.out.println("Progress: " + progress);
+			logger.info("Comparing progress: " + progress);
 		}
 		
 	}

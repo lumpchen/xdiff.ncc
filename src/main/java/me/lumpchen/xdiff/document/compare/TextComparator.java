@@ -1,5 +1,6 @@
 package me.lumpchen.xdiff.document.compare;
 
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -132,10 +133,15 @@ public class TextComparator extends ContentComparator {
 			it = this.insertTextLobList.iterator();
 			while (it.hasNext()) {
 				TextLob lob = it.next();
+				if (this.setting.ignoreInvisibleText && lob.isInvisible()) {
+					continue;
+				}
+				
 				DiffContent diffContent = new DiffContent(DiffContent.Category.Text);
-				diffContent.putAttr(DiffContent.Key.Attr_Text, false, TAG_INSERT, lob.getText());
+				diffContent.putAttr(DiffContent.Key.Attr_Text, false, TAG_INSERT, this.toHexString(lob.getText()));
 				this.setAttributes(lob, diffContent, TAG_INSERT);
-				diffContent.setBBox(null, lob.getBoundingBox());
+				Rectangle2D rect = this.calcSpaceFillLobOutline(lob);
+				diffContent.setBBox(null, rect);
 				result.add(diffContent);
 			}
 		}
@@ -144,13 +150,53 @@ public class TextComparator extends ContentComparator {
 			it = this.deleteTextLobList.iterator();
 			while (it.hasNext()) {
 				TextLob lob = it.next();
+				if (this.setting.ignoreInvisibleText && lob.isInvisible()) {
+					continue;
+				}
 				DiffContent diffContent = new DiffContent(DiffContent.Category.Text);
-				diffContent.putAttr(DiffContent.Key.Attr_Text, false, lob.getText(), TAG_DELETE);
+				diffContent.putAttr(DiffContent.Key.Attr_Text, false, this.toHexString(lob.getText()), TAG_DELETE);
 				this.setAttributes(lob, diffContent, TAG_DELETE);
-				diffContent.setBBox(lob.getBoundingBox(), null);
+				Rectangle2D rect = this.calcSpaceFillLobOutline(lob);
+				diffContent.setBBox(rect, null);
 				result.add(diffContent);
 			}
 		}
+	}
+	
+	private String toHexString(String s) {
+		if (s == null || s.trim().length() != 0) {
+			return s;
+		}
+		StringBuilder buf = new StringBuilder("[");
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+			String cname = Character.getName(c);
+			if (cname != null && cname.length() > 0) {
+				buf.append(cname);
+			} else {
+				String hex = String.format("%04x", (int) c);
+				buf.append("0x" + hex);	
+			}
+			if (i != s.length() - 1) {
+				buf.append(", ");	
+			}
+		}
+		buf.append("]");
+		return buf.toString();
+	}
+	
+	private Rectangle2D calcSpaceFillLobOutline(TextLob lob) {
+		Rectangle2D rect = lob.getBoundingBox();
+		if (rect != null && isZeroSize(rect)) {
+			TextContent content = lob.getContent();
+			
+			double x = content.getOrigin().getX();
+			double y = content.getBaseline();
+			double h = content.getHeight();
+			double w = content.getWCharWidth() * lob.getText().length();
+			rect.setRect(x, y, w, h);
+		}
+		return rect;
 	}
 	
 	private void setAttributes(TextLob lob, DiffContent entry, String tag) {
@@ -194,7 +240,8 @@ public class TextComparator extends ContentComparator {
 				entry.putAttr(DiffContent.Key.Attr_Pos_X, false, null, roundM(x));			
 			}
 			
-			double y = this.basePageHeight - lob.getBoundingBox().getY();
+//			double y = this.basePageHeight - lob.getBoundingBox().getY();
+			double y = this.basePageHeight - lob.getBaseline();
 			if ("#DELETE#".equals(tag)) {
 				entry.putAttr(DiffContent.Key.Attr_Pos_Y, false, roundM(y), null);
 			} else {

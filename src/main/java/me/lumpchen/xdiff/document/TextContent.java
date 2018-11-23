@@ -48,6 +48,10 @@ public class TextContent extends PageContent {
 		}
 	}
 	
+	public double getBaseline() {
+		return this.baseline;
+	}
+	
 	public boolean onBaseline(double y) {
 		return Math.abs(this.baseline - y) < 0.01; 
 	}

@@ -3,8 +3,6 @@ A PDL file comparison tool, support comparison of PDF, Postscript and AFP docume
 <img src="./docs/web/thumb-1.png" height="180" width="360">   <img src="./docs/web/thumb-0.png" height="180" width="360">
 
 ## Online compare
-[http://xdiffweb.com/](http://xdiffweb.com/)<br>
-[http://xdiff-lumpchen.a3c1.starter-us-west-1.openshiftapps.com/](http://xdiff-lumpchen.a3c1.starter-us-west-1.openshiftapps.com/)
 
 ## Showcase
 https://lumpchen.github.io/xdiff.ncc/

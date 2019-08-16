@@ -3,8 +3,7 @@ A PDL file comparison tool, support comparison of PDF, Postscript and AFP docume
 <img src="./docs/web/thumb-1.png" height="180" width="360">   <img src="./docs/web/thumb-0.png" height="180" width="360">
 
 ## Online compare
-http://xdiffweb.com
-http://39.105.156.14:8080/xdiff/
+http://pdfdict.com
 
 ## Showcase
 https://lumpchen.github.io/xdiff.ncc/

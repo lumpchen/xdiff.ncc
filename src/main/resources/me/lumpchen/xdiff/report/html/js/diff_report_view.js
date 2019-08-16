@@ -818,10 +818,13 @@ PDF_DIFF.diff_report_view = function(report_data) {
 
 
 	var drawPageImage = function(cell, imageTag, ctx, canvas, scale) {
+	    context = canvas.getContext("2d");
+
+		showLoadingText(canvas, "Loading " + imageTag + "...");
 		var img = new Image();
 		img.src = "images/" + imageTag;
-
-		img.onload = function() {
+		
+     	img.onload = function() {
 			var w = canvas.width;
 			var h = canvas.height;
 			var s = w / img.width;
@@ -1178,6 +1181,15 @@ PDF_DIFF.diff_report_view = function(report_data) {
 	    context.closePath();
 	    context.stroke();
 	};
+
+	var showLoadingText = function(canvas, loadingText) {
+		var ctx = canvas.getContext("2d");
+		ctx.save();
+		ctx.font = "16pt Calibri";
+		ctx.fillText(loadingText, canvas.width / 2 - 30, canvas.height / 2);
+		ctx.stroke();
+		ctx.restore();
+	}
 
 	var toPixel = function (pt) {
 		return parseInt((pt / 72.0) * dpi);

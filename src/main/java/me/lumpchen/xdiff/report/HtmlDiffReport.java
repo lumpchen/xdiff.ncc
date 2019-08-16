@@ -129,13 +129,13 @@ public class HtmlDiffReport {
 	}
 	
 	private void writeJS() throws IOException {
-		this.copyTemplate("jquery.js", "js");
-		this.copyTemplate("bootstrap-treeview.js", "js");
+		this.copyTemplate("jquery.min.js", "js");
+		this.copyTemplate("bootstrap-treeview.min.js", "js");
 		this.copyTemplate("diff_report_view.js", "js");
 		
-		this.copyTemplate("jquery.contextMenu.js", "js");
-		this.copyTemplate("jquery.ui.position.js", "js");
-		this.copyTemplate("jquery-ui.js", "js");
+		this.copyTemplate("jquery.contextMenu.min.js", "js");
+		this.copyTemplate("jquery.ui.position.min.js", "js");
+		this.copyTemplate("jquery-ui.min.js", "js");
 		
 		this.writeDataJS();
 	}

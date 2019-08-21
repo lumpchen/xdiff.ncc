@@ -1184,9 +1184,20 @@ PDF_DIFF.diff_report_view = function(report_data) {
 
 	var showLoadingText = function(canvas, loadingText) {
 		var ctx = canvas.getContext("2d");
+		
+		var w = canvas.width;
+		var h = canvas.height;
+		
+		ctx.clearRect(0, 0, w, h);
+		ctx.fillStyle = "white";
+		ctx.fillRect(0, 0, w, h);
+		
 		ctx.save();
 		ctx.font = "16pt Calibri";
-		ctx.fillText(loadingText, canvas.width / 2 - 30, canvas.height / 2);
+		ctx.fillStyle = "black";
+		var tw = ctx.measureText(loadingText).width;
+		var x = w - tw <= 0 ? 0 : (w - tw) / 2;
+		ctx.fillText(loadingText, x, h / 2);
 		ctx.stroke();
 		ctx.restore();
 	}

@@ -19,11 +19,11 @@ public class CompareSetting {
 	
 	public boolean disableLineBreaking = false;
 	
-	public float toleranceOfHorPosition = 0.5f;
-	public float toleranceOfVerPosition = 0.5f;
+	public float toleranceOfHorPosition = 1f;
+	public float toleranceOfVerPosition = 1f;
 	
-	public float toleranceOfRectWidth = 0.5f;
-	public float toleranceOfRectHeight = 0.5f;
+	public float toleranceOfRectWidth = 1f;
+	public float toleranceOfRectHeight = 1f;
 	
 	public boolean ignoreZeroSizeArea = true;
 	

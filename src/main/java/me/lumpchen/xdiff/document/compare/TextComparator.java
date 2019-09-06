@@ -308,12 +308,12 @@ public class TextComparator extends ContentComparator {
 		}
 		
 		boolean equal = compare(baseText, testText);
-		result |= equal;
+		result &= equal;
 		entry.putAttr(DiffContent.Key.Attr_Text, equal, baseText, testText);
 		
 		if (baseSymbol || testSymbol) {
 			equal = baseSymbol == testSymbol;
-			result |= equal;
+			result &= equal;
 			entry.putAttr(DiffContent.Key.Attr_Symbol_Text, equal, baseSymbol, testSymbol);
 		}
 		

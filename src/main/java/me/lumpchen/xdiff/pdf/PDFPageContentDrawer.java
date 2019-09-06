@@ -261,6 +261,38 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
         PDFont font = textState.getFont();
         if (font != null) {
         	gstate.textState.fontName = font.getName();
+        	
+        	if (!font.isEmbedded() || font.isDamaged()) {
+        		try {
+        			String fallbackFont = null;
+        			if (font instanceof PDTrueTypeFont) {
+        				PDTrueTypeFont ttfFont = (PDTrueTypeFont) font;
+        				ttfFont.getFontBoxFont().getName();
+        				fallbackFont = ttfFont.getTrueTypeFont().getName();
+        	        } else if (font instanceof PDType1Font) {
+        	            PDType1Font pdType1Font = (PDType1Font) font;
+        	            fallbackFont = pdType1Font.getFontBoxFont().getName();
+        	        } else if (font instanceof PDType1CFont) {
+        	            PDType1CFont type1CFont = (PDType1CFont) font;
+        	            fallbackFont = type1CFont.getFontBoxFont().getName();
+        	        } else if (font instanceof PDType0Font) {
+        	            PDType0Font type0Font = (PDType0Font) font;
+        	            if (type0Font.getDescendantFont() instanceof PDCIDFontType2) {
+        	            	fallbackFont = ((PDCIDFontType2) type0Font.getDescendantFont()).getTrueTypeFont().getName();
+        	            } else if (type0Font.getDescendantFont() instanceof PDCIDFontType0) {
+        	                PDCIDFontType0 cidType0Font = (PDCIDFontType0) type0Font.getDescendantFont();
+        	                fallbackFont = cidType0Font.getFontBoxFont().getName();
+        	            }
+        	        }
+        			if (fallbackFont != null && !fallbackFont.equalsIgnoreCase(gstate.textState.fontName)) {
+        				gstate.textState.fontName  = gstate.textState.fontName + " (not embedded, using fallback font \'" + fallbackFont + "\')";
+        				
+        			}
+        		} catch (Exception e) {
+        			LOG.warning("Font " + font.getName() + " is not embedded, using fallback font!");
+					// ignore any exception
+				}
+        	}
         }
         
         gstate.lineWidth = state.getLineWidth();

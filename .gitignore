@@ -106,3 +106,7 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+.project
+.settings/org.eclipse.jdt.core.prefs
+.project
+.settings/org.eclipse.jdt.core.prefs

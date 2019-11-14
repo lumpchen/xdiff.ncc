@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
 
+import me.lumpchen.xafp.AFPColor;
+
 public abstract class PageContent {
 
 	public static enum Type {
@@ -194,11 +196,11 @@ public abstract class PageContent {
 	    public String colorSpace;
 	    public int rgb;
 	    
-	    public static ColorDesc newInstance(Color c) {
+	    public static ColorDesc newInstance(Color c, AFPColor afpColor) {
 	    	ColorDesc desc = new ColorDesc();
 	    	desc.components = c.getColorComponents(new float[3]);
 	    	desc.patternName = "";
-	    	desc.colorSpace = c.getColorSpace().toString();
+	    	desc.colorSpace = afpColor.getColorSpace().toString();
 	    	desc.rgb = c.getRGB();
 	    	return desc;
 	    }
@@ -258,9 +260,9 @@ public abstract class PageContent {
     protected void calcArea() {
     	if (this.outline != null) {
     		for (Shape s : this.outline) {
-    			if (s.getBounds().isEmpty()) {
-    				continue;
-    			}
+//    			if (s.getBounds().isEmpty()) {
+//    				continue;
+//    			}
     			
     			if (this.outlineRect == null) {
     				this.outlineRect = s.getBounds2D();

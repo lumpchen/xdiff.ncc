@@ -278,7 +278,7 @@ public class XDiff {
 	}
 
 	public static int diff_folder(String base, String test, String report, String config, int fromPage, int toPage) {
-		return diff_folder(base, test, report, config, fromPage, toPage);
+		return diff(base, test, report, config, fromPage, toPage);
 	}
 	
 	public static class DefaultProgressListener implements ProgressListener {

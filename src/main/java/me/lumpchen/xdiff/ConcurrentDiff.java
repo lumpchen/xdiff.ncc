@@ -142,6 +142,7 @@ public abstract class ConcurrentDiff {
 			
 			return pageDiffResult.countDiffs();
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new DiffException("Page content extract failure: " + pageNo, e);
 		}
 	}

@@ -187,7 +187,7 @@ public class AFPContentGraphics2D extends StructuredAFPPageGraphics {
         gstate.textState = new TextStateDesc();
         
         if (this.state.color != null) {
-        	gstate.nonStrokingColor = ColorDesc.newInstance(this.state.color);
+        	gstate.nonStrokingColor = ColorDesc.newInstance(this.state.color, this.state.afpColor);
         }
         
     	if (this.state.textState.font != null) {
@@ -196,7 +196,7 @@ public class AFPContentGraphics2D extends StructuredAFPPageGraphics {
         
         gstate.textState.fontSize = this.state.textState.fontSize;
         if (this.state.textState.color != null) {
-        	gstate.nonStrokingColor = ColorDesc.newInstance(this.state.textState.color);
+        	gstate.nonStrokingColor = ColorDesc.newInstance(this.state.textState.color, this.state.textState.afpColor);
         }
        
         return gstate;

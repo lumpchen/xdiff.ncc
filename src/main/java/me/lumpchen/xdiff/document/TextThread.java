@@ -161,6 +161,9 @@ public class TextThread {
 				TextContent last = mergedContents.get(mergedContents.size() - 1);
 				TextContent next = contents.get(i);
 
+				if (next == null || last == null || last.getOutlineRect() == null) {
+					continue;
+				}
 				double distance = next.getOrigin().getX() - last.getX() - last.getOutlineRect().getWidth();
 				
 				if (last.getGraphicsStateDesc().equals(next.getGraphicsStateDesc())
@@ -388,7 +391,7 @@ public class TextThread {
 	    		for (int i = begin; i < end; i++) {
 	    			Shape s = this.shapeArr[i];
 	    			if (s == null) {
-	    				break;
+	    				continue;
 	    			}
 	    			if (s instanceof GeneralPath) {
 	    				area.add(new Area(((GeneralPath) s).getBounds2D()));

@@ -15,7 +15,7 @@ public class TestCaseText {
 	
 	@Test
 	public void test_ignorePageBlankArea() throws IOException {
-		TestCaseCommon.runTestCase(subFolder, "ignorePageBlankArea");
+//		TestCaseCommon.runTestCase(subFolder, "ignorePageBlankArea");
 	}
 	
 	@Test

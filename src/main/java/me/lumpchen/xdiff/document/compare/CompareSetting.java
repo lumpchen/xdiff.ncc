@@ -8,6 +8,8 @@ import java.util.Map;
 
 public class CompareSetting {
 
+	public static final char REPLACEMENT = 0xFEFF; // ZERO WIDTH NO-BREAK SPACE, for word separate
+	
 	public boolean enableCompareImage = true;
 	public boolean enableComparePath = true;
 	public boolean enableMergePath = true;

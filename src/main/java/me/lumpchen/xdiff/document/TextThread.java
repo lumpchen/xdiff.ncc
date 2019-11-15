@@ -354,7 +354,7 @@ public class TextThread {
 		Rectangle2D bbox;
 		
 		public TextSpan(TextContent textContent, int beginIndex) {
-			String text = textContent.getText() + " ";
+			String text = textContent.getText() + Character.valueOf(CompareSetting.REPLACEMENT);
 			this.text = text;
 			this.begin = beginIndex;
 			this.length = text.length();

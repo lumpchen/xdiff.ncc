@@ -44,12 +44,17 @@ public class TextComparator extends ContentComparator {
 		int ibase = 0, itest = 0;
 		for (Diff diff : diffs) {
 			if (diff.operation == Operation.INSERT) {
-				if (diff.text.length() == 1 && diff.text.charAt(0) == 0x20) {
+				if (diff.text.length() == 1 && diff.text.charAt(0) == CompareSetting.REPLACEMENT) {
 					itest += 1;
 					continue;
 				}
+				int len = diff.text.length();
 				int from = itest;
-				TextLob[] lobs = testTextThread.getTextLob(from, diff.text.length());
+				if (diff.text.charAt(0) == Character.valueOf(CompareSetting.REPLACEMENT)) {
+					from += 1;
+					len -= 1;
+				}
+				TextLob[] lobs = testTextThread.getTextLob(from, len);
 				itest += diff.text.length();
 				
 				List<TextLob> lobList = mergeLobs(lobs);
@@ -60,12 +65,17 @@ public class TextComparator extends ContentComparator {
 					}
 				}
 			} else if (diff.operation == Operation.DELETE) {
-				if (diff.text.length() == 1 && diff.text.charAt(0) == 0x20) {
+				if (diff.text.length() == 1 && diff.text.charAt(0) == CompareSetting.REPLACEMENT) {
 					ibase += 1;
 					continue;
 				}
+				int len = diff.text.length();
 				int from = ibase;
-				TextLob[] lobs = baseTextThread.getTextLob(from, diff.text.length());
+				if (diff.text.charAt(0) == Character.valueOf(CompareSetting.REPLACEMENT)) {
+					from += 1;
+					len -= 1;
+				}
+				TextLob[] lobs = baseTextThread.getTextLob(from, len);
 				ibase += diff.text.length();
 				
 				List<TextLob> lobList = mergeLobs(lobs);
@@ -205,28 +215,28 @@ public class TextComparator extends ContentComparator {
 			return;
 		}
 		String val = textContent.getFontName();
-		if ("#DELETE#".equals(tag)) {
+		if (TAG_DELETE.equals(tag)) {
 			entry.putAttr(DiffContent.Key.Attr_Font, false, val, null);	
 		} else {
 			entry.putAttr(DiffContent.Key.Attr_Font, false, null, val);			
 		}
 		
 		Float size = textContent.getFontSize();
-		if ("#DELETE#".equals(tag)) {
+		if (TAG_DELETE.equals(tag)) {
 			entry.putAttr(DiffContent.Key.Attr_Font_size, false, size == null ? null : size.toString(), null);
 		} else {
 			entry.putAttr(DiffContent.Key.Attr_Font_size, false, null, size == null ? null : size.toString());		
 		}
 		
 		val = textContent.getNonStrokingColorspace();
-		if ("#DELETE#".equals(tag)) {
+		if (TAG_DELETE.equals(tag)) {
 			entry.putAttr(DiffContent.Key.Attr_Fill_Colorspace, false, val, null);
 		} else {
 			entry.putAttr(DiffContent.Key.Attr_Fill_Colorspace, false, null, val);			
 		}
 		
 		val = textContent.getNonStrokingColorValue();
-		if ("#DELETE#".equals(tag)) {
+		if (TAG_DELETE.equals(tag)) {
 			entry.putAttr(DiffContent.Key.Attr_Fill_Color, false, val, null);
 		} else {
 			entry.putAttr(DiffContent.Key.Attr_Fill_Color, false, null, val);			
@@ -234,7 +244,7 @@ public class TextComparator extends ContentComparator {
 		
 		if (this.setting.enableTextPositionCompare) {
 			double x = lob.getBoundingBox().getX();
-			if ("#DELETE#".equals(tag)) {
+			if (TAG_DELETE.equals(tag)) {
 				entry.putAttr(DiffContent.Key.Attr_Pos_X, false, roundM(x), null);
 			} else {
 				entry.putAttr(DiffContent.Key.Attr_Pos_X, false, null, roundM(x));			
@@ -242,7 +252,7 @@ public class TextComparator extends ContentComparator {
 			
 //			double y = this.basePageHeight - lob.getBoundingBox().getY();
 			double y = this.basePageHeight - lob.getBaseline();
-			if ("#DELETE#".equals(tag)) {
+			if (TAG_DELETE.equals(tag)) {
 				entry.putAttr(DiffContent.Key.Attr_Pos_Y, false, roundM(y), null);
 			} else {
 				entry.putAttr(DiffContent.Key.Attr_Pos_Y, false, null, roundM(y));		
@@ -309,6 +319,8 @@ public class TextComparator extends ContentComparator {
 		
 		boolean equal = compare(baseText, testText);
 		result &= equal;
+		baseText = baseText.replace(CompareSetting.REPLACEMENT, (char) 0x20);
+		testText = testText.replace(CompareSetting.REPLACEMENT, (char) 0x20);
 		entry.putAttr(DiffContent.Key.Attr_Text, equal, baseText, testText);
 		
 		if (baseSymbol || testSymbol) {

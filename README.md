@@ -1,4 +1,5 @@
 # xdiff.ncc
+xdiff.ncc 可用与PDL类型的文档比较，支持PDF，AFP，PostScript（需安装GhostScript）。
 A PDL file comparison tool, support comparison of PDF, Postscript and AFP documents. xdiff.ncc not only compares rendering bitmap of each page, but also analyzes and compares all contents in each page. For [detail](https://lumpchen.github.io/xdiff.ncc/), see showcase below. <br>
 <img src="./docs/web/thumb-1.png" height="180" width="360">   <img src="./docs/web/thumb-0.png" height="180" width="360">
 

@@ -26,7 +26,13 @@ public class DiffSettingLoader {
 
 	private DiffSettingLoader() {
 	};
-
+	
+	public static DiffSetting load(InputStream in) throws Exception {
+		Properties properties = new Properties();
+		properties.load(in);
+		return load(properties);
+	}
+	
 	public static DiffSetting load(String fileName) throws Exception {
 		if (fileName == null) {
 			logger.info("Not found compare configuration file in " + fileName + ", using default setting.");
@@ -47,7 +53,10 @@ public class DiffSettingLoader {
 					logger.log(Level.WARNING, "", e);
 				}
 		}
+		return load(properties);
+	}
 
+	private static DiffSetting load(Properties properties) {
 		DiffSetting setting = new DiffSetting();
 		
 		try {
@@ -156,7 +165,7 @@ public class DiffSettingLoader {
 			    	String s2 = entry[1].trim();
 			    	String[] r = s2.substring(1, s2.length() - 1).split(" ");
 					if (r.length != 4) {
-						logger.log(Level.WARNING, "Fail to load <acceptanceDifferenceArea> value in: " + fileName);
+						logger.log(Level.WARNING, "Fail to load <acceptanceDifferenceArea> value: " + s);
 					} else {
 						int left = Integer.parseInt(r[0]);
 						int top = Integer.parseInt(r[1]);
@@ -207,13 +216,13 @@ public class DiffSettingLoader {
 				}
 			}
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "Fail to load configure file: " + fileName, e);
+			logger.log(Level.WARNING, "Fail to load configuration: ", e);
 			throw e;
 		}
 
 		return setting;
 	}
-
+	
 	static Integer getInteger(Properties properties, String key, int defaultValue) {
 		try {
 			String val = properties.getProperty(key);

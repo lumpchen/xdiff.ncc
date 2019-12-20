@@ -13,13 +13,14 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 
-import me.lumpchen.xdiff.BitmapComparor;
+import me.lumpchen.xdiff.BitmapComparator;
+import me.lumpchen.xdiff.BitmapComparator.Mode;
 import me.lumpchen.xdiff.DiffException;
 import me.lumpchen.xdiff.DiffSetting;
 import me.lumpchen.xdiff.PDocDiffResult;
-import me.lumpchen.xdiff.PageDiffResult;
 import me.lumpchen.xdiff.PDocDiffResult.DocumentProperties;
 import me.lumpchen.xdiff.PDocDiffResult.PageInfo;
+import me.lumpchen.xdiff.PageDiffResult;
 import me.lumpchen.xdiff.document.PageContent;
 import me.lumpchen.xdiff.document.compare.PageContentComparator;
 
@@ -59,12 +60,12 @@ public class SignleThreadPDFDiff {
 			baselinePDF = PDDocument.load(this.base);
 			result.getBaseDocumentInfo().setCategory("base");
 			result.getBaseDocumentInfo().setFileName(this.base.getName());
-			result.getBaseDocumentInfo().setProperties(getDocumentProperties(this.base, baselinePDF));
+			result.getBaseDocumentInfo().setProperties(getDocumentProperties(this.base, baselinePDF, this.setting.hiddenFileAbsolutePath));
 					
 			testPDF = PDDocument.load(this.test);
 			result.getTestDocumentInfo().setCategory("test");
 			result.getTestDocumentInfo().setFileName(this.test.getName());
-			result.getTestDocumentInfo().setProperties(getDocumentProperties(this.test, testPDF));
+			result.getTestDocumentInfo().setProperties(getDocumentProperties(this.test, testPDF, this.setting.hiddenFileAbsolutePath));
 			
 			this.diffPDoc(baselinePDF, testPDF, result);
 		} catch (Exception e) {
@@ -213,9 +214,10 @@ public class SignleThreadPDFDiff {
 	
 	private String compareBitmap(BufferedImage baseBitmap, BufferedImage testBitmap, int pageNo) throws Exception {
 		try {
-			BufferedImage xorBitmap = BitmapComparor.diffImages(baseBitmap, testBitmap, setting.diffBitmapBackground);
-			if (xorBitmap != null) {
-				return this.writeOutImage(pageNo, xorBitmap);
+			BitmapComparator.CompareResult res = BitmapComparator.getComparator(setting.diffBitmapPreviewMode, 
+					setting.diffBitmapBackground, null).compare(baseBitmap, testBitmap);
+			if (res.pecentage > 0 && res.diffImage != null) {
+				return this.writeOutImage(pageNo, res.diffImage);
 			}
 			return null;
 		} catch (IOException e) {
@@ -260,7 +262,7 @@ public class SignleThreadPDFDiff {
 		}
 	}
 	
-	private static DocumentProperties getDocumentProperties(File file, PDDocument pdf) {
+	private static DocumentProperties getDocumentProperties(File file, PDDocument pdf, boolean hiddenFileAbsolutePath) {
 		DocumentProperties props = new DocumentProperties();
 		props.title = pdf.getDocumentInformation().getTitle();
 		props.author = pdf.getDocumentInformation().getAuthor();
@@ -276,7 +278,11 @@ public class SignleThreadPDFDiff {
 		
 		props.producer = pdf.getDocumentInformation().getProducer();
 		props.version = pdf.getVersion() + "";
-		props.location = file.getAbsolutePath();
+		if (hiddenFileAbsolutePath) {
+			props.location = "./" + file.getName();
+		} else {
+			props.location = file.getAbsolutePath();			
+		}
 		props.fileSize = file.length() + " Bytes";
 		return props;
 	}

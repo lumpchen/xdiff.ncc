@@ -2,15 +2,15 @@ package me.lumpchen.xdiff.document.compare;
 
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.lumpchen.xdiff.BitmapComparor;
+import me.lumpchen.xdiff.BitmapComparator;
+import me.lumpchen.xdiff.BitmapComparator.Mode;
 import me.lumpchen.xdiff.PageDiffResult.DiffContent;
 import me.lumpchen.xdiff.document.ImageSet;
-import me.lumpchen.xdiff.document.PageThread;
 import me.lumpchen.xdiff.document.ImageSet.ImageLob;
+import me.lumpchen.xdiff.document.PageThread;
 
 public class ImageComparator extends ContentComparator {
 
@@ -103,12 +103,10 @@ public class ImageComparator extends ContentComparator {
 			BufferedImage img_1 = baseImage == null ? null : baseImage.imageData;
 			BufferedImage img_2 = testImage == null ? null : testImage.imageData;
 			
-			try {
-				if (BitmapComparor.diffImages(img_1, img_2, "black") != null) {
-					result &= false;
-					entry.putAttr(DiffContent.Key.Attr_Image_Appearance, false, "NA", "NA");
-				}
-			} catch (IOException e) {
+			BitmapComparator.CompareResult res = BitmapComparator.getComparator(Mode.XOR).compare(img_1, img_2);
+			if (res.pecentage > 0 && res.diffImage != null) {
+				result &= false;
+				entry.putAttr(DiffContent.Key.Attr_Image_Appearance, false, "NA", "NA");
 			}
 		}
 		

@@ -37,6 +37,8 @@ public class CompareSetting {
 	
 	public boolean ignoreInvisibleText = false;
 	
+	public boolean ignoreDifferentTextStyle = false;
+	
 	public float globalSearchDistance = -1;
 	
 	public List<String[]> acceptanceDifferenceFontNameMap = new ArrayList<String[]>(0);

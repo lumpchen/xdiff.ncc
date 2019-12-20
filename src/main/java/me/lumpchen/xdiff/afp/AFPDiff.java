@@ -47,13 +47,13 @@ public class AFPDiff extends ConcurrentDiff {
 		this.basePageCount = this.basePrintFile.getPageCount();
 		this.result.getBaseDocumentInfo().setPageCount(this.basePageCount);
 		this.result.getBaseDocumentInfo().setImageSuffix(this.setting.previewImageFormat);
-		this.result.getBaseDocumentInfo().setProperties(getDocumentProperties(this.base, this.basePrintFile));
+		this.result.getBaseDocumentInfo().setProperties(getDocumentProperties(this.base, this.basePrintFile, this.setting.hiddenFileAbsolutePath));
 		
 		this.testPrintFile = this.getPrintFile(this.test);
 		this.testPageCount = this.testPrintFile.getPageCount();
 		this.result.getTestDocumentInfo().setPageCount(testPageCount);
 		this.result.getTestDocumentInfo().setImageSuffix(this.setting.previewImageFormat);
-		this.result.getTestDocumentInfo().setProperties(getDocumentProperties(this.test, this.testPrintFile));
+		this.result.getTestDocumentInfo().setProperties(getDocumentProperties(this.test, this.testPrintFile, this.setting.hiddenFileAbsolutePath));
 	}
 
 	@Override
@@ -178,9 +178,13 @@ public class AFPDiff extends ConcurrentDiff {
 		pageInfo.setRotation(rotationAngle);
 	}
 	
-	private static DocumentProperties getDocumentProperties(File file, PrintFile pf) {
+	private static DocumentProperties getDocumentProperties(File file, PrintFile pf, boolean hiddenFileAbsolutePath) {
 		DocumentProperties props = new DocumentProperties();
-		props.location = file.getAbsolutePath();
+		if (hiddenFileAbsolutePath) {
+			props.location = "./" + file.getName();
+		} else {
+			props.location = file.getAbsolutePath();
+		}
 		props.fileSize = file.length() + " Bytes";
 		return props;
 	}

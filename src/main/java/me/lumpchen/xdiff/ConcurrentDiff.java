@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 
 import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 
+import me.lumpchen.xdiff.BitmapComparator.Mode;
 import me.lumpchen.xdiff.PDocDiffResult.PageInfo;
 import me.lumpchen.xdiff.document.PageContent;
 import me.lumpchen.xdiff.document.compare.PageContentComparator;
@@ -122,9 +123,10 @@ public abstract class ConcurrentDiff {
 	
 	protected String compareBitmap(BufferedImage baseBitmap, BufferedImage testBitmap, int pageNo) throws Exception {
 		try {
-			BufferedImage xorBitmap = BitmapComparor.diffImages(baseBitmap, testBitmap, setting.diffBitmapBackground);
-			if (xorBitmap != null) {
-				return this.writeOutImage(pageNo, xorBitmap);
+			BitmapComparator.CompareResult res = BitmapComparator.getComparator(setting.diffBitmapPreviewMode, 
+					setting.diffBitmapBackground, null).compare(baseBitmap, testBitmap);
+			if (res.pecentage > 0 && res.diffImage != null) {
+				return this.writeOutImage(pageNo, res.diffImage);
 			}
 			return null;
 		} catch (IOException e) {

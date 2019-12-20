@@ -48,13 +48,13 @@ public class PDFDiff extends ConcurrentDiff {
 			this.baselinePDF.setResourceCache(new ConcurrentResourceCache());
 			this.result.getBaseDocumentInfo().setCategory("base");
 			this.result.getBaseDocumentInfo().setFileName(this.base.getName());
-			this.result.getBaseDocumentInfo().setProperties(getDocumentProperties(this.base, this.baselinePDF));
+			this.result.getBaseDocumentInfo().setProperties(getDocumentProperties(this.base, this.baselinePDF, this.setting.hiddenFileAbsolutePath));
 					
 			this.testPDF = PDDocument.load(this.test);
 			this.testPDF.setResourceCache(new ConcurrentResourceCache());
 			this.result.getTestDocumentInfo().setCategory("test");
 			this.result.getTestDocumentInfo().setFileName(this.test.getName());
-			this.result.getTestDocumentInfo().setProperties(getDocumentProperties(this.test, this.testPDF));
+			this.result.getTestDocumentInfo().setProperties(getDocumentProperties(this.test, this.testPDF, this.setting.hiddenFileAbsolutePath));
 			
 			this.basePageCount = this.baselinePDF.getNumberOfPages();
 			this.result.getBaseDocumentInfo().setPageCount(this.basePageCount);
@@ -192,7 +192,7 @@ public class PDFDiff extends ConcurrentDiff {
 		return dstFile;
 	}
 	
-	private static DocumentProperties getDocumentProperties(File file, PDDocument pdf) {
+	private static DocumentProperties getDocumentProperties(File file, PDDocument pdf, boolean hiddenFileAbsolutePath) {
 		DocumentProperties props = new DocumentProperties();
 		props.title = pdf.getDocumentInformation().getTitle();
 		props.author = pdf.getDocumentInformation().getAuthor();
@@ -208,7 +208,11 @@ public class PDFDiff extends ConcurrentDiff {
 		
 		props.producer = pdf.getDocumentInformation().getProducer();
 		props.version = pdf.getVersion() + "";
-		props.location = file.getAbsolutePath();
+		if (hiddenFileAbsolutePath) {
+			props.location = "./" + file.getName();
+		} else {
+			props.location = file.getAbsolutePath();			
+		}
 		props.fileSize = file.length() + " Bytes";
 		return props;
 	}

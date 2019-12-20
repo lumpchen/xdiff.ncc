@@ -9,6 +9,7 @@ public class DiffSetting {
 	public boolean noReportOnSameResult = true;
 	public boolean printReport = false;
 	public boolean showDifferentPagesOnly = false;
+	public boolean hiddenFileAbsolutePath = false;
 	
 	public CompareSetting compSetting;
 	
@@ -16,6 +17,7 @@ public class DiffSetting {
 	public String GS_PS2PDF_Para;
 	
 	public String diffBitmapBackground = "black";
+	public String diffBitmapPreviewMode = "Mixed";
 	
 	public boolean ignorePageBlankArea = false;
 	

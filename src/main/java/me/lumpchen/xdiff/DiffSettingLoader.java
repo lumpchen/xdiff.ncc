@@ -65,7 +65,8 @@ public class DiffSettingLoader {
 			setting.noReportOnSameResult = getBoolean(properties, "noReportOnSameResult", setting.noReportOnSameResult);
 			setting.printReport = getBoolean(properties, "printReport", setting.printReport);
 			setting.showDifferentPagesOnly = getBoolean(properties, "showDifferentPagesOnly", setting.showDifferentPagesOnly);
-
+			setting.hiddenFileAbsolutePath = getBoolean(properties, "hiddenFileAbsolutePath", setting.hiddenFileAbsolutePath);
+			
 			setting.enableAFPTLEComparison = getBoolean(properties, "enableAFPTLEComparison", setting.enableAFPTLEComparison);
 			setting.enableAFPNOPComparison = getBoolean(properties, "enableAFPNOPComparison", setting.enableAFPNOPComparison);
 			
@@ -88,7 +89,8 @@ public class DiffSettingLoader {
 			compareSetting.ignoreZeroSizeArea = getBoolean(properties, "ignoreZeroSizeArea", compareSetting.ignoreZeroSizeArea);
 			compareSetting.ignoreInvisibleGraphics = getBoolean(properties, "ignoreInvisibleGraphics", compareSetting.ignoreInvisibleGraphics);
 			compareSetting.ignoreInvisibleText = getBoolean(properties, "ignoreInvisibleText", compareSetting.ignoreInvisibleText);
-			
+			compareSetting.ignoreDifferentTextStyle = getBoolean(properties, "ignoreDifferentTextStyle", compareSetting.ignoreDifferentTextStyle);
+		
 			compareSetting.scaleOfSpaceingBetweenWords = getFloat(properties, "scaleOfSpaceingBetweenWords", compareSetting.scaleOfSpaceingBetweenWords);
 			
 			compareSetting.disableLineBreaking = getBoolean(properties, "disableLineBreaking", compareSetting.disableLineBreaking);
@@ -187,6 +189,7 @@ public class DiffSettingLoader {
 			setting.GS_PS2PDF_Para = getString(properties, "GS_PS2PDF_Para", setting.GS_PS2PDF_Para);
 			
 			setting.diffBitmapBackground = getString(properties, "diffBitmapBackground", setting.diffBitmapBackground);
+			setting.diffBitmapPreviewMode = getString(properties, "diffBitmapPreviewMode", setting.diffBitmapPreviewMode);
 			
 			setting.ignorePageBlankArea = getBoolean(properties, "ignorePageBlankArea", setting.ignorePageBlankArea);
 			

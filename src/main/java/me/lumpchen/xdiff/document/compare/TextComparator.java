@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import me.lumpchen.xdiff.PageDiffResult.ContentAttr;
 import me.lumpchen.xdiff.PageDiffResult.DiffContent;
 import me.lumpchen.xdiff.document.PageThread;
 import me.lumpchen.xdiff.document.TextContent;
@@ -169,6 +170,21 @@ public class TextComparator extends ContentComparator {
 				Rectangle2D rect = this.calcSpaceFillLobOutline(lob);
 				diffContent.setBBox(rect, null);
 				result.add(diffContent);
+			}
+		}
+		
+		if (setting.ignoreDifferentTextStyle) {
+			Iterator<DiffContent> iter = result.iterator();
+			while (iter.hasNext()) {
+				DiffContent entry = iter.next();
+				List<ContentAttr> attrs = entry.getAttrList();
+				for (ContentAttr attr : attrs) {
+					if (DiffContent.Key.Attr_Text.equals(attr.key)) {
+						if (attr.equals) {
+							iter.remove();
+						}
+					}
+				}
 			}
 		}
 	}

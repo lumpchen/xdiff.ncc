@@ -260,9 +260,9 @@ public abstract class PageContent {
     protected void calcArea() {
     	if (this.outline != null) {
     		for (Shape s : this.outline) {
-//    			if (s.getBounds().isEmpty()) {
-//    				continue;
-//    			}
+    			if (s == null || s.getBounds().isEmpty()) {
+    				continue;
+    			}
     			
     			if (this.outlineRect == null) {
     				this.outlineRect = s.getBounds2D();

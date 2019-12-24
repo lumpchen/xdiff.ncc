@@ -80,11 +80,10 @@ public class TestCaseCommon {
 			
 		} catch (IOException e) {
 		}
-
 	}
 
 	static boolean runTestCase(File control, File test, File config, File report, File newReport) {
-		int res = XDiff.diff(control, test, newReport, config.getAbsolutePath(), -1, -1);
+		int res = XDiff.diff(control, test, newReport, config.getAbsolutePath(), -1, -1, -1, null);
 
 		File baselineReprotFile = getReportData(report);
 		File newReprotFile = getReportData(newReport);

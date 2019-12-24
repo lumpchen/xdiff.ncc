@@ -73,12 +73,19 @@ public class PDFDiff extends ConcurrentDiff {
 		CompareResult compareResult = new CompareResult();
         try {
         	for (int i = startPage; i <= endPage; i++) {
-        		logger.info("Comparing page " + (i + 1) + " in page range " + (startPage + 1) + "-" + (endPage + 1));
+        		logger.info("Comparing control page " + (this.baseStartPageIndex + i + 1) 
+        				+ " to test page " + (this.testStartPageIndex + i + 1));
 
             	CompareResult.Result cres = new CompareResult.Result();
             	
-                PDPage page_1 = i < this.basePageCount ? this.baselinePDF.getPage(i) : null;
-                PDPage page_2 = i < this.testPageCount ? this.testPDF.getPage(i) : null;
+//                PDPage page_1 = i < this.basePageCount ? this.baselinePDF.getPage(i) : null;
+//                PDPage page_2 = i < this.testPageCount ? this.testPDF.getPage(i) : null;
+
+            	int controlPageNo = i + this.baseStartPageIndex;
+            	int testPageNo = i + this.testStartPageIndex;
+                PDPage page_1 = controlPageNo < this.basePageCount ? this.baselinePDF.getPage(controlPageNo) : null;
+                PDPage page_2 = testPageNo < this.testPageCount ? this.testPDF.getPage(testPageNo) : null;
+                
                 
                 BufferedImage baseBitmap = null;
                 BufferedImage testBitmap = null;
@@ -86,10 +93,10 @@ public class PDFDiff extends ConcurrentDiff {
                 List<PageContent> baseContentList = null;
                 List<PageContent> testContentList = null;
                 if (page_1 != null) {
-                	basePageInfo = new PageInfo(i);
+                	basePageInfo = new PageInfo(controlPageNo);
 
                 	baseContentList = new ArrayList<PageContent>();
-                	baseBitmap = this.renderPage(i, this.baselinePDF, baseContentList);
+                	baseBitmap = this.renderPage(controlPageNo, this.baselinePDF, baseContentList);
                 	basePageInfo.setPreviewImage(this.writeOutImage(i, baseBitmap), baseBitmap);
                 	this.setPageInfo(page_1, basePageInfo);
             		result.getBaseDocumentInfo().setPageInfo(i, basePageInfo);	
@@ -97,10 +104,10 @@ public class PDFDiff extends ConcurrentDiff {
                 
                 PageInfo testPageInfo = null;
                 if (page_2 != null) {
-                	testPageInfo = new PageInfo(i);
+                	testPageInfo = new PageInfo(testPageNo);
                 	
                 	testContentList = new ArrayList<PageContent>();
-                	testBitmap = this.renderPage(i, this.testPDF, testContentList);
+                	testBitmap = this.renderPage(testPageNo, this.testPDF, testContentList);
                 	testPageInfo.setPreviewImage(this.writeOutImage(i, testBitmap), testBitmap);
                 	this.setPageInfo(page_2, testPageInfo);
             		result.getTestDocumentInfo().setPageInfo(i, testPageInfo);

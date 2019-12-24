@@ -26,6 +26,10 @@ public class DiffSetting {
 	public int fromPage = -1;
 	public int toPage = -1;
 	
+	public int startPageOfControl = -1;
+	public int startPageOfTest = -1;
+	public int compareCount = -1;
+	
 	public boolean enableAFPTLEComparison = false;
 	public boolean enableAFPNOPComparison = false;
 	

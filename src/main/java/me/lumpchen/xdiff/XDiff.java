@@ -17,6 +17,9 @@ import me.lumpchen.xdiff.ps.PSDiffTool;
 
 public class XDiff {
 	
+	private static Logger logger = Logger.getLogger(PDFDiffTool.class.getName());
+	public static enum FILE_FORMAT{PDF, PS, AFP};
+	
 	static {
 		System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
 		
@@ -35,14 +38,23 @@ public class XDiff {
 	}
 	
 	private static void showUsage() {
-        String usage = "Usage: java -jar xdiff.jar [options] <baseline-pdf> <test-pdf> <result-folder>\n"
+/*        String usage = "Usage: java -jar xdiff.jar [options] <baseline-pdf> <test-pdf> <result-folder>\n"
                 + "\nOptions:\n"
                 + "  -config                            : Comparison configuration file path.\n"
         		+ "  -from_page                         : Start page to compare, begin page 1.\n"
-        		+ "  -to_page                           : End page to compare.\n";
-        System.err.println(usage);
+        		+ "  -to_page                           : End page to compare.\n";*/
+        
+        String usage = "Usage: java -jar xdiff.jar [options] <baseline-pdf> <test-pdf> <result-folder>\n"
+                + "\nOptions:\n"
+                + "  -config                            : Comparison configuration file path.\n"
+        		+ "  -control_start_page                : Start page of control document, default start page is 1.\n"
+        		+ "  -test_start_page                	: Start page of test document, default start page is 1.\n"
+        		+ "  -compare_count                     : Total pages to compare.default to end of document.\n";
+		System.err.println(usage);
         System.exit(1);
 	}
+	
+	
 	
 	private static void run(String args[]) {
 
@@ -55,8 +67,9 @@ public class XDiff {
 		String test = null;
 		String result = null;
 		String config = null;
-		int fromPage = -1;
-		int toPage = -1;
+		int control_start_page = -1;
+		int test_start_page = -1;
+		int compare_count = -1;
 		
 		for (int i = 0; i < args.length; i++) {
 			String arg = args[i];
@@ -65,7 +78,30 @@ public class XDiff {
 				folderCompare = true;
 			} else if (arg.equals("-config")) {
 				config = args[++i];
-			} else if (arg.equals("-from_page")) {
+			} else if (arg.equals("-control_start_page")) {
+				String pageStr = args[++i];
+				try {
+					control_start_page = Integer.parseInt(pageStr.trim());	
+				} catch (Exception e) {
+					System.err.println("Invalid -control_start_page: " + pageStr + "\n");
+				}
+			} else if (arg.equals("-test_start_page")) {
+				String pageStr = args[++i];
+				try {
+					test_start_page = Integer.parseInt(pageStr.trim());	
+				} catch (Exception e) {
+					System.err.println("Invalid -test_start_page: " + pageStr + "\n");
+				}
+			} else if (arg.equals("-compare_count")) {
+				String pageStr = args[++i];
+				try {
+					compare_count = Integer.parseInt(pageStr.trim());	
+				} catch (Exception e) {
+					System.err.println("Invalid -compare_count: " + pageStr + "\n");
+				}
+/*			}
+			
+			else if (arg.equals("-from_page")) {
 				String pageStr = args[++i];
 				try {
 					fromPage = Integer.parseInt(pageStr);	
@@ -78,7 +114,7 @@ public class XDiff {
 					toPage = Integer.parseInt(pageStr);	
 				} catch (Exception e) {
 					System.err.println("Invalid page number: " + pageStr + "\n");
-				}
+				}*/
 			} else if (base == null) {
 				base = args[i];
 			} else if (test == null) {
@@ -93,31 +129,28 @@ public class XDiff {
 			showUsage();
 		}
 		
-		if (fromPage > toPage) {
-			System.err.println("Invalid page range "
-					+ "from " + fromPage + " to " + toPage + " \n");
-			showUsage();
-		}
+//		if (fromPage > toPage) {
+//			System.err.println("Invalid page range "
+//					+ "from " + fromPage + " to " + toPage + " \n");
+//			showUsage();
+//		}
 
-		int diff;
+		int diff = 0;
 		if (folderCompare) {
-			diff = diff_folder(base, test, result, config, fromPage, toPage);
+			diff = diff_folder(base, test, result, config);
 		} else {
-			diff = diff(base, test, result, config, fromPage, toPage);
+			diff = diff(base, test, result, config, control_start_page, test_start_page, compare_count, null);
 		}
 		
 		System.exit(diff);
 	}
 	
-	private static Logger logger = Logger.getLogger(PDFDiffTool.class.getName());
-	public static enum FILE_FORMAT{PDF, PS, AFP};
-	
-	public static int diff(String base, String test, String reportDir, String config, int fromPage, int toPage) {
-		return diff(base, test, reportDir, config, fromPage, toPage, null);
+	public static int diff_folder(String base, String test, String report, String config) {
+		return diff(base, test, report, config, -1, -1, -1, null);
 	}
 	
 	public static int diff(String base, String test, String reportDir, String config, 
-			int fromPage, int toPage, ProgressListener progressListener) {
+			int control_start_page, int test_start_page, int compare_count, ProgressListener progressListener) {
 		if (progressListener == null) {
 			progressListener = new DefaultProgressListener();
 		}
@@ -140,17 +173,42 @@ public class XDiff {
 		}
 		
 		if (baseFile.isFile() && testFile.isFile()) {
-			return diff(new File(base), new File(test), new File(reportDir), config, fromPage, toPage, progressListener);
+			return diff(new File(base), new File(test), new File(reportDir), config, 
+					control_start_page, test_start_page, compare_count, progressListener);
 		} else if (baseFile.isDirectory() && testFile.isDirectory()) {
-			return diff_folder(base, test, reportDir, config, fromPage, toPage, progressListener);
+			return diff_folder(base, test, reportDir, config, progressListener);
 		} else {
 			logger.severe("Invalid parameters, please check parameters!");
 			return -1;
 		}
 	}
 	
+	public static int diff_folder(String base, String test, String report, String config, ProgressListener progressListener) {
+		File baseDir = new File(base);
+		File testDir = new File(test);
+		File reportDir = new File(report);
+		
+		int count = 0;
+		File[] baseFiles = baseDir.listFiles();
+		for (File baseFile : baseFiles) {
+			String name = baseFile.getName();
+//			if (!name.toLowerCase().endsWith(".pdf")) {
+//				continue;
+//			}
+			File testFile = new File(testDir, name);
+			if (!testFile.exists()) {
+				continue;
+			}
+			
+			File reportFile = new File(reportDir, name);
+			count += diff(baseFile, testFile, reportFile, config, -1, -1, -1, progressListener);
+		}
+		
+		return count;
+	}
+	
 	public static int diff(File base, File test, File reportDir, String config, 
-			int fromPage, int toPage, ProgressListener progressListener) {
+			int control_start_page, int test_start_page, int compare_count, ProgressListener progressListener) {
 		DiffSetting setting;
 		if (config == null) {
 			setting = DiffSetting.getDefaultSetting();
@@ -163,27 +221,15 @@ public class XDiff {
 			}
 		}
 		
-		if (fromPage > 0 && toPage > 0) {
-			if (toPage >= fromPage) {
-				setting.fromPage = fromPage - 1;
-				setting.toPage = toPage - 1;
-			} else {
-				logger.log(Level.SEVERE, "Invalid page range "
-						+ "from" + fromPage + " to " + toPage + " \n");
-				return -1;
-			}
-		}
-		
 		if (progressListener == null) {
 			progressListener = new DefaultProgressListener();
 		}
 		setting.progressListener = progressListener;
+		setting.startPageOfControl = control_start_page;
+		setting.startPageOfTest = test_start_page;
+		setting.compareCount = compare_count;
 		
 		return diff(base, test, reportDir, setting);
-	}
-	
-	public static int diff(File base, File test, File reportDir, String config, int fromPage, int toPage) {
-		return diff(base, test, reportDir, config, fromPage, toPage, null);
 	}
 	
 	public static int diff(File base, File test, File reportDir, DiffSetting setting) {
@@ -251,43 +297,13 @@ public class XDiff {
 		
 		return null;
 	}
-	
-	public static int diff_folder(String base, String test, String report, String config, 
-			int fromPage, int toPage, ProgressListener progressListener) {
-		File baseDir = new File(base);
-		File testDir = new File(test);
-		File reportDir = new File(report);
-		
-		int count = 0;
-		File[] baseFiles = baseDir.listFiles();
-		for (File baseFile : baseFiles) {
-			String name = baseFile.getName();
-//			if (!name.toLowerCase().endsWith(".pdf")) {
-//				continue;
-//			}
-			File testFile = new File(testDir, name);
-			if (!testFile.exists()) {
-				continue;
-			}
-			
-			File reportFile = new File(reportDir, name);
-			count += diff(baseFile, testFile, reportFile, config, fromPage, toPage, progressListener);
-		}
-		
-		return count;
-	}
 
-	public static int diff_folder(String base, String test, String report, String config, int fromPage, int toPage) {
-		return diff(base, test, report, config, fromPage, toPage);
-	}
-	
 	public static class DefaultProgressListener implements ProgressListener {
 
 		@Override
 		public void progress(float progress) {
 			logger.info("Comparing progress: " + progress);
 		}
-		
 	}
 }
 

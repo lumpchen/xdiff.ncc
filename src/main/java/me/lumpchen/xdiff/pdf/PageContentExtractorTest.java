@@ -29,7 +29,8 @@ public class PageContentExtractorTest {
 			for (int i = 0; i < n; i++) {
 				render.renderImage(i);
 				List<PageContent> pageContents = render.getPageContentList();
-				showPageContents(pageContents);
+//				showPageContents(pageContents);
+				reflow(pageContents);
 			}
 			
 		} catch (IOException e) {
@@ -94,6 +95,18 @@ public class PageContentExtractorTest {
 //			System.out.println("    Name: " + annot.getFieldName());
 //			System.out.println("    Contents: " + annot.getAlternateFieldName());
 		} 
+	}
+	
+	public static void reflow(List<PageContent> pageContents) {
+		for (PageContent content : pageContents) {
+			if (content.getType() == PageContent.Type.Text) {
+				TextContent text = (TextContent) content;
+				int baseline = (int) Math.round(text.getOrigin().getY());
+				int lineHeight = (int) Math.round(text.getHeight());
+				System.out.println(baseline + "  " + text.getText());
+			}
+			
+		}
 	}
 }
 

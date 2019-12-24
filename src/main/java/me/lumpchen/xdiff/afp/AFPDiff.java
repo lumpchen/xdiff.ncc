@@ -63,12 +63,15 @@ public class AFPDiff extends ConcurrentDiff {
 		AFPPageContentDrawer baseDrawer = new AFPPageContentDrawer(this.para, this.basePrintFile);
 		AFPPageContentDrawer testDrawer = new AFPPageContentDrawer(this.para, this.testPrintFile);
 		for (int i = startPage; i <= endPage; i++) {
-			logger.info("Comparing page " + (i + 1));
+       		logger.info("Comparing control page " + (this.baseStartPageIndex + i + 1) 
+    				+ " to test page " + (this.testStartPageIndex + i + 1));
         	
 			CompareResult.Result cres = new CompareResult.Result();
 			
-            Page page_1 = i < basePageCount ? basePrintFile.getPage(i) : null;
-            Page page_2 = i < testPageCount ? testPrintFile.getPage(i) : null;
+        	int controlPageNo = i + this.baseStartPageIndex;
+        	int testPageNo = i + this.testStartPageIndex;
+            Page page_1 = i < basePageCount ? basePrintFile.getPage(controlPageNo) : null;
+            Page page_2 = i < testPageCount ? testPrintFile.getPage(testPageNo) : null;
             
             BufferedImage baseBitmap = null;
             BufferedImage testBitmap = null;
@@ -77,7 +80,7 @@ public class AFPDiff extends ConcurrentDiff {
             List<PageContent> testContentList = null;
             
             if (page_1 != null) {
-            	basePageInfo = new PageInfo(i);
+            	basePageInfo = new PageInfo(controlPageNo);
 
             	baseBitmap = baseDrawer.renderPage(page_1);
             	baseContentList = baseDrawer.getPageContentList();
@@ -89,7 +92,7 @@ public class AFPDiff extends ConcurrentDiff {
             
             PageInfo testPageInfo = null;
             if (page_2 != null) {
-            	testPageInfo = new PageInfo(i);
+            	testPageInfo = new PageInfo(testPageNo);
 
             	testBitmap = testDrawer.renderPage(page_2);
             	testContentList = testDrawer.getPageContentList();

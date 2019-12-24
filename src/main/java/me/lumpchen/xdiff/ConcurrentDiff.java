@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 
 import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 
-import me.lumpchen.xdiff.BitmapComparator.Mode;
 import me.lumpchen.xdiff.PDocDiffResult.PageInfo;
 import me.lumpchen.xdiff.document.PageContent;
 import me.lumpchen.xdiff.document.compare.PageContentComparator;
@@ -31,6 +30,9 @@ public abstract class ConcurrentDiff {
 	protected File base;
 	protected File test;
 	protected DiffSetting setting;
+	
+	protected int baseStartPageIndex;
+	protected int testStartPageIndex;
 	
 	protected int basePageCount;
 	protected int testPageCount;
@@ -49,13 +51,61 @@ public abstract class ConcurrentDiff {
 	}
 	
 	public PDocDiffResult diff() throws DiffException {
-
         try {
     		this.result = new PDocDiffResult(this.setting, this.getFormat());
     		this.prepareCompare();
-    		
-    		this.maxPageNum = basePageCount > testPageCount ? basePageCount : testPageCount;
 
+    		if (this.setting.startPageOfControl > this.basePageCount) {
+    			throw new DiffException("start page of control pdf file out of range ("
+    					+ "start: " + this.setting.startPageOfControl + ", total: " + this.basePageCount + ")");
+    		}
+    		if (this.setting.startPageOfTest > this.testPageCount) {
+    			throw new DiffException("start page of test pdf file out of range ("
+    					+ "start: " + this.setting.startPageOfTest + ", total: " + this.testPageCount + ")");
+    		}
+    		this.baseStartPageIndex = this.setting.startPageOfControl > 0 ? this.setting.startPageOfControl - 1 : 0;
+    		this.testStartPageIndex = this.setting.startPageOfTest > 0 ? this.setting.startPageOfTest - 1 : 0;
+    		
+    		int baseCompareCount = this.basePageCount - this.baseStartPageIndex;
+    		int testCompareCount = this.testPageCount - this.testStartPageIndex;
+    		this.maxPageNum = baseCompareCount > testCompareCount ? baseCompareCount : testCompareCount;
+    		if (this.setting.compareCount >= 0) {
+    			this.maxPageNum = this.setting.compareCount < this.maxPageNum ? this.setting.compareCount : this.maxPageNum;    			
+    		}
+    		
+    		final List<Callable<CompareResult>> partitions = new ArrayList<Callable<CompareResult>>();
+    		int partition = CPU_CORE_NUM * 2;
+        	int pagesPerPartition = maxPageNum / partition;
+        	if (maxPageNum <= partition) {
+        		pagesPerPartition = 1;
+        		partition = maxPageNum;
+        	} else {
+        		pagesPerPartition = maxPageNum / partition + 1;
+        	}
+        	for (int i = 0; i < partition; i++) {
+        		final int begin = i * pagesPerPartition;
+        		if (begin >= this.maxPageNum) {
+        			break;
+        		}
+        		int nend = begin + pagesPerPartition - 1;
+        		final int end = nend > maxPageNum ? maxPageNum : nend;
+        		
+        		partitions.add(new Callable<CompareResult>() {
+					@Override
+					public CompareResult call() throws Exception {
+						CompareResult ret = compare(begin, end);
+						return ret;
+					}
+        		});
+        	}
+    		
+    		
+    		
+    		
+    		
+    		
+    		/*
+    		this.maxPageNum = basePageCount > testPageCount ? basePageCount : testPageCount;
     		final List<Callable<CompareResult>> partitions = new ArrayList<Callable<CompareResult>>();
         	
         	if (this.setting.fromPage > -1 && this.setting.toPage > -1) {
@@ -94,11 +144,12 @@ public abstract class ConcurrentDiff {
     					}
             		});
             	}
-        	}
+        	}*/
         	
         	final ExecutorService executorPool = Executors.newFixedThreadPool(CPU_CORE_NUM);
 			final List<Future<CompareResult>> resultFromParts = executorPool.invokeAll(partitions, TIMEOUT, TimeUnit.SECONDS);
 			executorPool.shutdown();
+			
 //			for (final Future<CompareResult> ret : resultFromParts) {
 //				System.out.println(ret.get());
 //			}
@@ -107,7 +158,11 @@ public abstract class ConcurrentDiff {
 			
         } catch (Exception e) {
         	logger.log(Level.SEVERE, "Can't compare " + this.getFormat() + " files: ", e);
-        	throw new DiffException("Can't compare " + this.getFormat() + " files: " + e);
+        	if (e instanceof DiffException) {
+        		throw (DiffException) e;
+        	} else {
+        		throw new DiffException("Can't compare " + this.getFormat() + " files: " + e);        		
+        	}
         }
 		return result;
 	}

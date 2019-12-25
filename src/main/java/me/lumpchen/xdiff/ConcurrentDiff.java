@@ -87,8 +87,8 @@ public abstract class ConcurrentDiff {
         		if (begin >= this.maxPageNum) {
         			break;
         		}
-        		int nend = begin + pagesPerPartition - 1;
-        		final int end = nend > maxPageNum ? maxPageNum : nend;
+        		int nEnd = begin + pagesPerPartition - 1;
+        		final int end = nEnd > maxPageNum ? maxPageNum : nEnd;
         		
         		partitions.add(new Callable<CompareResult>() {
 					@Override
@@ -99,60 +99,13 @@ public abstract class ConcurrentDiff {
         		});
         	}
     		
-    		
-    		
-    		
-    		
-    		
-    		/*
-    		this.maxPageNum = basePageCount > testPageCount ? basePageCount : testPageCount;
-    		final List<Callable<CompareResult>> partitions = new ArrayList<Callable<CompareResult>>();
-        	
-        	if (this.setting.fromPage > -1 && this.setting.toPage > -1) {
-        		final int startPage = this.setting.fromPage < maxPageNum ? this.setting.fromPage : maxPageNum;
-        		final int endPage = this.setting.toPage < maxPageNum ? this.setting.toPage : maxPageNum;
-        		
-        		partitions.add(new Callable<CompareResult>() {
-					@Override
-					public CompareResult call() throws Exception {
-						CompareResult ret = compare(startPage, endPage);
-						return ret;
-					}
-        		});
-        	} else {
-            	int partition = CPU_CORE_NUM * 2;
-            	int pagesPerPartition = maxPageNum / partition;
-            	if (maxPageNum <= partition) {
-            		pagesPerPartition = 1;
-            		partition = maxPageNum;
-            	} else {
-            		pagesPerPartition = maxPageNum / partition + 1;
-            	}
-            	for (int i = 0; i < partition; i++) {
-            		final int begin = i * pagesPerPartition;
-            		if (begin >= this.maxPageNum) {
-            			break;
-            		}
-            		int nend = begin + pagesPerPartition - 1;
-            		final int end = nend > maxPageNum ? maxPageNum : nend;
-            		
-            		partitions.add(new Callable<CompareResult>() {
-    					@Override
-    					public CompareResult call() throws Exception {
-    						CompareResult ret = compare(begin, end);
-    						return ret;
-    					}
-            		});
-            	}
-        	}*/
-        	
         	final ExecutorService executorPool = Executors.newFixedThreadPool(CPU_CORE_NUM);
 			final List<Future<CompareResult>> resultFromParts = executorPool.invokeAll(partitions, TIMEOUT, TimeUnit.SECONDS);
 			executorPool.shutdown();
 			
-//			for (final Future<CompareResult> ret : resultFromParts) {
-//				System.out.println(ret.get());
-//			}
+			for (final Future<CompareResult> ret : resultFromParts) {
+				logger.info(ret.get().toString());
+			}
 
 			this.postCompare();
 			

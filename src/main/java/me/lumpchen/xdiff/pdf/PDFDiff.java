@@ -77,15 +77,11 @@ public class PDFDiff extends ConcurrentDiff {
         				+ " to test page " + (this.testStartPageIndex + i + 1));
 
             	CompareResult.Result cres = new CompareResult.Result();
-            	
-//                PDPage page_1 = i < this.basePageCount ? this.baselinePDF.getPage(i) : null;
-//                PDPage page_2 = i < this.testPageCount ? this.testPDF.getPage(i) : null;
 
             	int controlPageNo = i + this.baseStartPageIndex;
             	int testPageNo = i + this.testStartPageIndex;
                 PDPage page_1 = controlPageNo < this.basePageCount ? this.baselinePDF.getPage(controlPageNo) : null;
                 PDPage page_2 = testPageNo < this.testPageCount ? this.testPDF.getPage(testPageNo) : null;
-                
                 
                 BufferedImage baseBitmap = null;
                 BufferedImage testBitmap = null;

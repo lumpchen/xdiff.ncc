@@ -251,7 +251,8 @@ public class XDiff {
 		FILE_FORMAT baseFormat = checkSuffix(base);
 		FILE_FORMAT testFormat = checkSuffix(test);
 		if (baseFormat == null || testFormat == null || baseFormat != testFormat) {
-			logger.log(Level.SEVERE, "Baseline and test file have different format!");
+			logger.log(Level.SEVERE, "Baseline and test file have different format or format not supported!"
+					+ " - " + base.getName() + " vs " + test.getName());
 			return -1;
 		}
 		

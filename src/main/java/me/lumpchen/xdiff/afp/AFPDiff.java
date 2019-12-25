@@ -70,8 +70,8 @@ public class AFPDiff extends ConcurrentDiff {
 			
         	int controlPageNo = i + this.baseStartPageIndex;
         	int testPageNo = i + this.testStartPageIndex;
-            Page page_1 = i < basePageCount ? basePrintFile.getPage(controlPageNo) : null;
-            Page page_2 = i < testPageCount ? testPrintFile.getPage(testPageNo) : null;
+            Page page_1 = controlPageNo < basePageCount ? basePrintFile.getPage(controlPageNo) : null;
+            Page page_2 = testPageNo < testPageCount ? testPrintFile.getPage(testPageNo) : null;
             
             BufferedImage baseBitmap = null;
             BufferedImage testBitmap = null;

@@ -1,5 +1,4 @@
 # xdiff.ncc
-xdiff.ncc 可用于PDL类型的文档比较，支持PDF，AFP，PostScript（需安装GhostScript）。<br>
 A PDL file comparison tool, support comparison of PDF, Postscript and AFP documents. xdiff.ncc not only compares rendering bitmap of each page, but also analyzes and compares all contents in each page. For [detail](https://lumpchen.github.io/xdiff.ncc/), see showcase below. <br>
 <img src="./docs/web/thumb-1.png" height="180" width="360">   <img src="./docs/web/thumb-0.png" height="180" width="360">
 
@@ -48,6 +47,13 @@ Resource
 -----
 xdiff.ncc uses PDFBox for PDF interpreting and rendering. PDFBox is a project of the Apache Software Foundation <http://www.apache.org/>. xdiff.ncc is based on PDFBox 2.0.7.
 
+Development plan
+-----
+    Generate PDF format report
+    Continuous comparison accross pages
+    header/footer setting
+    Automatically identify paragraphs and tables
+
 Support
 -----
 lumpchen@gmail.com 
@@ -55,3 +61,7 @@ lumpchen@gmail.com
 License
 -----
 [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
+
+-----
+xdiff.ncc 可用于PDL类型的文档比较，支持PDF，AFP，PostScript（需安装GhostScript）。<br>
+

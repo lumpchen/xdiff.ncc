@@ -72,7 +72,7 @@ public abstract class PageContent {
 	        		|| this.lineCap != aObj.lineCap
 	        		|| this.lineJoin != aObj.lineJoin
 	        		|| this.miterLimit != aObj.miterLimit) {
-	        	return true;
+	        	return false;
 	        }
 	        return true;
 	    }
@@ -122,7 +122,7 @@ public abstract class PageContent {
 		        		|| this.lineCap != aObj.lineCap
 		        		|| this.lineJoin != aObj.lineJoin
 		        		|| this.miterLimit != aObj.miterLimit) {
-		        	return true;
+		        	return false;
 		        }
 	        }
 

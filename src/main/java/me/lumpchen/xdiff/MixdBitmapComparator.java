@@ -81,7 +81,7 @@ public class MixdBitmapComparator extends BitmapComparator {
 	}
 	
 	private static BufferedImage createDiffImage(int minWidth, int minHeight, int maxWidth, int maxHeight) {
-		BufferedImage bim3 = new BufferedImage(maxWidth, maxHeight, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage bim3 = new BufferedImage(maxWidth, maxHeight, BufferedImage.TYPE_INT_RGB);
 		return bim3;
 	}
 }

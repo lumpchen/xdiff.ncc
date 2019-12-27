@@ -17,7 +17,7 @@ public class DiffSetting {
 	public String GS_PS2PDF_Para;
 	
 	public String diffBitmapBackground = "black";
-	public String diffBitmapPreviewMode = "Mixed";
+	public String diffBitmapPreviewMode = "xor";
 	
 	public boolean ignorePageBlankArea = false;
 	

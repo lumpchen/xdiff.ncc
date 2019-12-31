@@ -88,7 +88,7 @@ public abstract class ContentComparator {
 					&& tstate_1.horizontalScaling == tstate_2.horizontalScaling && tstate_1.leading == tstate_2.leading
 					&& tstate_1.fontSize == tstate_2.fontSize && tstate_1.renderingMode == tstate_2.renderingMode
 					&& tstate_1.rise == tstate_2.rise && tstate_1.knockout == tstate_2.knockout;
-			b &= compare(tstate_1.fontName, tstate_2.fontName);
+			b &= compare(tstate_1.getFontName(), tstate_2.getFontName());
 			return b;
 		}
 		return false;

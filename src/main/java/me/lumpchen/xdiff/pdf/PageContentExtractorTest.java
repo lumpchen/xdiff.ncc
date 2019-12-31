@@ -67,7 +67,7 @@ public class PageContentExtractorTest {
 			TextContent text = (TextContent) content;
 			System.out.println(text.getTypeString() + ": " + text.showString());
 			
-			System.out.println("    FontName: " + text.getGraphicsStateDesc().textState.fontName
+			System.out.println("    FontName: " + text.getGraphicsStateDesc().textState.getFontName()
 					+ " " + text.getGraphicsStateDesc().textState.fontSize);
 			System.out.println("    Outline: " + text.getOutlineRect());
 		} else if (content.getType() == PageContent.Type.Path) {

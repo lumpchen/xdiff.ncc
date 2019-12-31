@@ -3,17 +3,17 @@ package me.lumpchen.xdiff.document;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextBlockBuilder {
+public class TextChunkBuilder {
 
 	private List<PageContent> contentList;
 	private float pageWidth;
 	private float pageHeight;
 	
-	private List<TextBlock> headerBlock;
-	private List<TextBlock> footerBlock;
-	private List<TextBlock> bodyBlock;
+	private List<TextChunk> headerChunk;
+	private List<TextChunk> footerChunk;
+	private List<TextChunk> bodyChunk;
 	
-	public TextBlockBuilder(List<PageContent> contentList, float pageWidth, float pageHeight) {
+	public TextChunkBuilder(List<PageContent> contentList, float pageWidth, float pageHeight) {
 		this.contentList = contentList;
 		this.pageWidth = pageWidth;
 		this.pageHeight = pageHeight;
@@ -45,60 +45,61 @@ public class TextBlockBuilder {
 		}
 
 		System.out.println("------- header --------");
-		this.headerBlock = buildBlock(headerContentList);
-		for (TextBlock tb : this.headerBlock) {
+		this.headerChunk = buildChunk(headerContentList);
+		for (TextChunk tb : this.headerChunk) {
 			System.out.println(tb.toString());
 		}
 
 		System.out.println("------- footer --------");
-		this.footerBlock = buildBlock(footerContentList);
-		for (TextBlock tb : this.footerBlock) {
+		this.footerChunk = buildChunk(footerContentList);
+		for (TextChunk tb : this.footerChunk) {
 			System.out.println(tb.toString());
 		}
 
 		System.out.println("------- body --------");
-		this.bodyBlock = buildBlock(bodyContentList);
-		for (TextBlock tb : this.bodyBlock) {
+		this.bodyChunk = buildChunk(bodyContentList);
+		for (TextChunk tb : this.bodyChunk) {
 			System.out.println(tb.toString());
+			System.out.println();
 		}
 	}
 	
-	public List<TextBlock> getHeaderBlock() {
-		return headerBlock;
+	public List<TextChunk> getHeaderBlock() {
+		return headerChunk;
 	}
 
-	public List<TextBlock> getFooterBlock() {
-		return footerBlock;
+	public List<TextChunk> getFooterBlock() {
+		return footerChunk;
 	}
 
-	public List<TextBlock> getBodyBlock() {
-		return bodyBlock;
+	public List<TextChunk> getBodyBlock() {
+		return bodyChunk;
 	}
 
-	private static List<TextBlock> buildBlock(List<TextContent> textContentList) {
-		List<TextBlock> blocks = new ArrayList<TextBlock>();
-		TextBlock block = new TextBlock();
+	private static List<TextChunk> buildChunk(List<TextContent> textContentList) {
+		List<TextChunk> chunks = new ArrayList<TextChunk>();
+		TextChunk chunk = new TextChunk();
 		for (TextContent content : textContentList) {
 			int x = (int) Math.round(content.getX());
 			int baseline = (int) Math.round(content.getBaseline());
 
-			if (block.getContentList().isEmpty()) {
-				block.getContentList().add(content);
+			if (chunk.getContentList().isEmpty()) {
+				chunk.getContentList().add(content);
 			} else {
-				TextContent last = block.getContentList().get(block.getContentList().size() - 1);
+				TextContent last = chunk.getContentList().get(chunk.getContentList().size() - 1);
 				if (content.getGraphicsStateDesc().equals(last.getGraphicsStateDesc())) {
-					block.getContentList().add(content);
+					chunk.getContentList().add(content);
 				} else {
-					blocks.add(block);
-					block = new TextBlock();
-					block.getContentList().add(content);
+					chunks.add(chunk);
+					chunk = new TextChunk();
+					chunk.getContentList().add(content);
 				}
 			}
 		}
-		if (!block.getContentList().isEmpty()) {
-			blocks.add(block);
+		if (!chunk.getContentList().isEmpty()) {
+			chunks.add(chunk);
 		}
 		
-		return blocks;
+		return chunks;
 	}
 }

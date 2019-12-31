@@ -3,11 +3,11 @@ package me.lumpchen.xdiff.document;
 import java.util.ArrayList;
 import java.util.List;
 
-class TextBlock {
+class TextChunk {
 	
 	private List<TextContent> contentList;
 	
-	public TextBlock() {
+	public TextChunk() {
 		this.contentList = new ArrayList<TextContent>();
 	}
 	

@@ -191,7 +191,7 @@ public class AFPContentGraphics2D extends StructuredAFPPageGraphics {
         }
         
     	if (this.state.textState.font != null) {
-    		gstate.textState.fontName = this.state.textState.font.getName();
+    		gstate.textState.setFontName(this.state.textState.font.getName());
     	}
         
         gstate.textState.fontSize = this.state.textState.fontSize;

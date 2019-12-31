@@ -260,7 +260,7 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 		gstate.textState.knockout = textState.getKnockoutFlag();
         PDFont font = textState.getFont();
         if (font != null) {
-        	gstate.textState.fontName = font.getName();
+        	gstate.textState.setFontName(font.getName());
         	
         	if (!font.isEmbedded() || font.isDamaged()) {
         		try {
@@ -284,9 +284,8 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
         	                fallbackFont = cidType0Font.getFontBoxFont().getName();
         	            }
         	        }
-        			if (fallbackFont != null && !fallbackFont.equalsIgnoreCase(gstate.textState.fontName)) {
-        				gstate.textState.fontName  = gstate.textState.fontName + " (not embedded, using fallback font \'" + fallbackFont + "\')";
-        				
+        			if (fallbackFont != null && !fallbackFont.equalsIgnoreCase(gstate.textState.getFontName())) {
+        				gstate.textState.setFontName(gstate.textState.getFontName() + " (not embedded, using fallback font \'" + fallbackFont + "\')");
         			}
         		} catch (Exception e) {
         			LOG.warning("Font " + font.getName() + " is not embedded, using fallback font!");

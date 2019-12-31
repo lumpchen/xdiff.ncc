@@ -163,9 +163,27 @@ public abstract class PageContent {
         public RenderingMode renderingMode;
         public float rise = 0;
         public boolean knockout = true;
-        public String fontName;
+        private String fontName;
         
-		@Override
+        public void setFontName(String fontName) {
+        	this.fontName = removeFontNameSubsetPrefix(fontName);
+        }
+        
+        public String getFontName() {
+        	return this.fontName;
+        }
+        
+    	static String removeFontNameSubsetPrefix(String fontName) {
+    		if (fontName == null) {
+    			return null;
+    		}
+    		if (fontName.indexOf("+") > 0) {
+    			return fontName.substring(fontName.indexOf("+") + 1, fontName.length()).trim();
+    		}
+    		return fontName.trim();
+    	}
+		
+        @Override
 	    public boolean equals(Object obj) {
 	        if (this == obj) {
 	        	return true;
@@ -175,7 +193,7 @@ public abstract class PageContent {
 	        }
 	        
 	        TextStateDesc aObj = (TextStateDesc) obj;
-	        if (this.characterSpacing == aObj.characterSpacing
+/*	        if (this.characterSpacing == aObj.characterSpacing
 	        		&& this.wordSpacing == aObj.wordSpacing
 	        		&& this.horizontalScaling == aObj.horizontalScaling
 	        		&& this.leading == aObj.leading
@@ -184,6 +202,10 @@ public abstract class PageContent {
 	        		&& this.rise == aObj.rise
 	        		&& this.knockout == aObj.knockout
 	        		&& this.fontName == aObj.fontName) {
+	        	return true;
+	        }*/
+	        if (this.fontSize == aObj.fontSize
+	        		&& this.fontName.equalsIgnoreCase(aObj.fontName)) {
 	        	return true;
 	        }
 	        return false;

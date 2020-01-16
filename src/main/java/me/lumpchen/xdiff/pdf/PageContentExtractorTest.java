@@ -2,6 +2,7 @@ package me.lumpchen.xdiff.pdf;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -26,11 +27,16 @@ public class PageContentExtractorTest {
 			
 			PDFContentRenderer render = new PDFContentRenderer(pdfDoc);
 			int n = pdfDoc.getNumberOfPages();
+			PDFReStructureDocument reDocument = new PDFReStructureDocument();
+			
 			for (int i = 0; i < n; i++) {
 				render.renderImage(i);
 				List<PageContent> pageContents = render.getPageContentList();
+				
+				PDFReStructurePage rePage = new PDFReStructurePage(i, pageContents);
+				reDocument.addPage(rePage);
+				
 //				showPageContents(pageContents);
-				reflow(pageContents);
 			}
 			
 		} catch (IOException e) {
@@ -97,15 +103,30 @@ public class PageContentExtractorTest {
 		} 
 	}
 	
-	public static void reflow(List<PageContent> pageContents) {
-		for (PageContent content : pageContents) {
-			if (content.getType() == PageContent.Type.Text) {
-				TextContent text = (TextContent) content;
-				int baseline = (int) Math.round(text.getOrigin().getY());
-				int lineHeight = (int) Math.round(text.getHeight());
-				System.out.println(baseline + "  " + text.getText());
-			}
+
+	static class PDFReStructureDocument {
+		public List<PDFReStructurePage> pageList = new ArrayList<PDFReStructurePage>();
+		
+		public PDFReStructureDocument() {
+		}
+
+		public void addPage(PDFReStructurePage page) {
+			this.pageList.add(page);
+		}
+		
+		public void reStructure() {
+			// header/footer
 			
+		}
+	}
+
+	static class PDFReStructurePage {
+		public int pageIndex;
+		public List<PageContent> contentList;
+		
+		public PDFReStructurePage(int pageIndex, List<PageContent> contentList) {
+			this.pageIndex = pageIndex;
+			this.contentList.addAll(contentList);
 		}
 	}
 }

@@ -110,3 +110,5 @@ local.properties
 .settings/org.eclipse.jdt.core.prefs
 .project
 .settings/org.eclipse.jdt.core.prefs
+.classpath
+.settings/org.eclipse.jdt.core.prefs

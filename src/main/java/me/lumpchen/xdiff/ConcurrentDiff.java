@@ -74,7 +74,9 @@ public abstract class ConcurrentDiff {
     		}
     		
     		final List<Callable<CompareResult>> partitions = new ArrayList<Callable<CompareResult>>();
-    		int partition = CPU_CORE_NUM * 2;
+//    		int partition = CPU_CORE_NUM * 2;
+    		int partition = 1;
+    		
         	int pagesPerPartition = maxPageNum / partition;
         	if (maxPageNum <= partition) {
         		pagesPerPartition = 1;

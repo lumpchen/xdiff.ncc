@@ -3,7 +3,6 @@ package me.lumpchen.xdiff.document;
 import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.GeneralPath;
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -166,11 +165,18 @@ public class TextThread {
 				}
 				double distance = next.getOrigin().getX() - last.getX() - last.getOutlineRect().getWidth();
 				
-				if (last.getGraphicsStateDesc().equals(next.getGraphicsStateDesc())
-						&& this.isConnect(last, next)
-						&& distance < last.getWCharWidth()) {
-					last.merge(next);
-					continue;
+				double spaceW = last.getWCharWidth();
+				if (last.getGraphicsStateDesc().equals(next.getGraphicsStateDesc())) {
+					if (this.isConnect(last, next) || distance <= spaceW * this.scaleOfSpaceingBetweenWords) {
+						last.merge(next);
+						continue;
+					}
+					
+					if (distance > spaceW * this.scaleOfSpaceingBetweenWords) {
+						last.autoAppendSpace();
+						last.merge(next);
+						continue;
+					}
 				}
 				mergedContents.add(next);
 			}
@@ -190,13 +196,7 @@ public class TextThread {
 			if (r1.intersects(r2)) {
 				return true;
 			}
-			
-			double x = r1.getX() + r1.getWidth() + wCharWidth * this.scaleOfSpaceingBetweenWords;
-			if (r2.contains(new Point2D.Double(x, r1.getY()))) {
-				return true;
-			}
-			
-			return true;
+			return false;
 		}
 	}
 	
@@ -338,6 +338,9 @@ public class TextThread {
 		
 		public boolean isInvisible() {
 			if (this.bBox != null && this.bBox.isEmpty()) {
+				return true;
+			}
+			if (this.getText().trim().length() == 0) {
 				return true;
 			}
 			return false;

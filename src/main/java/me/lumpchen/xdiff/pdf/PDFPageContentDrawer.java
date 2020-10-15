@@ -169,7 +169,7 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 		this.markImage(pdImage, new GeneralPath(outline));
     }
     
-	private void markText(String unicode, Integer cid, Point2D origin, AffineTransform at, Shape glyph) {
+	private void markText(String unicode, Integer cid, Point2D origin, AffineTransform at, Shape glyph, float spaceWidth) {
 		if (this.runtimePageContentStack.isEmpty()) {
 			return;
 		}
@@ -180,6 +180,7 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 		}
 		
 		TextContent textContent = (TextContent) content;
+		textContent.setSpaceWidth(spaceWidth);
 		
 		if (textContent.onBaseline(origin.getY())) {
 			textContent.appendText(unicode, cid, origin, at, glyph.getBounds2D());
@@ -193,6 +194,7 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
     		}
     		
         	TextContent newContent = new TextContent();
+        	newContent.setSpaceWidth(spaceWidth);
         	newContent.appendText(unicode, cid, origin, at, glyph.getBounds2D());
         	this.runtimePageContentStack.push(newContent);
         	this.markGraphicsState();
@@ -582,13 +584,9 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 		Point2D ptDst = new Point2D.Double(0, 0);
 		at.transform(ptSrc, ptDst);
 		
-/*		Shape wGlyph = at.createTransformedShape(cache.getPathForCharacterCode(0x20));
-		double spaceWidth = 0;
-		if (wGlyph != null) {
-			spaceWidth = wGlyph.getBounds2D().getWidth();
-		}*/
-
-		this.markText(unicode, code, ptDst, at, this.lastGlyph);
+		float spaceWidth = font.getSpaceWidth();
+		spaceWidth = (spaceWidth / 1000f) * this.getGraphicsState().getTextState().getFontSize();
+		this.markText(unicode, code, ptDst, at, this.lastGlyph, spaceWidth);
     }
 
     /**

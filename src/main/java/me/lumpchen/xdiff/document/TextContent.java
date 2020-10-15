@@ -42,10 +42,6 @@ public class TextContent extends PageContent {
 			this.origin = origin;
 			this.baseline = origin.getY();
 		}
-		
-		if (this.averageFontWidth == -1) {
-			this.averageFontWidth = glyphBBox.getBounds2D().getWidth();
-		}
 	}
 	
 	public double getBaseline() {
@@ -134,8 +130,8 @@ public class TextContent extends PageContent {
 	}
 	
 	public double getWCharWidth() {
-		if (this.averageFontWidth == -1) {
-			return 0;
+		if (this.averageFontWidth <= 0) {
+			this.averageFontWidth  = this.getOutlineRect().getWidth() / this.cidArray.size();
 		}
 		return this.averageFontWidth;
 	}
@@ -153,6 +149,29 @@ public class TextContent extends PageContent {
 	
 	public boolean isSymbol() {
 		return this.isSymbol;
+	}
+	
+	public void setSpaceWidth(float spaceWidth) {
+		this.averageFontWidth = spaceWidth;
+	}
+	
+	public void autoAppendSpace() {
+		char c = 0x20;
+		if (this.text.length() == 0 || this.text.charAt(this.text.length() - 1) == c) {
+			return;
+		}
+		
+		this.text.append(c);
+		this.cidArray.add(0x20);
+		
+		double spaceW = this.getWCharWidth();
+		double height = this.getHeight();
+		
+		Rectangle2D cRect = this.getOutlineRect();
+		double x = cRect.getX() + cRect.getWidth();
+		double y = cRect.getY();
+		Rectangle2D r2 = new Rectangle2D.Double(x, y, spaceW, height);
+		this.addOutlineShape(r2);
 	}
 }
 

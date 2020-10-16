@@ -224,8 +224,13 @@ public class PDFPageContentDrawer extends PDFGraphicsStreamEngine implements Pag
 		}
 		
 		if (this.lastClip != null) {
-			outline = this.lastClip.getBounds2D();
+			Rectangle r1 = outline.getBounds();
+			Rectangle r2 = this.lastClip.getBounds();
+			if (r1.contains(r2)) {
+				outline = this.lastClip.getBounds2D();
+			}
 		}
+
 		this.markPath(outline);
 		this.addToContentList(this.runtimePageContentStack.pop());
 		

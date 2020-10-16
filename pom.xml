@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.lumpchen</groupId>
@@ -11,7 +12,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
-   		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -19,56 +20,63 @@
 		<dependency>
 			<groupId>com.twelvemonkeys.common</groupId>
 			<artifactId>common-image</artifactId>
-			<version>3.3.2</version>
+			<version>3.6</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.common/common-io -->
 		<dependency>
 			<groupId>com.twelvemonkeys.common</groupId>
 			<artifactId>common-io</artifactId>
-			<version>3.3.2</version>
+			<version>3.6</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.common/common-lang -->
 		<dependency>
 			<groupId>com.twelvemonkeys.common</groupId>
 			<artifactId>common-lang</artifactId>
-			<version>3.3.2</version>
+			<version>3.6</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-core -->
 		<dependency>
 			<groupId>com.twelvemonkeys.imageio</groupId>
 			<artifactId>imageio-core</artifactId>
-			<version>3.3.2</version>
+			<version>3.6</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-bmp -->
+		<dependency>
+			<groupId>com.twelvemonkeys.imageio</groupId>
+			<artifactId>imageio-bmp</artifactId>
+			<version>3.6</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-jpeg -->
 		<dependency>
 			<groupId>com.twelvemonkeys.imageio</groupId>
 			<artifactId>imageio-jpeg</artifactId>
-			<version>3.3.2</version>
+			<version>3.6</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-metadata -->
 		<dependency>
 			<groupId>com.twelvemonkeys.imageio</groupId>
 			<artifactId>imageio-metadata</artifactId>
-			<version>3.3.2</version>
+			<version>3.6</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-sgi -->
 		<dependency>
 			<groupId>com.twelvemonkeys.imageio</groupId>
 			<artifactId>imageio-sgi</artifactId>
-			<version>3.3.2</version>
+			<version>3.6</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-tiff -->
 		<dependency>
 			<groupId>com.twelvemonkeys.imageio</groupId>
 			<artifactId>imageio-tiff</artifactId>
-			<version>3.3.2</version>
+			<version>3.6</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
@@ -86,9 +94,9 @@
 		</dependency>
 
 		<dependency>
-		  	<groupId>com.github.lumpchen</groupId>
-		  	<artifactId>xafp</artifactId>
-		 	<version>1.0.1-SNAPSHOT</version>
+			<groupId>com.github.lumpchen</groupId>
+			<artifactId>xafp</artifactId>
+			<version>1.0.1-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -113,7 +121,7 @@
 				<version>2.3.2</version>
 				<configuration>
 					<source>1.8</source>
-            		<target>1.8</target>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 
@@ -137,12 +145,13 @@
 						<configuration>
 							<!-- <skip>true</skip> -->
 							<tasks>
-								<mkdir dir="target/surefire-reports"/>
+								<mkdir dir="target/surefire-reports" />
 								<junitreport todir="target/surefire-reports">
 									<fileset dir="target/surefire-reports">
 										<include name="**/*.xml" />
 									</fileset>
-									<report format="noframes" todir="target/surefire-reports" />
+									<report format="noframes"
+										todir="target/surefire-reports" />
 								</junitreport>
 							</tasks>
 						</configuration>

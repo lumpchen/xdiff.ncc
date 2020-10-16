@@ -205,7 +205,11 @@ PDF_DIFF.diff_report_view = function(report_data) {
 			if (i >= base_pdf_json_obj.pageCount) {
 				var text = document.createTextNode("NA");
 			} else {
-				var text = document.createTextNode("Page " + (i + 1));	
+				if (base_pdf_json_obj.pages[i] && base_pdf_json_obj.pages[i].num !== undefined) {
+					var text = document.createTextNode("Page " + (base_pdf_json_obj.pages[i].num + 1));
+				} else {
+					var text = document.createTextNode("NA");
+				}
 			}
 			
 			cell.appendChild(text);
@@ -218,9 +222,13 @@ PDF_DIFF.diff_report_view = function(report_data) {
 
 			var cell = pageRow.insertCell(1);
 			if (i >= test_pdf_json_obj.pageCount) {
-				var text = document.createTextNode("NA");
+				
 			} else {
-				var text = document.createTextNode("Page " + (i + 1));	
+				if (test_pdf_json_obj.pages[i] && test_pdf_json_obj.pages[i].num !== undefined) {
+					var text = document.createTextNode("Page " + (test_pdf_json_obj.pages[i].num + 1));
+				} else {
+					var text = document.createTextNode("NA");
+				}
 			}
 			cell.appendChild(text);
 
@@ -496,7 +504,7 @@ PDF_DIFF.diff_report_view = function(report_data) {
 			page_view_paras["PageNo"] = pageNo;
 			page_view_paras["DiffContent"] = null;
 
-			if (pageNo < base_pdf_json_obj.pageCount) {
+			if (pageNo < base_pdf_json_obj.pageCount && base_pdf_json_obj.pages[pageNo].num !== undefined) {
 				page_view_paras["BasePageWidth"] = base_pdf_json_obj.pages[pageNo].width;
 				page_view_paras["BasePageHeight"] = base_pdf_json_obj.pages[pageNo].height;
 				page_view_paras["BaseIsBlank"] = false;
@@ -506,7 +514,7 @@ PDF_DIFF.diff_report_view = function(report_data) {
 				page_view_paras["BaseIsBlank"] = true;
 			}
 
-			if (pageNo < test_pdf_json_obj.pageCount) {
+			if (pageNo < test_pdf_json_obj.pageCount && test_pdf_json_obj.pages[pageNo].num !== undefined) {
 				page_view_paras["TestPageWidth"] = test_pdf_json_obj.pages[pageNo].width;
 				page_view_paras["TestPageHeight"] = test_pdf_json_obj.pages[pageNo].height;
 				page_view_paras["TestIsBlank"] = false;
@@ -818,10 +826,13 @@ PDF_DIFF.diff_report_view = function(report_data) {
 
 
 	var drawPageImage = function(cell, imageTag, ctx, canvas, scale) {
+	    context = canvas.getContext("2d");
+
+		showLoadingText(canvas, "Loading " + imageTag + "...");
 		var img = new Image();
 		img.src = "images/" + imageTag;
-
-		img.onload = function() {
+		
+     	img.onload = function() {
 			var w = canvas.width;
 			var h = canvas.height;
 			var s = w / img.width;
@@ -1178,6 +1189,26 @@ PDF_DIFF.diff_report_view = function(report_data) {
 	    context.closePath();
 	    context.stroke();
 	};
+
+	var showLoadingText = function(canvas, loadingText) {
+		var ctx = canvas.getContext("2d");
+		
+		var w = canvas.width;
+		var h = canvas.height;
+		
+		ctx.clearRect(0, 0, w, h);
+		ctx.fillStyle = "white";
+		ctx.fillRect(0, 0, w, h);
+		
+		ctx.save();
+		ctx.font = "16pt Calibri";
+		ctx.fillStyle = "black";
+		var tw = ctx.measureText(loadingText).width;
+		var x = w - tw <= 0 ? 0 : (w - tw) / 2;
+		ctx.fillText(loadingText, x, h / 2);
+		ctx.stroke();
+		ctx.restore();
+	}
 
 	var toPixel = function (pt) {
 		return parseInt((pt / 72.0) * dpi);

@@ -172,7 +172,8 @@ public class TextThread {
 						continue;
 					}
 					
-					if (distance > spaceW * this.scaleOfSpaceingBetweenWords) {
+					if (distance >= spaceW * this.scaleOfSpaceingBetweenWords
+							&& distance <= spaceW * 4) {
 						last.autoAppendSpace();
 						last.merge(next);
 						continue;

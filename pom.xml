@@ -93,11 +93,11 @@
 			<version>20160810</version>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.github.lumpchen</groupId>
 			<artifactId>xafp</artifactId>
 			<version>1.0.1-SNAPSHOT</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.apache.pdfbox</groupId>

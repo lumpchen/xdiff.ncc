@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>com.twelvemonkeys.imageio</groupId>
 			<artifactId>imageio-metadata</artifactId>
-			<version>3.6</version>
+			<version>3.7.1</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/com.twelvemonkeys.imageio/imageio-sgi -->

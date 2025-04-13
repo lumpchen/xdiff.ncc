@@ -45,6 +45,12 @@ public class DiffSetting {
 		setting.showDifferentPagesOnly = false;
 		
 		setting.compSetting = new CompareSetting();
+		setting.progressListener = new ProgressListener() {
+
+			@Override
+			public void progress(float progress) {
+				System.out.println("Comparing progress: " + progress);
+			}};
 		
 		setting.diffBitmapBackground = "black";
 		

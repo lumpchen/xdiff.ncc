@@ -17,6 +17,33 @@ form control | [control.pdf](./src/test/resources/testcases/xdiff/annot/form_con
 Indesign forms | [control.pdf](./src/test/resources/testcases/xdiff/annot/indd_forms/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/annot/indd_forms/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/annot/indd_forms/report/report.html)
 misc | [control.pdf](./src/test/resources/testcases/xdiff/misc/simple/control.pdf) | [test.pdf](./src/test/resources/testcases/xdiff/misc/simple/test.pdf) | [report.html](./src/test/resources/testcases/xdiff/misc/simple/report/report.html)
 
+Maven
+----
+    <dependency>
+        <groupId>com.github.lumpchen</groupId>
+        <artifactId>xdiff.ncc</artifactId>
+        <version>0.9.2</version>
+    </dependency>
+
+How To Use
+----
+    import me.lumpchen.xdiff.DiffSetting;
+    import me.lumpchen.xdiff.XDiff
+
+    public class Test {
+        public static void main(String[] args) {
+            File control = "path_to_control_pdf";
+            File test = "path_to_test_pdf";
+            File reportDir = "path_to_report_dir";
+            
+            DiffSetting diffSetting = DiffSetting.getDefaultSetting();
+            diffSetting.compSetting.ignoreDifferentTextStyle = true;
+
+            int res = XDiff.diff(control, test, reportDir, diffSetting);
+        }
+    }
+For more samples, see https://github.com/lumpchen/xdiff.ncc/tree/master/src/test/java/me/lumpchen/xdiff
+
 Build
 -----
 
@@ -30,7 +57,7 @@ Binary download:
 -----
 [xdiff.jar](./dst/), download both xdiff.jar and config.properties. xdiff.jar is an excutable java program, see detail in usage section.
 
-Usage
+Executable Jar Usage
 -----
     Usage: java -jar xdiff.jar [options] <baseline-pdf> <test-pdf> <result-folder>
 
@@ -56,12 +83,10 @@ Development plan
 
 Support
 -----
-lumpchen@gmail.com 
+lumpchen@163.com 
 
 License
 -----
 [http://www.apache.org/licenses/LICENSE-2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
------
-xdiff.ncc 可用于PDL类型的文档比较，支持PDF，AFP，PostScript（需安装GhostScript）。<br>
 
